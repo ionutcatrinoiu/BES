@@ -1,1 +1,1282 @@
-<!doctype html><html lang="ro"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#071f27"><title>Brand Experience Summit 2026 | Înregistrare</title><link rel="stylesheet" href="/assets/style.css"></head><body><div class="ambient"></div><video class="bg" autoplay muted loop playsinline poster="/assets/poster.jpg"><source src="/assets/summit-background.mp4" type="video/mp4"></video><div class="wrap"><header><span id="date">28 noiembrie 2026</span><select id="language" aria-label="Language"><option value="ro">Română</option><option value="en">English</option><option value="ru">Русский</option></select><span>Capitoles Park</span></header><section class="hero center"><div class="eyebrow" id="edition">EDIȚIA A II-A</div><h1>Brand Experience Summit</h1><div class="sub">More brands. More knowledge. More business.</div><p id="intro">Chișinău · 28 noiembrie 2026 · 09:30</p><div class="logos"><span>SD ROYAL OPTIC</span><span>EMY OPTIC</span><span>TOTALMED</span><span>AVVERO</span><span>ROOFT</span></div></section><main class="panel"><div id="formView"><div class="steps" id="steps"></div><h2 id="stepTitle"></h2><form id="registration" novalidate><div id="fields"></div><div class="error" id="error" role="alert"></div><div class="actions"><button type="button" class="alt" id="back">Înapoi</button><button type="button" id="next">Continuă</button></div></form></div><div class="hide center" id="success"><h2 id="successTitle">Înregistrare confirmată!</h2><p id="successText"></p><h2 id="successCode"></h2><p id="successMail"></p></div></main><section class="program"><h2 id="programTitle">Programul evenimentului</h2><div id="schedule"></div></section><footer>Brand Experience Summit 2026 · Chișinău</footer></div><script src="/assets/app.js"></script></body></html>
+<!doctype html><html lang="ro"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Brand Experience Summit | Înscriere</title>
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#0a1c21">
+<meta name="description" content="Brand Experience Summit, 28 noiembrie 2026, Capitoles Park, Chișinău">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Avvero × Brand Experience Summit 2026">
+<meta property="og:title" content="Managementul miopiei dincolo de lentilă: Cum educăm o generație să vadă mai bine.">
+<meta property="og:description" content="Înscrie-te la evenimenta Avvero din cadrul Brand Experience Summit 2026.">
+<meta property="og:url" content="https://avvero-x-snoo.vercel.app/">
+<meta property="og:image" content="https://avvero-x-snoo.vercel.app/avvero-snoo-share.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Avvero × Brand Experience Summit 2026">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Managementul miopiei dincolo de lentilă: Cum educăm o generație să vadă mai bine.">
+<meta name="twitter:description" content="Înscrie-te la evenimenta Avvero din cadrul Brand Experience Summit 2026.">
+<meta name="twitter:image" content="https://avvero-x-snoo.vercel.app/avvero-snoo-share.png">
+<style>
+
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#061315;color:#fff;font-family:"Source Sans 3","Source Sans Pro",Arial,Helvetica,sans-serif}button,input{font:inherit}
+.bg{position:fixed;inset:0;z-index:0;overflow:hidden;background:#071719}.veil{position:fixed;inset:0;z-index:1;background:linear-gradient(90deg,rgba(4,16,18,.82) 0%,rgba(4,16,18,.61) 34%,rgba(4,16,18,.15) 68%,rgba(4,16,18,.25) 100%),linear-gradient(0deg,rgba(4,14,16,.34),transparent 50%)}.grain{position:fixed;inset:0;z-index:2;pointer-events:none;opacity:.045;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+header{position:fixed;z-index:6;left:5vw;right:5vw;top:34px;display:flex;align-items:flex-start;justify-content:space-between}.logo{width:112px;height:auto}.event{font-size:8px;letter-spacing:.29em;font-weight:500;color:rgba(255,255,255,.78);padding-top:7px}
+.hero{position:fixed;z-index:5;inset:0;display:flex;align-items:center}.copy{margin-left:5vw;width:min(700px,54vw)}.ey{font-size:9px;letter-spacing:.25em;font-weight:500;margin-bottom:26px;color:rgba(255,255,255,.82)}
+h1{font-size:clamp(52px,5.45vw,84px);font-weight:700;line-height:.97;letter-spacing:-.055em;margin:0 0 25px;text-transform:none}.accent{font-style:normal;font-weight:700;color:#a9e3e4}.copy p{max-width:580px;color:rgba(255,255,255,.77);font-size:13px;line-height:1.72;font-weight:300}.go{min-height:58px;min-width:218px;position:relative;overflow:hidden;margin-top:31px;border:1px solid rgba(255,255,255,.78);border-radius:100px;background:linear-gradient(135deg,rgba(255,255,255,.20),rgba(255,255,255,.055));backdrop-filter:blur(16px) saturate(145%);box-shadow:inset 0 1px 0 rgba(255,255,255,.38),0 12px 42px rgba(0,0,0,.18);color:#fff;padding:15px 23px;cursor:pointer;font-size:9px;letter-spacing:.17em;font-weight:500;transition:.35s}.go i{display:none}.go:before{content:'';position:absolute;left:-25%;top:-120%;width:48%;height:340%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.42),transparent);transform:rotate(22deg);transition:.7s}.go:hover:before{left:115%}.go:hover{background:#fff;color:#122326;transform:translateY(-2px)}.tech{display:none}.foot{position:fixed;z-index:5;left:5vw;bottom:27px;font-size:7px;letter-spacing:.2em;color:rgba(255,255,255,.55)}.foot b{color:white;font-weight:500}
+.flow{position:fixed;inset:0;z-index:20;opacity:0;pointer-events:none;background:#f1f0eb;transition:.7s cubic-bezier(.16,1,.3,1);clip-path:inset(100% 0 0 0)}.flow.open{opacity:1;pointer-events:auto;clip-path:inset(0)}.modal{width:min(980px,92vw);height:100%;margin:auto;padding:46px 10px 38px;color:#162325;display:flex;flex-direction:column}.meta{display:flex;justify-content:space-between;font-size:8px;letter-spacing:.23em;color:#718082}.prog{height:1px;background:#ccd0cd;margin:16px 0 0}.prog span{height:1px;display:block;background:#162325;width:9%;transition:.55s}.modal #box{flex:1;display:flex;align-items:center}.step{width:100%;animation:in .55s cubic-bezier(.16,1,.3,1)}@keyframes in{from{opacity:0;filter:blur(8px);transform:translateY(22px)}to{opacity:1;filter:none;transform:none}}.step.out{animation:out .22s ease forwards}@keyframes out{to{opacity:0;filter:blur(7px);transform:translateY(-16px)}}.step small{font-size:8px;letter-spacing:.22em;color:#728083}.step h2{text-transform:none;font-size:clamp(38px,4.7vw,66px);font-weight:300;line-height:1.02;letter-spacing:-.055em;margin:16px 0 12px;max-width:850px}.step p{font-size:12px;color:#6d797b;margin:0 0 32px}.field{width:100%;border:0;border-bottom:1px solid #aeb7b5;background:transparent;color:#162325;padding:12px 0 14px;font-size:27px;font-weight:300;outline:0}.field:focus{border-color:#162325}.field::placeholder{color:#a3acab}.field[type=text]{text-transform:capitalize}.field[type=tel],.field[type=email]{text-transform:none}.err{height:18px;color:#a9444d;font-size:9px;margin-top:7px}.nav{display:flex;justify-content:center;align-items:center}.nav button{border:0;background:none;color:#162325;font-size:8px;letter-spacing:.18em;cursor:pointer;padding:12px 0;font-weight:500}.nav .back{color:#7c8888}.answers{border-top:1px solid #c9cfcc}.answer{display:block;width:100%;position:relative;text-align:left;border:0;border-bottom:1px solid #c9cfcc;background:none;color:#536063;padding:21px 2px;font-size:18px;font-weight:300;cursor:pointer;transition:.3s}.answer:hover,.answer.sel{padding-left:17px;color:#111c1e}.answer:hover:before,.answer.sel:before{content:"";position:absolute;left:0;top:50%;width:5px;height:5px;border-radius:50%;background:#55aeb1}.pass{margin-top:22px;padding:22px 0;border-top:1px solid #bcc4c1;border-bottom:1px solid #bcc4c1}.pass .name{font-size:25px;font-weight:300;margin:15px 0 5px}.pass .code{font-size:9px;letter-spacing:.22em;color:#448e91}
+@media(max-width:760px){header{top:20px}.logo{width:82px}.hero{align-items:flex-end;padding-bottom:9vh}.copy{margin-left:6vw;width:88vw}h1{font-size:46px}.copy p{font-size:11px}.modal{width:88vw;padding-top:30px}.step h2{text-transform:none;font-size:39px}.bg iframe{width:210vh}.go{padding:14px 19px}}
+.mobile-success-home{display:none}@media(max-width:760px){.mobile-success-home{display:inline-flex!important}.desktop-success-close{display:none!important}}
+</style><style>
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;600;700&display=swap');
+</style>
+
+<style id="final-ux-cleanup-2026">
+@media(max-width:760px){
+  .step{animation:none!important;filter:none!important}
+  .step.out,.step.out-down{animation:none!important;filter:none!important}
+  #box>.step,.swipe-preview-step{will-change:transform,opacity;backface-visibility:hidden;-webkit-backface-visibility:hidden;transform:translateZ(0)}
+  .modal>.nav:has(.nav-success-stack){position:static!important;left:auto!important;right:auto!important;bottom:auto!important;width:100%!important;display:block!important;margin:20px 0 max(12px,env(safe-area-inset-bottom))!important;padding:0 18px!important}
+  .nav-success-stack{display:flex!important;flex-direction:column!important;width:100%!important;gap:10px!important;padding:0!important;margin:0!important}
+  .nav-success-stack .action-primary{display:flex!important;width:100%!important;max-width:none!important;min-width:0!important;min-height:58px!important;margin:0!important;padding:14px 18px!important;align-items:center!important;justify-content:center!important;border-radius:999px!important;box-sizing:border-box!important}
+}
+</style>
+<style>
+.gdpr-step{position:relative;padding-bottom:74px}
+.gdpr-arrow{margin-top:22px;width:56px;height:56px;border:1px solid #162325;border-radius:50%;background:#162325;color:#fff;font:300 30px/1 Arial,sans-serif;display:flex;align-items:center;justify-content:center;cursor:pointer}
+@media(min-width:761px){.gdpr-continue-legacy{position:static!important}.gdpr-arrow{position:static!important;margin-top:22px!important}.gdpr-step{padding-bottom:0!important}}
+@media(max-width:760px){.gdpr-arrow{width:54px;height:54px;margin:18px auto 0}}
+</style><style>.lang-switch{display:flex;gap:8px;margin-top:14px}.lang-btn{border:1px solid rgba(255,255,255,.45);background:rgba(0,0,0,.12);color:#fff;border-radius:999px;padding:8px 12px;font:600 10px/1 Arial,sans-serif;letter-spacing:.12em;cursor:pointer}.lang-btn.active{background:#fff;color:#102326}</style><style id="language-position-fix">.event-wrap{position:absolute;right:0;top:0;display:flex;flex-direction:column;align-items:flex-end;gap:10px}.event-wrap .event{position:static!important}.event-wrap .lang-switch{margin-top:0!important;justify-content:flex-end}@media(max-width:760px){.event-wrap{right:0;top:0;gap:8px}.event-wrap .lang-btn{padding:7px 10px;font-size:9px}}</style></head><body>
+<div class="bg"><video id="bgvideo" autoplay muted loop playsinline webkit-playsinline preload="auto" disablepictureinpicture><source src="assets/summit-background.mp4" type="video/mp4"></video></div>
+<div class="veil"></div><div class="grain"></div><header><div class="bes-header-brand">BRAND EXPERIENCE <span>SUMMIT</span></div><div class="event-wrap"><div class="event">28 NOIEMBRIE 2026 · CHIȘINĂU</div><div class="lang-switch"><button type="button" id="langRo" class="lang-btn active" aria-pressed="true" onclick="setLanguage('ro')">RO</button><button type="button" id="langEn" class="lang-btn" aria-pressed="false" onclick="setLanguage('en')">EN</button><button type="button" id="langRu" class="lang-btn" aria-pressed="false" onclick="setLanguage('ru')">RU</button></div></div></header><div class="hero"><div class="copy"><div class="ey">EDIȚIA A II-A · CAPITOLES PARK</div><h1>Brand Experience<br><span class="accent">Summit</span></h1><p>More brands. More knowledge. More business.</p><div class="bes-datetime">28 noiembrie 2026 · 09:30 · Chișinău</div><button class="go" onclick="start()">ÎNSCRIE-TE LA EVENIMENT</button><div class="bes-partners" aria-label="Partenerii evenimentului"><img src="assets/sd-royal.png" alt="SD Royal Optic"><span class="emy-logo">EMY OPTIC</span><img src="assets/totalmed.png" alt="Totalmed"><img src="assets/avvero.png" alt="Avvero"><img src="assets/rooft.png" alt="Rooft"></div></div></div><div class="tech"><b>MYO FREE-FORM</b> · CONTINUOUS OPTICAL SURFACE</div><div class="foot"><b>AVVERO</b> · SMART VISION EXPERIENCE</div>
+<div class="flow" id="flow"><div class="modal"><div class="meta"><span id="label">IDENTITATE</span><span id="count">01 / 12</span></div><div class="prog"><span id="bar"></span></div><div id="box"></div><div class="nav" id="nav"></div></div></div>
+
+
+
+
+<script>
+const S={gdpr:false,imageConsent:false,first:'',last:'',phone:'',email:'',optic:'',role:'',city:'',county:'',country:'MD',street:'',myopia:'',myoless:'',partnerSd:'',partnerEmy:'',partnerTotalmed:'',partnerAvvero:'',partnerRooft:''};let n=0,lock=false,phoneDuplicate=false,phoneCheckTimer=null,phoneCheckSeq=0;
+const COUNTY_BY_CODE={AB:'Alba',AR:'Arad',AG:'Argeș',BC:'Bacău',BH:'Bihor',BN:'Bistrița-Năsăud',BT:'Botoșani',BR:'Brăila',BV:'Brașov',B:'București',BZ:'Buzău',CL:'Călărași',CS:'Caraș-Severin',CJ:'Cluj',CT:'Constanța',CV:'Covasna',DB:'Dâmbovița',DJ:'Dolj',GL:'Galați',GR:'Giurgiu',GJ:'Gorj',HR:'Harghita',HD:'Hunedoara',IL:'Ialomița',IS:'Iași',IF:'Ilfov',MM:'Maramureș',MH:'Mehedinți',MS:'Mureș',NT:'Neamț',OT:'Olt',PH:'Prahova',SJ:'Sălaj',SM:'Satu Mare',SB:'Sibiu',SV:'Suceava',TR:'Teleorman',TM:'Timiș',TL:'Tulcea',VL:'Vâlcea',VS:'Vaslui',VN:'Vrancea'};
+let RO_CITIES=[],MD_CITIES=[],ALL_CITIES=[],CITY_INDEX=new Map(),localitiesReady=false,localitiesFailed=false;
+const MD_CITIES_STATIC=[
+ ['Chișinău','Chișinău'],['Codru','Chișinău'],['Cricova','Chișinău'],['Durlești','Chișinău'],['Sîngera','Chișinău'],['Vadul lui Vodă','Chișinău'],['Vatra','Chișinău'],
+ ['Bălți','Bălți'],['Anenii Noi','Anenii Noi'],['Basarabeasca','Basarabeasca'],['Briceni','Briceni'],['Lipcani','Briceni'],['Cahul','Cahul'],
+ ['Călărași','Călărași'],['Cantemir','Cantemir'],['Căușeni','Căușeni'],['Căinari','Căușeni'],['Cimișlia','Cimișlia'],['Criuleni','Criuleni'],
+ ['Dondușeni','Dondușeni'],['Drochia','Drochia'],['Dubăsari','Dubăsari'],['Edineț','Edineț'],['Cupcini','Edineț'],['Fălești','Fălești'],
+ ['Florești','Florești'],['Ghindești','Florești'],['Mărculești','Florești'],['Glodeni','Glodeni'],['Hîncești','Hîncești'],['Ialoveni','Ialoveni'],
+ ['Leova','Leova'],['Iargara','Leova'],['Nisporeni','Nisporeni'],['Ocnița','Ocnița'],['Otaci','Ocnița'],['Orhei','Orhei'],['Rezina','Rezina'],
+ ['Rîșcani','Rîșcani'],['Costești','Rîșcani'],['Sîngerei','Sîngerei'],['Biruința','Sîngerei'],['Soroca','Soroca'],['Strășeni','Strășeni'],
+ ['Bucovăț','Strășeni'],['Șoldănești','Șoldănești'],['Ștefan Vodă','Ștefan Vodă'],['Taraclia','Taraclia'],['Tvardița','Taraclia'],
+ ['Telenești','Telenești'],['Ungheni','Ungheni'],['Cornești','Ungheni'],['Comrat','Găgăuzia'],['Ceadîr-Lunga','Găgăuzia'],['Vulcănești','Găgăuzia'],['Tiraspol','Stînga Nistrului'],['Bender','Bender'],['Rîbnița','Stînga Nistrului'],['Camenca','Stînga Nistrului'],['Grigoriopol','Stînga Nistrului'],['Slobozia','Stînga Nistrului'],['Dnestrovsc','Stînga Nistrului']
+].map(([name,county])=>({name,county,country:'MD'}));
+let transitionDir='forward',touchStartX=0,touchStartY=0,touchStartedAt=0,touchDragging=false,swipeNavigation=false;
+function cityKey(v){return String(v||'').trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/ș/g,'s').replace(/ț/g,'t')}
+function cityCompositeKey(name,country){return `${country||''}:${cityKey(name)}`}
+function parseCityRow(r){
+ const name=r.nume||r.name||r.oras||r.city||''; const code=String(r.judetAuto||r.countyCode||r.county||'').toUpperCase();
+ const county=COUNTY_BY_CODE[code]||r.judetNume||r.countyName||r.judet||(code==='-'?'București':'');
+ return name?{name,county:cityKey(name)==='bucuresti'?'București':county,country:'MD'}:null;
+}
+function rebuildCityIndex(){
+ ALL_CITIES=[...RO_CITIES,...MD_CITIES_STATIC];CITY_INDEX=new Map();
+ for(const c of ALL_CITIES){CITY_INDEX.set(cityCompositeKey(c.name,c.country),c)}
+ localitiesReady=RO_CITIES.length>10000&&MD_CITIES_STATIC.length>40;
+}
+async function loadRomaniaCities(){
+ try{const r=await fetch('https://raw.githubusercontent.com/romania/localitati/master/json/orase.min.json',{cache:'force-cache'});if(!r.ok)throw new Error('cities');const raw=await r.json();const rows=Array.isArray(raw)?raw:(raw.data||raw.orase||[]);RO_CITIES=rows.map(parseCityRow).filter(x=>x&&x.county);rebuildCityIndex();if(!localitiesReady)throw new Error('cities');}
+ catch(e){localitiesFailed=true;MD_CITIES=MD_CITIES_STATIC;rebuildCityIndex();console.error('Lista localităților din România nu a putut fi încărcată',e)}
+}
+MD_CITIES=MD_CITIES_STATIC;rebuildCityIndex();
+const A=[['IDENTITATE','Care este prenumele tău?','Începem cu tine.','first','Prenume','text'],['IDENTITATE','Care este numele tău?','Completează numele de familie.','last','Nume','text'],['OPTICA TA','Ce optică reprezinți?','Denumirea opticii medicale.','optic','Denumirea opticii','text'],['OPTICA TA','Care este rolul tău în optică?','Selectează rolul care te reprezintă.','role','','role'],['LOCAȚIE','În ce localitate se află optica?','Construim adresa pas cu pas.','city','Localitate','text'],['LOCAȚIE','Județ sau raion','Județul sau raionul în care se află optica.','county','Județ / raion','text'],['LOCAȚIE','Strada și număr','Introdu strada și numărul imobilului.','street','Stradă, număr','text'],['CONTACT','Lasă-ne numărul tău de telefon','Prefixul țării este selectat automat după localitate.','phone','','tel'],['CONTACT','Adresa ta de e-mail','Adresa de e-mail este necesară pentru confirmarea și reminderul participării.','email','nume@exemplu.ro','email'],['SD ROYAL OPTIC','Ce temă te interesează cel mai mult la eveniment?','Întrebare pentru SD Royal Optic.','partnerSd','Răspunsul tău','text'],['EMY OPTIC','Ce noutăți ai vrea să descoperi despre rame?','Întrebare pentru EMY Optic.','partnerEmy','Răspunsul tău','text'],['TOTALMED','Ce echipamente te interesează pentru practica ta?','Întrebare pentru Totalmed.','partnerTotalmed','Răspunsul tău','text'],['AVVERO','Ce subiect despre lentile oftalmice te interesează?','Întrebare pentru Avvero.','partnerAvvero','Răspunsul tău','text'],['ROOFT','Ce ai dori să afli despre lentilele de contact?','Întrebare pentru Rooft.','partnerRooft','Răspunsul tău','text']];function norm(s){return String(s||'').trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/ş/g,'s').replace(/ţ/g,'t')}function buc(s){const v=norm(s).replace(/^municipiul\s+/,'').trim();return v==='bucuresti'}function countryPrefix(){return S.country==='MD'?'+373':'+40'}function nationalPhone(v){let d=String(v||'').replace(/\D/g,'');const prefix=S.country==='MD'?'373':'40';if(d.startsWith('00'+prefix))d=d.slice(prefix.length+2);else if(d.startsWith(prefix))d=d.slice(prefix.length);if(d.startsWith('0'))d=d.slice(1);return d}function ph(v){const d=nationalPhone(v);return S.country==='MD'?/^[67]\d{7}$/.test(d):/^7\d{8}$/.test(d)}function cap(v){return String(v).trim().toLocaleLowerCase('ro-RO').replace(/(^|[\s\-'])\p{L}/gu,m=>m.toLocaleUpperCase('ro-RO'))}function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;')}function start(){if(window.cancelHomeSwipePreview)window.cancelHomeSwipePreview();flow.style.transform='';flow.style.transition='';flow.style.opacity='';flow.style.clipPath='';flow.classList.add('open','liquid-open');resetParticipant();render();setTimeout(()=>flow.classList.remove('liquid-open'),850)}function render(){
+lock=false;
+let sk=false,total=A.length;
+if(!S.gdpr){
+ label.textContent='ACORDURI';count.textContent='00 / '+total;bar.style.width='2%';
+ box.innerHTML=`<section class="step gdpr-step"><small>CONFIDENȚIALITATE</small><h2>Acorduri</h2><p>Pentru a continua înscrierea, avem nevoie de acordurile tale privind prelucrarea datelor cu caracter personal și utilizarea imaginilor foto/video realizate în cadrul evenimentului, în scopurile descrise mai jos.</p><label class="gdpr-check"><input id="gdprConsent" type="checkbox"><span>Sunt de acord cu prelucrarea datelor mele cu caracter personal în scopul înscrierii și gestionării participării la eveniment.</span></label><label class="gdpr-check"><input id="imageConsent" type="checkbox"><span>Sunt de acord ca imaginile foto/video realizate în cadrul evenimentului în care pot apărea să fie utilizate de organizatorii Brand Experience Summit în scopul comunicării și promovării evenimentului, inclusiv pe website și canalele de social media.</span></label><div class="gdpr-error" id="gdprErr"></div><div class="step-nav" aria-label="Navigare formular"><button type="button" class="step-arrow forward-arrow" aria-label="Înainte" onclick="acceptGdpr()">›</button></div></section>`;
+ nav.innerHTML='';return;
+}
+let shown=n+1;
+count.textContent=String(shown).padStart(2,'0')+' / '+total;
+bar.style.width=(shown/total*100)+'%';
+if(n===A.length){success();return}
+let x=A[n];label.textContent=x[0];
+let body=x[5]==='q1'
+ ?`<div class="answers"><button class="answer" onclick="pick('Da',this)">Da, folosim deja soluții dedicate</button><button class="answer" onclick="pick('Nu',this)">Nu încă, vrem să descoperim opțiunile</button></div>`
+ :x[5]==='q2'
+ ?`<div class="answers"><button class="answer" onclick="pick('Da',this)">Da, cunosc Myoless</button><button class="answer" onclick="pick('Nu',this)">Nu încă. Vreau să îl descopăr.</button></div>`
+ :x[5]==='role'
+ ?`<div class="answers role-answers"><button class="answer" onclick="pick('Medic oftalmolog',this)">Medic oftalmolog</button><button class="answer" onclick="pick('Optometrist',this)">Optometrist</button><button class="answer" onclick="pick('Administrator',this)">Administrator</button><button class="answer" onclick="pick('Consilier vânzări',this)">Consilier vânzări</button><button class="answer" onclick="pick('Altul',this)">Altul</button></div>`
+ :x[3]==='phone'
+ ?`<div class="phone-field-wrap"><span class="phone-prefix">${countryPrefix()}</span><input id="field" class="field phone-field" type="tel" inputmode="numeric" enterkeyhint="next" placeholder="${S.country==='MD'?'6x xxx xxx':'7xx xxx xxx'}" value="${esc(S.phone)}" name="participantPhone" aria-label="Număr de telefon" autocomplete="section-participant tel"></div><div class="err" id="err" aria-live="polite"></div>`
+ :x[3]==='street'
+ ?`<textarea id="field" class="field street-field" name="opticalStoreStreetAddress" rows="1" wrap="off" inputmode="text" enterkeyhint="next" autocomplete="off" aria-label="Stradă și număr" placeholder="${x[4]}">${esc(S.street).replace(/>/g,'&gt;')}</textarea><div class="err" id="err" aria-live="polite"></div>`
+ :`<input id="field" class="field" type="${x[5]}" inputmode="text" enterkeyhint="next" placeholder="${x[4]}" value="${esc(S[x[3]])}" ${x[3]==='first'?'autocomplete="given-name"':x[3]==='last'?'autocomplete="family-name"':x[3]==='email'?'autocomplete="email"':x[3]==='street'?'autocomplete="street-address"':x[3]==='city'?'autocomplete="address-level2"':x[3]==='county'?'autocomplete="address-level1"':''}><div class="err" id="err" aria-live="polite"></div>`;
+let choice=x[5]==='role'||x[5][0]==='q';
+const backDisabled='';
+const stepNav=`<div class="step-nav" aria-label="Navigare formular"><button type="button" class="step-arrow back-arrow" ${backDisabled} onclick="back()" aria-label="Înapoi">‹</button><button type="button" class="step-arrow forward-arrow" onclick="${choice?'choiceForward()':'next()'}" aria-label="Înainte">›</button></div>`;
+box.innerHTML=`<section class="step ${transitionDir==='back'?'from-up':''}" tabindex="-1"><small>${x[0]}</small><h2>${x[1]}</h2><p>${x[2]}</p><div class="field-row">${body}</div>${stepNav}</section>`;
+nav.innerHTML='';
+if(window.field){
+ const currentField=document.getElementById('field');
+ if(!matchMedia('(max-width:760px)').matches)setTimeout(()=>{if(currentField&&currentField.isConnected&&!lock)currentField.focus({preventScroll:true})},460);
+ field.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();next(true)}};
+ if(x[3]==='street'){field.value=field.value.replace(/\s*[\r\n]+\s*/g,' ');field.addEventListener('input',e=>{const f=e.currentTarget;f.value=f.value.replace(/\s*[\r\n]+\s*/g,' ');S.street=f.value})}
+ if(x[3]==='phone')field.addEventListener('input',schedulePhoneCheck);
+ if(x[3]==='city')wireCityAutocomplete(field);
+}
+}
+function normalizePhoneClient(v){return countryPrefix()+nationalPhone(v)}
+function schedulePhoneCheck(){phoneDuplicate=false;clearTimeout(phoneCheckTimer);const el=document.getElementById('field'),msg=document.getElementById('err');if(!el||!msg)return;if(!ph(el.value)){msg.textContent='';return}const d=normalizePhoneClient(el.value);msg.textContent=uiText('Verificăm numărul…');const seq=++phoneCheckSeq;phoneCheckTimer=setTimeout(()=>checkPhoneAvailability(d,seq),260)}
+async function checkPhoneAvailability(phone,seq=++phoneCheckSeq){const msg=document.getElementById('err');try{const r=await fetch('/api/check-phone',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({language:window.APP_LANG||'ro',phone})});const data=await r.json();if(seq!==phoneCheckSeq)return false;phoneDuplicate=!!data.exists;if(msg)msg.textContent=phoneDuplicate?uiText('Acest număr de telefon este deja asociat unei rezervări.'):'';return !phoneDuplicate}catch(_){if(seq===phoneCheckSeq&&msg)msg.textContent=uiText('Nu am putut verifica numărul acum. Poți încerca din nou.');return false}}
+function choiceForward(){const x=A[n];if(!x)return;const v=S[x[3]];if(!v){const step=box.querySelector('.step');let e=step&&step.querySelector('.choice-error');if(!e&&step){e=document.createElement('div');e.className='err choice-error';e.setAttribute('aria-live','polite');step.querySelector('.step-nav').before(e)}if(e)e.textContent=uiText('Selectează o opțiune pentru a continua.');return}move(()=>{n++})}
+function acceptGdpr(){
+ const c=document.getElementById('gdprConsent');
+ const image=document.getElementById('imageConsent');
+ if(!c||!c.checked||!image||!image.checked){document.getElementById('gdprErr').textContent=uiText('Ambele acorduri sunt obligatorii pentru a continua.');return}
+ S.gdprConsent=true;S.imageConsent=true;S.gdpr=true;render();
+}
+function move(cb,dir='forward'){if(lock)return;lock=true;transitionDir=dir;const step=box.querySelector('.step');if(swipeNavigation){swipeNavigation=false;cb();render();return}if(step)step.classList.add(dir==='back'?'out-down':'out');setTimeout(()=>{cb();render()},250)}async function next(keepKeyboard=false){const field=document.getElementById('field');const err=document.getElementById('err');let x=A[n];if(!x||!field)return;let v=field.value.trim();if(x[3]==='street'){v=formatStreet(v);field.value=v}if(x[3]==='phone'){v=nationalPhone(v);field.value=v}if(!v){err.textContent=uiText(x[3]==='email'?'Introdu adresa ta de e-mail pentru a continua.':'Completează acest câmp pentru a continua.');return}if(x[3]==='email'&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)){err.textContent=uiText('Introdu o adresă de e-mail validă.');return}if(x[3]==='street'&&!/\d/.test(v)){err.textContent=uiText('Introdu și numărul imobilului.');return}if(x[3]==='phone'&&!ph(v)){err.textContent=uiText('Introdu un număr de telefon valid.');return}if(x[3]==='email'){const stepIndex=n;v=normalizeEmailClient(v);const ok=await checkEmailAvailability(v);if(!ok||n!==stepIndex||document.getElementById('field')!==field||normalizeEmailClient(field.value)!==v)return}
+if(x[3]==='phone'){const stepIndex=n;const ok=await checkPhoneAvailability(normalizePhoneClient(v));if(!ok||n!==stepIndex||document.getElementById('field')!==field||nationalPhone(field.value)!==v)return}
+if(x[3]==='city'){
+ const matches=ALL_CITIES.filter(c=>cityKey(c.name)===cityKey(v));
+ let c=matches.find(c=>c.country===S.country&&cityKey(c.county)===cityKey(S.county))||matches.find(c=>c.country===S.country)||matches[0];
+ if(!c){err.textContent=uiText('Selectează o localitate din România sau Republica Moldova din lista afișată.');return}
+ v=c.name;const oldCountry=S.country;S.city=c.name;S.county=c.county||'';S.country=c.country;if(oldCountry!==S.country)S.phone='';
+}
+if(x[3]==='county'){
+ const allowed=S.country==='MD'?[...new Set(MD_CITIES_STATIC.map(c=>c.county))]:Object.values(COUNTY_BY_CODE);
+ const match=allowed.find(c=>cityKey(c)===cityKey(v));
+ if(!match){err.textContent=uiText(S.country==='MD'?'Selectează un raion din lista afișată.':'Selectează un județ din lista afișată.');return}
+ v=match;
+}
+S[x[3]]=x[3]==='street'?formatStreet(v):(x[3]==='first'||x[3]==='last'||x[3]==='optic'||x[3]==='city'||x[3]==='county')?cap(v):v;
+let advance=()=>{n++};
+if(keepKeyboard){
+  advance();render();
+  const nf=document.getElementById('field');
+  if(nf){nf.focus({preventScroll:true})}
+}else{
+  move(advance)
+}}function back(){if(lock||!S.gdpr)return;const current=A[n];const f=document.getElementById('field');if(current&&f)S[current[3]]=f.value.trim();if(n===0){S.gdpr=false;render();return}move(()=>{n--},'back')}function pick(v,b){if(lock)return;const key=A[n][3];S[key]=v;const answers=b.closest('.answers');if(answers)answers.querySelectorAll('.answer.sel').forEach(el=>el.classList.remove('sel'));b.classList.add('sel');const e=box.querySelector('.choice-error');if(e)e.textContent='';const forward=box.querySelector('.forward-arrow');if(forward)forward.disabled=false;try{saveDraft()}catch(_){}}
+let registrationSubmitted=false;
+function registrationPayload(){return {
+ firstName:S.first,lastName:S.last,phone:normalizePhoneClient(S.phone),email:S.email,
+ opticalStore:S.optic,role:S.role,city:S.city,
+ county:S.county,country:S.country,streetAddress:S.street,
+ usesMyopiaManagement:S.myopia,knowsMyoless:S.myoless,
+ partnerAnswers:{sdRoyal:S.partnerSd,emyOptic:S.partnerEmy,totalmed:S.partnerTotalmed,avvero:S.partnerAvvero,rooft:S.partnerRooft},gdprConsent:true,imageConsent:S.imageConsent,event:'Brand Experience Summit 2026',language:(window.APP_LANG||'ro')
+}}
+let gdprHomeTouchY=0,gdprHomeTouchX=0,gdprHomeTouchAt=0,gdprHomeDragging=false;
+function gdprSwipeHomeEnabled(){return window.matchMedia('(max-width:760px)').matches&&flow.classList.contains('open')&&!S.gdpr}
+function resetGdprHomeDrag(animated=true){
+ flow.style.transition=animated?'transform .26s cubic-bezier(.22,1,.36,1),opacity .22s ease':'';
+ flow.style.transform='translate3d(0,0,0)';flow.style.opacity='1';
+ setTimeout(()=>{if(flow.classList.contains('open')&&!gdprHomeDragging){flow.style.transition='';flow.style.transform='';flow.style.opacity='';flow.classList.remove('liquid-open')}},animated?270:0)
+}
+function commitGdprHome(){
+ gdprHomeDragging=false;flow.classList.add('liquid-open');
+ flow.style.transition='transform .34s cubic-bezier(.22,1,.36,1),opacity .28s ease';
+ flow.style.transform='translate3d(0,100dvh,0)';flow.style.opacity='.72';
+ setTimeout(()=>{flow.classList.remove('open','liquid-open');flow.style.transition='';flow.style.transform='';flow.style.opacity='';flow.style.clipPath='';n=0;render()},350)
+}
+flow.addEventListener('touchstart',e=>{
+ if(!gdprSwipeHomeEnabled()||e.touches.length!==1)return;
+ const t=e.touches[0];gdprHomeTouchX=t.clientX;gdprHomeTouchY=t.clientY;gdprHomeTouchAt=Date.now();gdprHomeDragging=false;
+},{passive:true});
+flow.addEventListener('touchmove',e=>{
+ if(!gdprSwipeHomeEnabled()||!gdprHomeTouchAt||e.touches.length!==1)return;
+ const t=e.touches[0],dx=t.clientX-gdprHomeTouchX,dy=t.clientY-gdprHomeTouchY;
+ if(dy<=0||Math.abs(dy)<10||Math.abs(dy)<Math.abs(dx)*1.15)return;
+ gdprHomeDragging=true;flow.classList.add('liquid-open');flow.style.transition='none';
+ flow.style.transform=`translate3d(0,${dy}px,0)`;
+ flow.style.opacity=String(Math.max(.72,1-dy/Math.max(window.innerHeight*2.2,900)));
+ e.preventDefault();
+},{passive:false});
+flow.addEventListener('touchend',e=>{
+ if(!gdprSwipeHomeEnabled()||!gdprHomeTouchAt||!e.changedTouches.length)return;
+ const t=e.changedTouches[0],dx=t.clientX-gdprHomeTouchX,dy=t.clientY-gdprHomeTouchY,elapsed=Date.now()-gdprHomeTouchAt;
+ gdprHomeTouchAt=0;const commit=gdprHomeDragging&&elapsed<=1200&&dy>=Math.max(64,window.innerHeight*.08)&&Math.abs(dy)>=Math.abs(dx)*1.15;
+ gdprHomeDragging=false;if(commit)commitGdprHome();else resetGdprHomeDrag(true);
+},{passive:true});
+flow.addEventListener('touchcancel',()=>{if(!gdprHomeTouchAt)return;gdprHomeTouchAt=0;gdprHomeDragging=false;resetGdprHomeDrag(true)},{passive:true});
+function mobileSwipeEnabled(){return window.matchMedia('(max-width:760px)').matches&&flow.classList.contains('open')&&S.gdpr&&n>=0&&n<11}
+flow.addEventListener('touchstart',e=>{
+ if(!mobileSwipeEnabled()||e.touches.length!==1)return;
+ const t=e.touches[0];touchStartX=t.clientX;touchStartY=t.clientY;touchStartedAt=Date.now();touchDragging=false;
+ const step=box.querySelector('.step');if(step){step.classList.add('swipe-drag');step.style.transition='none'}
+},{passive:true});
+flow.addEventListener('touchmove',e=>{
+ if(!mobileSwipeEnabled()||!touchStartedAt||e.touches.length!==1)return;
+ const t=e.touches[0],dx=t.clientX-touchStartX,dy=t.clientY-touchStartY;
+ if(Math.abs(dy)<10||Math.abs(dy)<Math.abs(dx)*1.15)return;
+ touchDragging=true;
+ const step=box.querySelector('.step');if(!step)return;
+ const travel=dy;
+ step.style.transform=`translate3d(0,${dy}px,0)`;
+ step.style.opacity=String(Math.max(.52,1-Math.abs(travel)/Math.max(window.innerHeight*1.15,520)));
+ e.preventDefault();
+},{passive:false});
+flow.addEventListener('touchend',e=>{
+ if(!mobileSwipeEnabled()||!touchStartedAt||!e.changedTouches.length)return;
+ const t=e.changedTouches[0],dx=t.clientX-touchStartX,dy=t.clientY-touchStartY,elapsed=Date.now()-touchStartedAt;
+ touchStartedAt=0;
+ const step=box.querySelector('.step');
+ const valid=touchDragging&&elapsed<=1100&&Math.abs(dy)>=64&&Math.abs(dy)>=Math.abs(dx)*1.2;
+ touchDragging=false;
+ if(step){step.style.transition='transform 180ms cubic-bezier(.22,1,.36,1),opacity 160ms ease';step.style.transform='translate3d(0,0,0)';step.style.opacity='1'}
+ if(!valid)return;
+ if(dy<0){
+   const kind=A[n]&&A[n][5];
+   if(kind==='role'||kind==='q1'||kind==='q2')return;
+   swipeNavigation=true;next();
+ }else{swipeNavigation=true;back()}
+},{passive:true});
+flow.addEventListener('touchcancel',()=>{
+ touchStartedAt=0;touchDragging=false;
+ const step=box.querySelector('.step');if(step){step.style.transition='transform 180ms cubic-bezier(.22,1,.36,1),opacity 160ms ease';step.style.transform='translate3d(0,0,0)';step.style.opacity='1'}
+},{passive:true});
+async function submitRegistration(){
+ if(registrationSubmitted)throw new Error('SUBMIT_IN_PROGRESS');
+ registrationSubmitted=true;
+ try{
+  const r=await fetch('/api/register',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(registrationPayload())});
+  let data={};try{data=await r.json()}catch(_){}
+  if(!r.ok){const e=new Error(data.error||'SAVE_FAILED');e.code=data.error||'SAVE_FAILED';throw e}
+  return data;
+ }finally{registrationSubmitted=false}
+}
+async function success(){
+ label.textContent='SE SALVEAZĂ';count.textContent=A.length+' / '+A.length;bar.style.width='100%';nav.innerHTML='';
+ box.innerHTML=`<section class="step"><small>BRAND EXPERIENCE SUMMIT 2026</small><h2>Finalizăm înscrierea.</h2><p>Salvăm datele și rezervăm locul tău la eveniment.</p></section>`;
+ try{
+  const data=await submitRegistration();
+  label.textContent='CONFIRMAT';
+  box.innerHTML=`<section class="step"><small>BRAND EXPERIENCE SUMMIT 2026</small><h2>Bine ai venit, ${esc(S.first)}.</h2><p>Locul tău la eveniment este rezervat.</p><div class="pass"><small>PARTICIPANT</small><div class="name">${esc(S.first)} ${esc(S.last)}</div><div class="code">${esc(data.participationCode||'')}</div></div></section>`;
+  nav.innerHTML='<button class="action-primary mobile-success-home" onclick="location.href=\'/\'">REVENIRE LA PAGINA PRINCIPALĂ</button><button class="action-primary desktop-success-close" onclick="location.reload()">ÎNCHIDE</button>';
+ }catch(e){
+  label.textContent='NECONFIRMAT';
+  const duplicate=e.code==='DUPLICATE_PHONE';
+  box.innerHTML=`<section class="step"><small>BRAND EXPERIENCE SUMMIT 2026</small><h2>${duplicate?'Numărul este deja înscris.':'Înscrierea nu a fost salvată.'}</h2><p>${duplicate?'Există deja o participare asociată acestui număr de telefon.':'Verifică conexiunea și încearcă din nou. Locul nu este considerat rezervat până la confirmare.'}</p></section>`;
+  nav.innerHTML=duplicate?'<button class="action-primary" onclick="location.reload()">ÎNCHIDE</button>':'<button class="action-primary" onclick="success()">REÎNCEARCĂ →</button>';
+ }
+}
+</script><script>
+(function heroSwipe(){
+ const hero=document.querySelector('.hero');if(!hero)return;
+ let gesture=null,cleanupTimer=0,frame=0,version=0;
+ window.cancelHomeSwipePreview=()=>{++version;clearTimeout(cleanupTimer);if(frame){cancelAnimationFrame(frame);frame=0}gesture=null};
+ function height(){return window.innerHeight}
+ function paint(){frame=0;if(!gesture||!gesture.preview)return;const y=Math.max(0,height()+gesture.dy);flow.style.transform=`translate3d(0,${y}px,0)`}
+ function settle(open){
+  if(frame){cancelAnimationFrame(frame);frame=0}
+  const token=++version;clearTimeout(cleanupTimer);
+  flow.classList.remove('liquid-open');
+  if(open)flow.classList.add('open');
+  flow.style.transition='transform 380ms cubic-bezier(.22,.65,.3,1)';
+  flow.style.transform=open?'translate3d(0,0,0)':`translate3d(0,${height()}px,0)`;
+  cleanupTimer=setTimeout(()=>{
+   if(token!==version)return;
+   // Switch to the matching CSS state before clearing the temporary drag styles.
+   if(!open)flow.classList.remove('open');
+   flow.style.transition='none';flow.style.transform='';flow.style.opacity='';flow.style.clipPath='';
+   requestAnimationFrame(()=>{if(token===version)flow.style.transition=''});
+  },400);
+ }
+ hero.addEventListener('touchstart',e=>{
+  if(e.target.closest('.go')||flow.classList.contains('open')||e.touches.length!==1)return;
+  ++version;clearTimeout(cleanupTimer);if(frame){cancelAnimationFrame(frame);frame=0}
+  const t=e.touches[0];gesture={x:t.clientX,y:t.clientY,dy:0,preview:false};
+ },{passive:true});
+ hero.addEventListener('touchmove',e=>{
+  if(!gesture||e.touches.length!==1)return;
+  const t=e.touches[0],dx=t.clientX-gesture.x,dy=t.clientY-gesture.y;
+  if(!gesture.preview&&(dy>=-8||Math.abs(dy)<Math.abs(dx)*1.15))return;
+  if(!gesture.preview){
+   resetParticipant();render();gesture.preview=true;
+   flow.classList.remove('liquid-open');flow.style.transition='none';flow.style.clipPath='inset(0)';flow.style.opacity='1';
+   flow.style.transform=`translate3d(0,${height()}px,0)`;
+  }
+  gesture.dy=Math.min(0,dy);if(!frame)frame=requestAnimationFrame(paint);
+  e.preventDefault();
+ },{passive:false});
+ hero.addEventListener('touchend',e=>{
+  if(!gesture)return;const g=gesture;
+  if(frame){cancelAnimationFrame(frame);frame=0}if(g.preview)paint();gesture=null;
+  if(!g.preview)return;
+  const t=e.changedTouches[0],dy=t?t.clientY-g.y:g.dy,dx=t?t.clientX-g.x:0;
+  const commit=dy<-Math.max(70,height()*.10)&&Math.abs(dy)>Math.abs(dx)*1.15;
+  settle(commit);
+ },{passive:true});
+ hero.addEventListener('touchcancel',()=>{if(!gesture)return;const preview=gesture.preview;gesture=null;if(preview)settle(false)},{passive:true});
+})();
+</script>
+<script>
+const bgv=document.getElementById('bgvideo');
+if(bgv){bgv.muted=true;bgv.defaultMuted=true;bgv.playsInline=true;const playBg=()=>bgv.play().catch(()=>{});document.addEventListener('visibilitychange',()=>{if(!document.hidden)playBg()});window.addEventListener('pageshow',playBg);playBg();}
+</script>
+<script>
+(function(){
+  const v=document.getElementById('bgvideo');
+  if(!v) return;
+  v.muted=true;
+  v.defaultMuted=true;
+  v.volume=0;
+  v.setAttribute('muted','');
+  v.setAttribute('playsinline','');
+  v.setAttribute('webkit-playsinline','');
+  v.removeAttribute('controls');
+
+  function playBg(){
+    const p=v.play();
+    if(p && typeof p.catch==='function') p.catch(()=>{});
+  }
+
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',playBg,{once:true});
+  } else playBg();
+
+  window.addEventListener('load',playBg,{once:true});
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden) playBg()});
+
+  // iOS may reject autoplay in Low Power Mode. The first user gesture then starts it.
+  ['touchstart','pointerdown','click'].forEach(ev=>{
+    document.addEventListener(ev,playBg,{passive:true,once:true,capture:true});
+  });
+})();
+</script>
+
+<style>
+.swipe-hint{display:none}
+@keyframes inFromUp{from{opacity:0;filter:blur(8px);transform:translateY(-22px)}to{opacity:1;filter:none;transform:none}}
+.step.from-up{animation:inFromUp .55s cubic-bezier(.16,1,.3,1)}
+.step.out-down{animation:outDown .22s ease forwards}
+@keyframes outDown{to{opacity:0;filter:blur(7px);transform:translateY(16px)}}
+@media(max-width:760px){
+  .inline-next{display:none!important}
+  .swipe-hint{display:none}
+  .step.swipe-drag{animation:none!important;filter:none!important;will-change:transform,opacity;backface-visibility:hidden}
+}
+</style>
+
+<script>
+(function(){
+ const vv=window.visualViewport;
+ if(!vv)return;
+ const syncKeyboard=()=>document.body.classList.toggle('keyboard-open', window.innerHeight-vv.height>140);
+ vv.addEventListener('resize',syncKeyboard); vv.addEventListener('scroll',syncKeyboard); syncKeyboard();
+})();
+</script>
+<style>
+@media(max-width:760px){
+ .inline-next{display:none!important}
+ .swipe-hint{display:none}
+ 
+}
+</style>
+
+<style>
+@media(max-width:760px){
+ .inline-next{display:none!important}
+ .swipe-hint{display:block!important;position:static!important;inset:auto!important;margin-top:12px!important;text-align:center!important;color:#718082;font-size:12px;font-weight:600;letter-spacing:.08em;line-height:1.3;transform:none!important;pointer-events:none;user-select:none}
+}
+</style>
+
+<style id="edge-to-edge-mobile">
+html,body{min-height:100dvh;min-height:-webkit-fill-available}
+.bg,.veil,.grain,.hero,.flow{inset:0;min-height:100dvh}
+@media(max-width:760px){
+ html,body{width:100%;height:100dvh;min-height:100dvh;background:#061315}
+ .bg,.veil,.grain,.hero{top:0;right:0;bottom:0;left:0;width:100vw;height:100dvh;min-height:100dvh}
+ .bg video{width:100vw!important;height:100dvh!important;min-height:100dvh;object-fit:cover}
+ header{top:max(20px,env(safe-area-inset-top));padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right)}
+ .hero{padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right);padding-bottom:max(7.2vh,env(safe-area-inset-bottom))!important}
+ .flow{height:100dvh;min-height:100dvh}
+ .modal{padding-top:max(30px,calc(env(safe-area-inset-top) + 14px));padding-bottom:max(24px,calc(env(safe-area-inset-bottom) + 12px))}
+}
+</style>
+
+<style id="video-only-edge-extension">
+@media(max-width:760px){
+  .bg{
+    top:calc(-1 * env(safe-area-inset-top))!important;
+    bottom:calc(-1 * env(safe-area-inset-bottom))!important;
+    height:calc(100dvh + env(safe-area-inset-top) + env(safe-area-inset-bottom))!important;
+    min-height:calc(100dvh + env(safe-area-inset-top) + env(safe-area-inset-bottom))!important;
+  }
+  .bg video{
+    position:absolute!important;
+    inset:0!important;
+    width:100%!important;
+    height:100%!important;
+    min-height:100%!important;
+    object-fit:cover!important;
+    object-position:center center!important;
+  }
+}
+</style>
+
+<style id="ux-real-2026">
+/* Verified interaction layer */
+.prog{height:3px!important;background:rgba(22,35,37,.09)!important;overflow:hidden;border-radius:999px}
+.prog .progress-fill{display:block;height:100%!important;background:#162325!important;border-radius:999px;transform-origin:left center;transition:width .42s cubic-bezier(.22,1,.36,1)!important}
+.field[data-valid="true"]{border-color:#4d9293!important;box-shadow:0 1px 0 rgba(77,146,147,.28)}
+.field[data-valid="false"]:not(:placeholder-shown){border-color:rgba(22,35,37,.34)!important}
+.forward-arrow:disabled{opacity:.22!important;pointer-events:none}
+.swipe-preview-step{position:absolute;inset:0;z-index:1;display:flex;align-items:center;pointer-events:none;will-change:transform,opacity;background:#f1f0eb}
+.swipe-preview-step section{width:100%}
+#box>.step{position:relative;z-index:2;will-change:transform,opacity}
+.nav-success-stack{width:100%;display:flex;gap:12px;align-items:stretch}
+.nav-success-stack .action-primary{flex:1;min-width:0;margin:0!important;white-space:normal;text-align:center;padding-left:18px;padding-right:18px}
+@media(max-width:760px){
+ .nav-success-stack{flex-direction:column;padding:0 24px 10px;gap:10px}
+ .nav-success-stack .action-primary{width:100%!important;min-height:58px!important;border-radius:999px!important}
+ .modal>.nav:has(.nav-success-stack){position:static!important;display:block!important;padding:0!important;margin-top:22px!important}
+}
+@media(prefers-reduced-motion:reduce){.prog .progress-fill,.swipe-preview-step,#box>.step{transition:none!important}}
+</style>
+<script id="ux-real-2026-script">
+/* Disable the older gesture recognizer; its listeners remain harmless. */
+mobileSwipeEnabled=function(){return false};
+
+function progressFill(){bar.classList.add('progress-fill');return bar}
+function updateProgressUX(){const total=A.length;const shown=Math.min(total,n+1);progressFill().style.width=((shown/total)*100)+'%'}
+
+function fieldValidity(x,v){
+ v=String(v||'').trim(); if(!v)return {ok:false,msg:''};
+ if(x[3]==='email'&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v))return {ok:false,msg:uiText('Introdu o adresă de e-mail validă.')};if(x[3]==='street'&&!/\d/.test(v))return {ok:false,msg:uiText('Introdu și numărul imobilului.')};
+ if(x[3]==='phone'&&!ph(v))return {ok:false,msg:uiText('Introdu un număr de telefon valid.')};
+ if(x[3]==='city'&&buc(v))return {ok:true,msg:''};
+ if(x[3]==='city'&&localitiesReady&&!ALL_CITIES.some(c=>cityKey(c.name)===cityKey(v)))return {ok:false,msg:uiText('Selectează o localitate din lista afișată.')};
+ return {ok:true,msg:''};
+}
+function setForwardState(ok){const b=box.querySelector('.forward-arrow');if(b){b.disabled=!ok;b.setAttribute('aria-disabled',String(!ok))}}
+function validateLiveField(){
+ const f=document.getElementById('field'),x=A[n],e=document.getElementById('err');if(!f||!x)return false;
+ const r=fieldValidity(x,f.value);f.dataset.valid=String(r.ok);f.classList.toggle('field-valid',r.ok);setForwardState(true);
+ if(e&&x[3]!=='phone')e.textContent=r.msg;
+ if(x[3]==='phone'&&!r.ok&&e)e.textContent=r.msg;
+ saveDraft();return r.ok;
+}
+function wireVerifiedUX(){
+ updateProgressUX();const f=document.getElementById('field'),x=A[n];if(!f||!x)return;
+ f.addEventListener('input',validateLiveField);f.addEventListener('change',validateLiveField);validateLiveField();
+ if(x[3]==='phone')f.addEventListener('input',()=>setTimeout(()=>{setForwardState(true);f.dataset.valid=String(ph(f.value)&&!phoneDuplicate)},330));
+}
+const __renderVerified=render;render=function(){__renderVerified();wireVerifiedUX()};
+
+function previewMarkup(idx){
+ const x=A[idx];if(!x)return '';
+ let body='';
+ if(x[5]==='role')body='<div class="field-row"><div class="answers"><button class="answer">Medic oftalmolog</button><button class="answer">Optometrist</button></div></div>';
+ else if(x[5]==='q1'||x[5]==='q2')body='<div class="field-row"><div class="answers"><button class="answer">Da</button><button class="answer">Nu</button></div></div>';
+ else body=`<div class="field-row"><input class="field" tabindex="-1" placeholder="${esc(x[4])}"></div>`;
+ return `<section><small>${esc(x[0])}</small><h2>${esc(x[1])}</h2><p>${esc(x[2])}</p>${body}</section>`;
+}
+let realSwipe=null;
+function realSwipeEnabled(){return matchMedia('(max-width:760px)').matches&&flow.classList.contains('open')&&S.gdpr&&n>=0&&n<11}
+function beginInteractiveStepSwipe(e){
+ if(!realSwipeEnabled()||e.touches.length!==1||e.target.closest('button,input,label,a'))return;
+ const t=e.touches[0];realSwipe={x:t.clientX,y:t.clientY,at:Date.now(),dir:0,preview:null,current:box.querySelector(':scope > .step')};
+}
+function makeRealPreview(dir){
+ if(!realSwipe||realSwipe.preview)return realSwipe&&realSwipe.preview;
+ let idx=n+(dir<0?1:-1);if(n===8&&buc(S.city)&&dir>0)idx=6;
+ if(idx<0||idx>=A.length)return null;
+ const p=document.createElement('div');p.className='swipe-preview-step';p.innerHTML=previewMarkup(idx);p.style.transform=`translate3d(0,${dir<0?'100%':'-100%'},0)`;p.style.opacity='.72';box.prepend(p);realSwipe.preview=p;return p;
+}
+function moveInteractiveStepSwipe(e){
+ if(!realSwipe||e.touches.length!==1)return;const t=e.touches[0],dx=t.clientX-realSwipe.x,dy=t.clientY-realSwipe.y;
+ if(Math.abs(dy)<8||Math.abs(dy)<Math.abs(dx)*1.12)return;const dir=dy<0?-1:1;
+ if(dir<0){const kind=A[n]&&A[n][5],key=A[n]&&A[n][3];if((kind==='role'||kind==='q1'||kind==='q2')&&!S[key])return;if(kind!=='role'&&kind!=='q1'&&kind!=='q2'&&!validateLiveField())return}
+ if(dir>0&&n<=0)return;
+ realSwipe.dir=dir;const p=makeRealPreview(dir);if(!p)return;const q=Math.min(.98,Math.abs(dy)/Math.max(innerHeight*.62,360));
+ realSwipe.current.style.transition='none';p.style.transition='none';realSwipe.current.style.transform=`translate3d(0,${dy}px,0)`;realSwipe.current.style.opacity=String(1-q*.28);
+ p.style.transform=`translate3d(0,${dir<0?(1-q)*100:-(1-q)*100}%,0)`;p.style.opacity=String(.72+q*.28);e.preventDefault();
+}
+function finishInteractiveStepSwipe(e){
+ if(!realSwipe)return;const st=realSwipe;realSwipe=null;const t=e.changedTouches&&e.changedTouches[0];const dy=t?t.clientY-st.y:0,elapsed=Date.now()-st.at;const commit=st.dir&&Math.abs(dy)>Math.max(70,innerHeight*.085)&&elapsed<1400;
+ const p=st.preview,c=st.current;if(!p){if(c){c.style.transform='';c.style.opacity=''}return}
+ c.style.transition='transform .28s cubic-bezier(.22,1,.36,1),opacity .22s ease';p.style.transition='transform .28s cubic-bezier(.22,1,.36,1),opacity .22s ease';
+ if(!commit){c.style.transform='translate3d(0,0,0)';c.style.opacity='1';p.style.transform=`translate3d(0,${st.dir<0?'100%':'-100%'},0)`;p.style.opacity='.72';setTimeout(()=>p.remove(),290);return}
+ c.style.transform=`translate3d(0,${st.dir<0?'-100%':'100%'},0)`;c.style.opacity='.65';p.style.transform='translate3d(0,0,0)';p.style.opacity='1';
+ setTimeout(async()=>{p.remove();swipeNavigation=true;if(st.dir<0){const kind=A[n]&&A[n][5];if(kind==='role'||kind==='q1'||kind==='q2')move(()=>{n++});else await next(false)}else back()},250);
+}
+flow.addEventListener('touchstart',beginInteractiveStepSwipe,{passive:true});
+flow.addEventListener('touchmove',moveInteractiveStepSwipe,{passive:false});
+flow.addEventListener('touchend',finishInteractiveStepSwipe,{passive:true});
+flow.addEventListener('touchcancel',finishInteractiveStepSwipe,{passive:true});
+
+/* Keep the public locality source, which contains towns, communes and villages. Add explicit resilient examples. */
+const LOCALITY_FALLBACKS=[{name:'Bucov',county:'Prahova'},{name:'Urlați',county:'Prahova'},{name:'Vălenii de Munte',county:'Prahova'}];
+const __loadVerified=loadRomaniaCities;loadRomaniaCities=async function(){await __loadVerified();for(const c of LOCALITY_FALLBACKS){if(!CITY_INDEX.has(cityKey(c.name))){RO_CITIES.push(c);CITY_INDEX.set(cityKey(c.name),c)}}localitiesReady=RO_CITIES.length>10000};
+
+/* Final screen: mobile actions are a deliberate vertical stack. */
+success=async function(){label.textContent='SE SALVEAZĂ';count.textContent=A.length+' / '+A.length;progressFill().style.width='100%';nav.innerHTML='';box.innerHTML=`<section class="step"><small>BRAND EXPERIENCE SUMMIT 2026</small><h2>Finalizăm înscrierea.</h2><p>Salvăm datele și rezervăm locul tău la eveniment.</p></section>`;try{const data=await submitRegistration();resetParticipant();label.textContent='CONFIRMAT';const code=esc(data.participationCode||'');box.innerHTML=`<section class="step"><small>ÎNSCRIERE CONFIRMATĂ</small><h2>Bine ai venit, ${esc(S.first)}.</h2><p>Locul tău la evenimenta Avvero este rezervat.</p><div class="participation-card"><div class="pc-label">BRAND EXPERIENCE SUMMIT 2026</div><div class="pc-code">${code}</div><div class="pc-event">Sâmbătă, 17 octombrie 2026 · 17:15<br>ROMEXPO, București<br>Cadoul tău surpriză te așteaptă la eveniment.</div></div></section>`;nav.innerHTML=`<div class="nav-success-stack"><button class="action-primary calendar-btn" onclick="addToCalendar('${code}')">ADAUGĂ ÎN CALENDAR</button><button class="action-primary mobile-success-home" onclick="location.href='/'">REVENIRE LA PAGINA PRINCIPALĂ</button><button class="action-primary desktop-success-close" onclick="location.reload()">ÎNCHIDE</button></div>`}catch(e){label.textContent='NECONFIRMAT';const duplicate=e.code==='DUPLICATE_PHONE';box.innerHTML=`<section class="step"><small>BRAND EXPERIENCE SUMMIT 2026</small><h2>${duplicate?'Numărul este deja înscris.':'Înscrierea nu a fost salvată.'}</h2><p>${duplicate?'Există deja o participare asociată acestui număr de telefon.':'Verifică conexiunea și încearcă din nou. Locul nu este considerat rezervat până la confirmare.'}</p></section>`;nav.innerHTML=duplicate?'<button class="action-primary" onclick="location.reload()">ÎNCHIDE</button>':'<button class="action-primary" onclick="success()">REÎNCEARCĂ →</button>'}}
+
+/* Markup hooks used by automated regression checks. */
+document.documentElement.dataset.valid='ux-real';
+</script>
+
+
+<style id="ux-auto-smooth-final">
+/* Fast GPU-only step motion: no blur/filter during navigation. */
+.step{animation:stepInFast .24s cubic-bezier(.22,1,.36,1)!important;filter:none!important;will-change:transform,opacity}
+.step.out{animation:stepOutFast .18s cubic-bezier(.4,0,1,1) forwards!important;filter:none!important}
+.step.out-down{animation:stepOutDownFast .18s cubic-bezier(.4,0,1,1) forwards!important;filter:none!important}
+@keyframes stepInFast{from{opacity:.72;transform:translate3d(0,18px,0)}to{opacity:1;transform:translate3d(0,0,0)}}
+@keyframes stepOutFast{to{opacity:.68;transform:translate3d(0,-18px,0)}}
+@keyframes stepOutDownFast{to{opacity:.68;transform:translate3d(0,18px,0)}}
+.hero .copy>p{font-size:18px!important;line-height:1.45!important}
+.participation-card .pc-label{font-size:10px!important;line-height:1.5!important}
+.participation-card .pc-code{font-size:14px!important;line-height:1.5!important}
+.participation-card .pc-event{font-size:14px!important;line-height:1.65!important}
+@media(min-width:761px){.mobile-success-home{display:none!important}.desktop-success-close{display:inline-flex!important}.nav-success-stack{flex-direction:row!important;max-width:420px!important}.nav-success-stack .action-primary{min-height:52px!important}}
+@media(max-width:760px){.desktop-success-close{display:none!important}.mobile-success-home{display:flex!important}.hero .copy>p{font-size:17px!important}.participation-card .pc-label{font-size:10px!important}.participation-card .pc-code{font-size:14px!important}.participation-card .pc-event{font-size:14px!important}.nav-success-stack{padding:0!important}}
+@media(prefers-reduced-motion:reduce){.step,.step.out,.step.out-down{animation:none!important}}
+</style>
+
+
+<script id="trilingual-form-2026" src="form-languages.js"></script>
+<script id="final-language-consistency-2026">
+/* Keep every dynamically rendered form step in the selected language. */
+const __renderLanguageFinal=render;
+render=function(){
+  __renderLanguageFinal();
+  translateNode(flow);
+};
+</script>
+</body></html>
+<style>
+.bg,#ytbg,
+
+@media(max-aspect-ratio:16/9){}
+@media(max-width:760px){.hero{min-height:100dvh}.copy{padding-bottom:max(18px,env(safe-area-inset-bottom))}}
+</style>
+<style>
+.bg video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center center;pointer-events:none}
+@media(max-width:760px){.bg video{width:100%;height:100%;object-fit:cover;object-position:center center}}
+</style>
+
+<style>
+.bg video{pointer-events:none}
+.bg video::-webkit-media-controls{display:none!important}
+.bg video::-webkit-media-controls-start-playback-button{display:none!important;-webkit-appearance:none}
+.bg video::-webkit-media-controls-play-button{display:none!important}
+</style>
+
+<style>
+/* Separate AVVERO copy from the typography baked into the background film */
+.hero{align-items:flex-end!important;padding-bottom:8.5vh!important}
+.copy{margin-top:0!important;margin-bottom:0!important;position:relative;isolation:isolate}
+.copy:before{
+  content:"";position:absolute;z-index:-1;
+  left:-3.2vw;right:-2vw;top:-4.5vh;bottom:-3.5vh;
+  background:radial-gradient(ellipse at 25% 48%,rgba(3,15,20,.46) 0%,rgba(3,15,20,.25) 45%,rgba(3,15,20,0) 76%);
+  filter:blur(18px);pointer-events:none
+}
+
+/* Glossy optical headline */
+.copy h1{
+  position:relative;
+  color:transparent!important;
+  background:
+    linear-gradient(180deg,
+      #ffffff 0%,
+      #ffffff 34%,
+      #dfeef1 48%,
+      #ffffff 59%,
+      #c7d9de 100%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+  text-shadow:0 1px 0 rgba(255,255,255,.12),0 10px 34px rgba(0,0,0,.22);
+  filter:drop-shadow(0 1px 0 rgba(255,255,255,.18));
+}
+.copy h1 .accent{
+  color:transparent!important;
+  background:
+    linear-gradient(180deg,
+      #dfffff 0%,
+      #9de8ec 35%,
+      #ecffff 49%,
+      #74cbd3 64%,
+      #b8f2f2 100%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+  text-shadow:0 0 22px rgba(100,218,225,.16);
+}
+.copy h1:after{
+  content:"";position:absolute;pointer-events:none;
+  left:0;top:2%;width:76%;height:20%;
+  background:linear-gradient(105deg,transparent 0%,rgba(255,255,255,.16) 38%,rgba(255,255,255,.48) 49%,rgba(255,255,255,.10) 58%,transparent 76%);
+  filter:blur(7px);mix-blend-mode:screen;opacity:.55;
+  animation:headlineGloss 6.8s ease-in-out infinite;
+}
+@keyframes headlineGloss{
+  0%,62%,100%{transform:translateX(-28%);opacity:0}
+  70%{opacity:.48}
+  84%{transform:translateX(48%);opacity:.22}
+  92%{opacity:0}
+}
+
+@media(min-width:761px){
+  .hero{padding-bottom:10vh!important}
+  .copy{width:min(690px,48vw)!important}
+}
+@media(max-width:760px){
+  .hero{align-items:flex-end!important;padding-bottom:7.2vh!important}
+  .copy{margin-left:6vw!important;width:88vw!important;padding-bottom:0!important}
+  .copy:before{left:-7vw;right:-4vw;top:-2.5vh;bottom:-2.5vh}
+  .ey{margin-bottom:14px!important}
+  .copy h1{font-size:44px!important;line-height:.98!important;margin-bottom:20px!important}
+  .copy p{margin-top:0!important;margin-bottom:0!important}
+  .go{margin-top:25px!important}
+  .foot{bottom:20px!important}
+}
+</style>
+
+<style>
+/* Refined IOT-like neo-grotesk typography */
+body,button,input{font-family:"Source Sans 3","Source Sans Pro",Arial,Helvetica,sans-serif}
+.copy h1{
+  font-family:"Source Sans 3","Source Sans Pro",Arial,Helvetica,sans-serif!important;
+  font-weight:700!important;
+  letter-spacing:-.058em!important;
+  line-height:.94!important;
+  color:#fff!important;
+  -webkit-text-fill-color:transparent!important;
+  background:
+    linear-gradient(180deg,#fff 0%,#fff 28%,#dbe8eb 45%,#fff 57%,#c7d5d9 100%)!important;
+  -webkit-background-clip:text!important;background-clip:text!important;
+  text-shadow:none!important;
+  filter:drop-shadow(0 7px 24px rgba(0,0,0,.22))!important;
+}
+.copy h1 .accent{
+  font-weight:700!important;
+  -webkit-text-fill-color:transparent!important;
+  background:linear-gradient(180deg,#dfffff 0%,#a8eef0 31%,#f1ffff 48%,#73cdd4 66%,#b9eff1 100%)!important;
+  -webkit-background-clip:text!important;background-clip:text!important;
+}
+.copy h1:after{height:12%!important;top:7%!important;opacity:.34!important;filter:blur(9px)!important}
+
+/* Mobile completion experience */
+@media(max-width:760px){
+  header{left:5.5vw!important;right:5.5vw!important;top:max(18px,env(safe-area-inset-top))!important}
+  .logo{width:76px!important}
+  .event{font-size:6.5px!important;letter-spacing:.22em!important}
+  .hero{
+    min-height:100dvh!important;
+    align-items:flex-end!important;
+    padding:0 0 calc(4.5vh + env(safe-area-inset-bottom))!important;
+  }
+  .copy{
+    width:89vw!important;margin-left:5.5vw!important;
+    padding:0!important;
+  }
+  .ey{font-size:7.5px!important;letter-spacing:.22em!important;margin:0 0 11px!important}
+  .copy h1{font-size:clamp(38px,11.5vw,49px)!important;line-height:.94!important;margin:0 0 18px!important}
+  .copy p{font-size:12px!important;line-height:1.45!important;margin:0!important;max-width:88%!important}
+  .go{
+    width:100%!important;min-height:56px!important;margin-top:22px!important;
+    display:flex!important;align-items:center!important;justify-content:center!important;
+    font-size:10px!important;letter-spacing:.15em!important;
+    padding:16px 18px!important;
+  }
+  .foot{display:none!important}
+
+  /* Full-screen form optimized for thumb use */
+  .flow{overflow:hidden!important}
+  .modal{
+    width:100%!important;height:100dvh!important;min-height:100dvh!important;
+    padding:max(22px,env(safe-area-inset-top)) 20px max(18px,env(safe-area-inset-bottom))!important;
+    margin:0!important;
+  }
+  .meta{font-size:7px!important;letter-spacing:.18em!important}
+  .prog{margin-top:12px!important}
+  .modal #box{align-items:center!important}
+  .step{padding:2vh 0!important}
+  .step small{font-size:7.5px!important}
+  .step h2{
+    font-size:clamp(31px,9.2vw,42px)!important;line-height:1.02!important;
+    letter-spacing:-.045em!important;margin:12px 0 9px!important;
+  }
+  .step p{font-size:12px!important;line-height:1.45!important;margin-bottom:22px!important}
+  .field{
+    font-size:20px!important;min-height:52px!important;padding:12px 2px!important;
+    border-bottom-width:1px!important;
+  }
+  .err{font-size:9px!important;min-height:18px!important}
+  .nav{
+    position:sticky!important;bottom:0!important;
+    padding-top:10px!important;
+    background:linear-gradient(180deg,rgba(241,240,235,0),#f1f0eb 28%)!important;
+  }
+  .nav button{
+    min-width:72%!important;min-height:52px!important;
+    border:1px solid #172426!important;border-radius:999px!important;
+    padding:14px 20px!important;font-size:9px!important;
+    background:#172426!important;color:#fff!important;
+  }
+  .answers{margin-top:4px!important}
+  .answer{
+    min-height:62px!important;padding:18px 4px!important;
+    font-size:17px!important;line-height:1.3!important;
+  }
+  .answer:hover,.answer.sel{padding-left:18px!important}
+  .pass{margin-top:14px!important;padding:16px 0!important}
+  .pass .name{font-size:22px!important}
+}
+
+/* Desktop stays spacious */
+@media(min-width:761px){
+  .copy h1{max-width:720px}
+  .modal{max-width:980px}
+}
+</style>
+
+<style>
+html,body,button,input,textarea,select,
+.hero,.copy,.modal,.step,.field,.answer,.nav button,.go,.meta,.event,.foot{
+  font-family:"Source Sans 3","Source Sans Pro",Arial,Helvetica,sans-serif!important;
+}
+.copy h1,.step h2{
+  font-family:"Source Sans 3","Source Sans Pro",Arial,Helvetica,sans-serif!important;
+  font-weight:700!important;
+}
+.copy p,.step p,.field{font-weight:400}
+.go,.nav button,.ey,.meta{font-weight:600}
+</style>
+
+<style>
+.mobile-title{display:none}
+.inline-next{display:none}
+.field-row{position:relative;width:100%}
+
+@media(min-width:761px){
+  .desktop-title{display:inline}
+  .mobile-title{display:none}
+  .copy{width:min(760px,55vw)!important}
+  .copy h1{font-size:clamp(46px,4.4vw,72px)!important;line-height:1.02!important;letter-spacing:-.038em!important}
+}
+@media(max-width:760px){
+  .desktop-title{display:none}
+  .mobile-title{display:inline}
+  .field-row .field{padding-right:58px!important}
+  .inline-next{
+    display:flex!important;
+    position:absolute!important;
+    right:0!important;
+    top:50%!important;
+    transform:translateY(-50%)!important;
+    width:44px!important;height:44px!important;
+    min-width:44px!important;min-height:44px!important;
+    padding:0!important;
+    border:2px solid #172426!important;
+    border-radius:50%!important;
+    background:#f1f0eb!important;
+    color:#172426!important;
+    align-items:center!important;
+    justify-content:center!important;
+    font-family:"Source Sans 3","Source Sans Pro",Arial,Helvetica,sans-serif!important;
+    font-size:24px!important;font-weight:600!important;line-height:1!important;
+    z-index:5!important;
+  }
+  /* Input steps use only the inline arrow. Quiz/success behavior remains unchanged. */
+  .step:has(.field) ~ *{}
+  .modal:has(.step .field) > .nav{display:none!important}
+}
+</style>
+
+<style>
+/* Desktop headline: the second line mirrors the lighter typography in the IOT film */
+@media(min-width:761px){
+  .copy h1 .hero-light,
+  .copy h1 .hero-light .accent{
+    font-weight:300!important;
+  }
+}
+
+/* Safari / Chrome autofill must preserve the AVVERO field surface */
+.field:-webkit-autofill,
+.field:-webkit-autofill:hover,
+.field:-webkit-autofill:focus,
+.field:-webkit-autofill:active{
+  -webkit-text-fill-color:#162325!important;
+  -webkit-box-shadow:0 0 0 1000px #f1f0eb inset!important;
+  box-shadow:0 0 0 1000px #f1f0eb inset!important;
+  caret-color:#162325!important;
+  transition:background-color 9999s ease-out 0s!important;
+}
+.field:autofill{background:#f1f0eb!important;color:#162325!important}
+
+@media(max-width:760px){
+  .field-row{position:relative!important;width:100%!important}
+  .field-row .field{
+    display:block!important;
+    width:100%!important;
+    padding-right:62px!important;
+  }
+  .inline-next{
+    right:2px!important;
+    top:auto!important;
+    bottom:3px!important;
+    transform:none!important;
+    width:44px!important;height:44px!important;
+    border:2px solid #172426!important;
+    background:#f1f0eb!important;
+  }
+}
+</style>
+
+<style>
+/* Hero title follows the typography visible inside the IOT film:
+   lighter, smaller, less display-like, no glossy treatment. */
+.copy h1{
+  font-family:"Source Sans 3","Source Sans Pro",Arial,Helvetica,sans-serif!important;
+  font-weight:300!important;
+  font-size:clamp(38px,3.55vw,58px)!important;
+  line-height:1.03!important;
+  letter-spacing:-.025em!important;
+  color:rgba(255,255,255,.92)!important;
+  background:none!important;
+  -webkit-background-clip:initial!important;
+  background-clip:initial!important;
+  -webkit-text-fill-color:rgba(255,255,255,.92)!important;
+  text-shadow:0 2px 18px rgba(0,0,0,.20)!important;
+  filter:none!important;
+}
+.copy h1:after{display:none!important}
+.copy h1 .accent,
+.copy h1 .hero-light,
+.copy h1 .hero-light .accent{
+  font-weight:300!important;
+  color:rgba(255,255,255,.92)!important;
+  background:none!important;
+  -webkit-background-clip:initial!important;
+  background-clip:initial!important;
+  -webkit-text-fill-color:rgba(255,255,255,.92)!important;
+  text-shadow:inherit!important;
+}
+
+/* Mobile: arrow sits centered just ABOVE the input underline, never over it. */
+@media(max-width:760px){
+  .field-row{position:relative!important;width:100%!important}
+  .field-row .field{
+    width:100%!important;
+    padding-right:58px!important;
+  }
+  .inline-next{
+    display:flex!important;
+    position:absolute!important;
+    right:2px!important;
+    top:auto!important;
+    bottom:14px!important;
+    transform:translateY(-100%)!important;
+    width:44px!important;height:44px!important;
+    min-width:44px!important;min-height:44px!important;
+    padding:0!important;
+    border:2px solid #172426!important;
+    border-radius:50%!important;
+    background:#f1f0eb!important;
+    color:#172426!important;
+    align-items:center!important;justify-content:center!important;
+    font-size:24px!important;font-weight:400!important;line-height:1!important;
+    z-index:6!important;
+  }
+}
+</style>
+
+<style>
+/* HERO: restore hierarchy, but slightly smaller overall */
+.copy h1{
+  font-family:"Source Sans 3","Source Sans Pro",Arial,Helvetica,sans-serif!important;
+  font-size:clamp(40px,3.8vw,61px)!important;
+  line-height:1.015!important;
+  letter-spacing:-.032em!important;
+  font-weight:700!important;
+  color:#fff!important;
+  background:none!important;
+  -webkit-text-fill-color:#fff!important;
+  text-shadow:0 2px 20px rgba(0,0,0,.20)!important;
+}
+.copy h1 .hero-light,
+.copy h1 .hero-light .accent{
+  font-weight:600!important;
+  color:#fff!important;
+  background:none!important;
+  -webkit-text-fill-color:#fff!important;
+}
+.copy h1:after{display:none!important}
+
+/* MOBILE: match the supplied mockup. Arrow center sits on the input line. */
+@media(max-width:760px){
+  .inline-next{
+    right:2px!important;
+    top:auto!important;
+    bottom:0!important;
+    transform:translateY(50%)!important;
+    width:44px!important;height:44px!important;
+    min-width:44px!important;min-height:44px!important;
+    background:#f1f0eb!important;
+  }
+  .field-row .field{padding-right:58px!important}
+}
+</style>
+
+<style>
+.copy h1 .hero-bold{font-weight:700!important}
+.copy h1 .hero-semi,
+.copy h1 .hero-semi .accent,
+.copy h1 .hero-light,
+.copy h1 .hero-light .accent{font-weight:600!important}
+
+/* ONLY FIX 2: mobile arrow center aligned exactly with the input underline */
+@media(max-width:760px){
+  .inline-next{
+    top:auto!important;
+    bottom:0!important;
+    transform:translateY(50%)!important;
+  }
+}
+</style>
+
+<style>
+.gdpr-check{
+  display:flex;align-items:flex-start;gap:14px;
+  max-width:760px;padding:18px 0;
+  border-top:1px solid #c9cfcc;border-bottom:1px solid #c9cfcc;
+  color:#536063;font-size:14px;line-height:1.45;cursor:pointer
+}
+.gdpr-check input{width:20px;height:20px;margin:1px 0 0;accent-color:#162325;flex:0 0 auto}
+.gdpr-error{height:20px;margin-top:7px;color:#a9444d;font-size:9px}
+.gdpr-continue-legacy{
+  margin-top:18px;border:1px solid #162325;border-radius:999px;
+  background:#162325;color:#fff;padding:14px 24px;
+  font-size:8px;letter-spacing:.18em;font-weight:600;cursor:pointer
+}
+.role-answers{max-width:760px}
+@media(max-width:760px){
+ .gdpr-step h2{font-size:34px!important}
+ .gdpr-step p{margin-bottom:20px!important}
+ .gdpr-check{font-size:12px;gap:11px;padding:15px 0}
+ .gdpr-check input{width:22px;height:22px}
+ .gdpr-continue-legacy{width:100%;min-height:50px}
+ .role-answers .answer{min-height:58px;font-size:16px}
+}
+</style>
+
+<style>
+/* Slightly larger microcopy for desktop readability */
+.meta,.step small,.ey,.event,.foot{font-size:max(10px,.68vw)!important}
+.step p{font-size:max(15px,.94vw)!important;line-height:1.52!important}
+.gdpr-check{font-size:max(15px,.9vw)!important}
+.gdpr-error,.err{font-size:max(11px,.7vw)!important}
+
+/* Same Continue position on every desktop form step */
+@media(min-width:761px){
+  .modal{position:relative!important}
+  .nav{position:absolute!important;left:0!important;bottom:38px!important;width:auto!important;margin:0!important;z-index:20!important}
+  .nav button{min-width:180px!important;min-height:56px!important}
+  .gdpr-continue-legacy{position:absolute!important;left:0!important;bottom:38px!important;margin:0!important;min-width:150px!important;min-height:48px!important;z-index:20!important}
+}
+@media(max-width:760px){
+  .meta,.step small{font-size:10px!important}
+  .step p,.gdpr-check{font-size:15px!important}
+}
+</style>
+
+<style>
+.action-primary,.gdpr-nav .action-primary{
+  border:1px solid #162325!important;border-radius:999px!important;
+  background:#162325!important;color:#fff!important;
+  min-width:180px!important;min-height:56px!important;padding:0 30px!important;
+  font-family:"Source Sans 3","Source Sans Pro",Arial,Helvetica,sans-serif!important;
+  font-size:10px!important;font-weight:600!important;letter-spacing:.15em!important;
+}
+@media(min-width:761px){
+ .gdpr-nav{
+   position:absolute!important;left:0!important;bottom:38px!important;
+   margin:0!important;z-index:20!important
+ }
+}
+</style>
+<style>
+/* SNOO button label readability refinement */
+.go{
+  font-size:14px!important;
+  font-weight:600!important;
+  letter-spacing:.13em!important;
+}
+.action-primary,.gdpr-nav .action-primary{
+  font-size:13px!important;
+  font-weight:600!important;
+  letter-spacing:.13em!important;
+}
+@media(max-width:760px){
+  .go{font-size:13px!important;letter-spacing:.11em!important}
+  .action-primary,.gdpr-nav .action-primary{font-size:12px!important;letter-spacing:.11em!important}
+}
+</style>
+
+<style>
+@media(max-width:760px){
+ .modal>.nav:empty{display:none!important}
+ .modal>.nav:not(:empty){display:flex!important;position:sticky!important;bottom:max(18px,env(safe-area-inset-bottom))!important;z-index:30!important}
+ .mobile-success-home{display:inline-flex!important;align-items:center!important;justify-content:center!important}
+}
+</style>
+
+<style>
+.step-nav{display:flex;align-items:center;gap:12px;margin-top:18px}
+.step-arrow{width:52px;height:52px;border:1px solid #162325;border-radius:50%;background:transparent;color:#162325;font:300 34px/1 Arial,sans-serif;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:transform .18s ease,background .18s ease,opacity .18s ease}
+.step-arrow:hover,.step-arrow:focus-visible{background:#162325;color:#f1f0eb;outline:3px solid rgba(85,174,177,.35);outline-offset:3px}.step-arrow:active{transform:scale(.94)}.step-arrow:disabled{opacity:.25;cursor:default}.step-arrow:disabled:hover{background:transparent;color:#162325;outline:0}
+.err[aria-live]{min-height:18px}.step:focus{outline:none}
+.flow.liquid-open{backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.flow.liquid-open:before{content:"";position:absolute;inset:-12%;pointer-events:none;background:radial-gradient(circle at 50% 100%,rgba(255,255,255,.58),rgba(85,174,177,.12) 28%,transparent 62%);animation:liquidRise .8s cubic-bezier(.16,1,.3,1)}
+@keyframes liquidRise{from{transform:translateY(28%) scale(.94);opacity:.25}to{transform:translateY(0) scale(1);opacity:0}}
+@media(max-width:760px){.step-nav{margin-top:16px;gap:14px}.step-arrow{width:56px;height:56px;font-size:38px}.swipe-hint{display:none!important}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}.flow.liquid-open{backdrop-filter:none;-webkit-backdrop-filter:none}}
+</style>
+<style id="ux-premium-2026">
+/* UX refinement layer: deliberately leaves the landing composition unchanged. */
+.prog{height:2px!important;background:rgba(22,35,37,.10)!important;border-radius:999px;overflow:hidden}.prog span{height:2px!important;border-radius:999px;transition:width .38s cubic-bezier(.22,1,.36,1)!important}
+.field{transition:border-color .2s ease,box-shadow .2s ease}.field.field-valid{border-color:#5c9998!important;box-shadow:0 1px 0 rgba(92,153,152,.22)}
+.answer{transform:translateZ(0)}.answer:active{transform:scale(.992)}
+.swipe-next-preview{position:absolute;inset:0;display:flex;align-items:center;pointer-events:none;opacity:0;transform:translate3d(0,100%,0);will-change:transform,opacity}.swipe-next-preview .preview-inner{width:100%}.swipe-next-preview small{font-size:8px;letter-spacing:.22em;color:#728083}.swipe-next-preview h2{font-size:clamp(38px,4.7vw,66px);font-weight:300;line-height:1.02;letter-spacing:-.055em;margin:16px 0 12px}
+.participation-card{margin-top:24px;padding:28px;border:1px solid rgba(22,35,37,.18);border-radius:22px;background:rgba(255,255,255,.24);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}.participation-card .pc-label{font-size:8px;letter-spacing:.22em;color:#718082}.participation-card .pc-name{font-size:clamp(27px,4vw,42px);font-weight:300;margin:12px 0 6px}.participation-card .pc-code{font-size:12px;letter-spacing:.22em;color:#448e91}.participation-card .pc-event{margin-top:20px;font-size:11px;line-height:1.6;color:#596768}.calendar-btn{margin-top:14px!important}
+@media(max-width:760px){.participation-card{padding:22px;border-radius:18px}.modal #box{position:relative;overflow:hidden}}
+@media(prefers-reduced-motion:reduce){.swipe-next-preview,.field,.answer,.prog span{transition:none!important}}
+</style>
+<script id="ux-premium-2026-script">
+const SNOO_DRAFT_KEY='snooFormDraft';
+const EVENT_START='20261017T171500'; const EVENT_END='20261017T181500'; const EVENT_LOCATION='ROMEXPO, București';
+function haptic(ms=12){try{if('vibrate' in navigator)navigator.vibrate(ms)}catch(_){}}
+function saveDraft(){clearDraft()}
+function restoreDraft(){clearDraft()}
+function clearDraft(){try{sessionStorage.removeItem(SNOO_DRAFT_KEY);localStorage.removeItem(SNOO_DRAFT_KEY)}catch(_){}}
+restoreDraft();
+const _renderUX=render; render=function(){_renderUX(); if(S.gdpr)saveDraft(); const f=document.getElementById('field');if(!f)return;const x=A[n];if(!x)return;
+ const ac={first:'given-name',last:'family-name',phone:'tel-national',email:'email',optic:'organization',city:'address-level2',county:'address-level1',street:'street-address'}[x[3]];if(ac)f.setAttribute('autocomplete',ac);
+ if(x[3]==='email'){f.setAttribute('inputmode','email');f.setAttribute('autocapitalize','none');f.setAttribute('spellcheck','false')}
+ const validate=()=>{let ok=!!f.value.trim();if(x[3]==='email')ok=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.value.trim());if(x[3]==='phone')ok=ph(f.value);if(x[3]==='street')ok=/\d/.test(f.value.trim());f.classList.toggle('field-valid',ok);if(ok&&x[3]!=='phone'){const e=document.getElementById('err');if(e)e.textContent=''}saveDraft()};f.addEventListener('input',validate);validate();
+};
+const _acceptUX=acceptGdpr;acceptGdpr=function(){_acceptUX();if(S.gdpr){haptic(10);saveDraft()}};
+const _pickUX=pick;pick=function(v,b){haptic(10);_pickUX(v,b);saveDraft()};
+const _nextUX=next;next=async function(k){const before=n;const r=await _nextUX(k);if(n!==before){haptic(8);saveDraft()}return r};
+const _backUX=back;back=function(){const before=n;_backUX();if(n!==before){haptic(7);saveDraft()}};
+function calendarICS(code){const pad=s=>s.replace(/[-:]/g,'');const title='Managementul miopiei dincolo de lentilă: Cum educăm o generație să vadă mai bine.';const desc='Prezentare Avvero în cadrul Brand Experience Summit 2026'+(code?' | Cod participare: '+code:'');return ['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Avvero//Brand Experience Summit 2026//RO','CALSCALE:GREGORIAN','BEGIN:VEVENT','DTSTART;TZID=Europe/Bucharest:'+EVENT_START,'DTEND;TZID=Europe/Bucharest:'+EVENT_END,'SUMMARY:'+title,'LOCATION:'+EVENT_LOCATION,'DESCRIPTION:'+desc,'END:VEVENT','END:VCALENDAR'].join('\r\n')}
+function addToCalendar(code){const blob=new Blob([calendarICS(code)],{type:'text/calendar;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='Avvero-SNOO-2026.ics';document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},800)}
+const _successUX=success;success=async function(){label.textContent='SE SALVEAZĂ';count.textContent=A.length+' / '+A.length;bar.style.width='100%';nav.innerHTML='';box.innerHTML=`<section class="step"><small>BRAND EXPERIENCE SUMMIT 2026</small><h2>Finalizăm înscrierea.</h2><p>Salvăm datele și rezervăm locul tău la eveniment.</p></section>`;try{const data=await submitRegistration();resetParticipant();haptic(18);label.textContent='CONFIRMAT';const code=esc(data.participationCode||'');box.innerHTML=`<section class="step"><small>ÎNSCRIERE CONFIRMATĂ</small><h2>Bine ai venit, ${esc(S.first)}.</h2><p>Locul tău la evenimenta Avvero este rezervat.</p><div class="participation-card"><div class="pc-label">BRAND EXPERIENCE SUMMIT 2026</div><div class="pc-code">${code}</div><div class="pc-event">Sâmbătă, 17 octombrie 2026 · 17:15<br>ROMEXPO, București<br>Cadoul tău surpriză te așteaptă la eveniment.</div></div></section>`;nav.innerHTML=`<div class="nav-success-stack"><button class="action-primary calendar-btn" onclick="addToCalendar('${code}')">ADAUGĂ ÎN CALENDAR</button><button class="action-primary mobile-success-home" onclick="location.href='/'">REVENIRE LA PAGINA PRINCIPALĂ</button><button class="action-primary desktop-success-close" onclick="location.reload()">ÎNCHIDE</button></div>`}catch(e){label.textContent='NECONFIRMAT';const duplicate=e.code==='DUPLICATE_PHONE';box.innerHTML=`<section class="step"><small>BRAND EXPERIENCE SUMMIT 2026</small><h2>${duplicate?'Numărul este deja înscris.':'Înscrierea nu a fost salvată.'}</h2><p>${duplicate?'Există deja o participare asociată acestui număr de telefon.':'Verifică conexiunea și încearcă din nou. Locul nu este considerat rezervat până la confirmare.'}</p></section>`;nav.innerHTML=duplicate?'<button class="action-primary" onclick="location.reload()">ÎNCHIDE</button>':'<button class="action-primary" onclick="success()">REÎNCEARCĂ →</button>'}}
+/* Dataset-ul romania/localitati conține toate localitățile, nu doar municipii. */
+const _loadCitiesUX=loadRomaniaCities;loadRomaniaCities=async function(){await _loadCitiesUX();rebuildCityIndex();if(!localitiesReady)console.warn('Lista completă de localități nu este disponibilă încă')};
+</script>
+
+
+<style id="stable-navigation-city-final">
+.field-row{position:relative}
+.city-suggestions{position:absolute;left:0;right:0;top:calc(100% + 8px);z-index:80;background:#f1f0eb;border:1px solid rgba(22,35,37,.18);border-radius:16px;box-shadow:0 14px 34px rgba(22,35,37,.12);max-height:260px;overflow-y:auto;overscroll-behavior:contain;padding:6px;box-sizing:border-box;scrollbar-width:thin;scrollbar-color:rgba(22,35,37,.28) transparent}
+.city-suggestion{width:100%;border:0;background:#f1f0eb;color:#162325;text-align:left;padding:13px 15px;border-radius:11px;font:500 16px/1.25 inherit;cursor:pointer;display:flex;justify-content:space-between;gap:16px}
+.city-suggestion span{color:#718082;font-size:13px;font-weight:400}
+.city-suggestion:hover,.city-suggestion:focus-visible,.city-suggestion.active{background:rgba(22,35,37,.07);outline:none}
+@media(max-width:760px){.city-suggestions{left:0;right:0;max-height:min(34dvh,240px);border-radius:14px}.city-suggestion{padding:14px 13px;font-size:16px}}
+.final-success-actions{width:100%;box-sizing:border-box}
+@media(min-width:761px){.final-success-actions.desktop-final{display:flex;justify-content:flex-start}.final-success-actions.desktop-final .action-primary{width:220px!important;min-width:220px!important;min-height:54px!important;margin:0!important}}
+@media(max-width:760px){.final-success-actions.mobile-final{display:flex;flex-direction:column;gap:12px;padding:0 18px 12px}.final-success-actions.mobile-final .action-primary{width:100%!important;min-width:0!important;min-height:58px!important;margin:0!important}}
+
+.phone-field-wrap{display:flex;align-items:center;border-bottom:1px solid #aeb7b5}.phone-field-wrap:focus-within{border-color:#162325}.phone-prefix{flex:0 0 auto;padding:12px 12px 14px 0;font-size:27px;font-weight:400;color:#162325}.phone-field-wrap .field{border-bottom:0!important;min-width:0}.phone-field-wrap .field:focus{border-color:transparent}
+</style>
+<script id="stable-navigation-city-final-script">
+let cityActiveIndex=-1;
+function cityMatches(q){
+ q=cityKey(q); if(!q||!ALL_CITIES.length)return [];
+ const starts=[],contains=[];
+ for(const c of ALL_CITIES){const k=cityKey(c.name);if(k.startsWith(q))starts.push(c);else if(k.includes(q))contains.push(c);if(starts.length>=7)break}
+ return starts.concat(contains).slice(0,7);
+}
+function closeCitySuggestions(){const d=document.getElementById('citySuggestions');if(d)d.remove();cityActiveIndex=-1}
+function chooseCitySuggestion(c){const f=document.getElementById('field');if(!f)return;const oldCountry=S.country;f.value=c.name;S.city=c.name;S.county=c.county||'';S.country=c.country||'RO';if(oldCountry!==S.country)S.phone='';closeCitySuggestions();const e=document.getElementById('err');if(e)e.textContent='';f.focus({preventScroll:true})}
+function showCitySuggestions(f){
+ closeCitySuggestions();const matches=cityMatches(f.value);if(!matches.length)return;
+ const d=document.createElement('div');d.id='citySuggestions';d.className='city-suggestions';d.setAttribute('role','listbox');d.setAttribute('aria-label',uiText('Sugestii localități'));
+ matches.forEach((c,i)=>{const b=document.createElement('button');b.type='button';b.className='city-suggestion';b.setAttribute('role','option');b.innerHTML=`${esc(c.name)}<span>${esc(c.county||'')} · ${uiText(c.country==='MD'?'Republica Moldova':'România')}</span>`;b.addEventListener('pointerdown',e=>e.preventDefault());b.addEventListener('click',()=>chooseCitySuggestion(c));d.appendChild(b)});
+ f.closest('.field-row').appendChild(d);
+}
+function wireCityAutocomplete(f){
+ f.removeAttribute('list');f.setAttribute('aria-autocomplete','list');f.setAttribute('aria-controls','citySuggestions');
+ f.addEventListener('input',()=>showCitySuggestions(f));
+ f.addEventListener('focus',()=>{if(f.value.trim())showCitySuggestions(f)});
+ f.addEventListener('keydown',e=>{const d=document.getElementById('citySuggestions');const items=d?[...d.querySelectorAll('.city-suggestion')]:[];if(!items.length)return;
+  if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();cityActiveIndex=(cityActiveIndex+(e.key==='ArrowDown'?1:-1)+items.length)%items.length;items.forEach((x,i)=>x.classList.toggle('active',i===cityActiveIndex));items[cityActiveIndex].scrollIntoView({block:'nearest'});return}
+  if(e.key==='Enter'&&cityActiveIndex>=0){e.preventDefault();items[cityActiveIndex].click();}
+  if(e.key==='Escape')closeCitySuggestions();
+ });
+ f.addEventListener('blur',()=>setTimeout(closeCitySuggestions,120));
+}
+
+/* One authoritative mobile swipe path. It deliberately works when a gesture starts on an input. */
+let stableSwipe=null;
+function stableSwipeStart(e){
+ if(!matchMedia('(max-width:760px)').matches||!flow.classList.contains('open')||n<0||n>=11||e.touches.length!==1)return;
+ if(e.target.closest('button,a'))return;const t=e.touches[0];stableSwipe={x:t.clientX,y:t.clientY,dy:0,step:box.querySelector('.step')};e.stopImmediatePropagation();
+}
+function stableSwipeMove(e){
+ if(!stableSwipe||e.touches.length!==1)return;
+ const t=e.touches[0],dx=t.clientX-stableSwipe.x,dy=t.clientY-stableSwipe.y;
+ if(Math.abs(dy)<6||Math.abs(dy)<Math.abs(dx)*1.15)return;
+ const st=stableSwipe;st.dy=dy;
+ if(!st.frame)st.frame=requestAnimationFrame(()=>{
+  st.frame=0;if(stableSwipe!==st||!st.step)return;
+  st.step.style.transition='none';st.step.style.transform=`translate3d(0,${st.dy}px,0)`;
+  st.step.style.opacity=String(Math.max(.92,1-Math.abs(st.dy)/2400));
+ });
+ e.preventDefault();e.stopImmediatePropagation();
+}
+function stableSwipeEnd(e){if(!stableSwipe)return;const st=stableSwipe;stableSwipe=null;e.stopImmediatePropagation();if(st.step){st.step.style.transition='transform 180ms cubic-bezier(.22,1,.36,1),opacity 150ms ease';st.step.style.transform='translate3d(0,0,0)';st.step.style.opacity='1'}if(Math.abs(st.dy)<64)return;if(!S.gdpr){if(st.dy>0){commitGdprHome();return}acceptGdpr();return}if(st.dy>0){back();return}const x=A[n],kind=x&&x[5],key=x&&x[3];if(kind==='role'||kind==='q1'||kind==='q2'){if(S[key])choiceForward();return}next(false)}
+flow.addEventListener('touchstart',stableSwipeStart,{capture:true,passive:true});flow.addEventListener('touchmove',stableSwipeMove,{capture:true,passive:false});flow.addEventListener('touchend',stableSwipeEnd,{capture:true,passive:true});flow.addEventListener('touchcancel',stableSwipeEnd,{capture:true,passive:true});
+
+/* Final actions: desktop has Close only; mobile keeps Calendar + Home. */
+success=async function(){
+ const en=window.APP_LANG==='en';
+ label.textContent=en?'SAVING':'SE SALVEAZĂ';
+ count.textContent=A.length+' / '+A.length;
+ progressFill().style.width='100%';nav.innerHTML='';
+ box.innerHTML=`<section class="step"><small>BRAND EXPERIENCE SUMMIT 2026</small><h2>${en?'Completing your registration.':'Finalizăm înscrierea.'}</h2><p>${en?'We are saving your details and reserving your place at the presentation.':'Salvăm datele și rezervăm locul tău la eveniment.'}</p></section>`;
+ translateNode(flow);
+ try{
+  const data=await submitRegistration();resetParticipant();
+  label.textContent=en?'CONFIRMED':'CONFIRMAT';
+  const code=esc(data.participationCode||'');
+  box.innerHTML=`<section class="step"><small>${en?'REGISTRATION CONFIRMED':'ÎNSCRIERE CONFIRMATĂ'}</small><h2>${en?'Registration confirmed.':'Înscriere confirmată.'}</h2><p>${en?'Your place at the Avvero presentation is reserved.':'Locul tău la evenimenta Avvero este rezervat.'}</p><div class="participation-card"><div class="pc-label">BRAND EXPERIENCE SUMMIT 2026</div><div class="pc-code">${code}</div><div class="pc-event">${en?'Saturday, 17 October 2026 · 17:15':'Sâmbătă, 17 octombrie 2026 · 17:15'}<br>${en?'ROMEXPO, Bucharest':'ROMEXPO, București'}<br>${en?'Your surprise gift will be waiting for you at the presentation.':'Cadoul tău surpriză te așteaptă la eveniment.'}</div></div></section>`;
+  const mobile=matchMedia('(max-width:760px)').matches;
+  nav.innerHTML=mobile
+   ?`<div class="final-success-actions mobile-final"><button class="action-primary" onclick="addToCalendar('${code}')">${en?'ADD TO CALENDAR':'ADAUGĂ ÎN CALENDAR'}</button><button class="action-primary" onclick="location.href='/'">${en?'RETURN TO HOME PAGE':'REVENIRE LA PAGINA PRINCIPALĂ'}</button></div>`
+   :`<div class="final-success-actions desktop-final"><button class="action-primary" onclick="location.reload()">${en?'CLOSE':'ÎNCHIDE'}</button></div>`;
+  translateNode(flow);
+ }catch(e){
+  label.textContent=en?'NOT CONFIRMED':'NECONFIRMAT';
+  const emailDuplicate=e.code==='DUPLICATE_EMAIL',duplicate=emailDuplicate||e.code==='DUPLICATE_PHONE';
+  box.innerHTML=`<section class="step"><small>BRAND EXPERIENCE SUMMIT 2026</small><h2>${duplicate?(emailDuplicate?uiText('Adresa de e-mail este deja înscrisă.'):(en?'This phone number is already registered.':'Numărul este deja înscris.')):(en?'Your registration was not saved.':'Înscrierea nu a fost salvată.')}</h2><p>${duplicate?(emailDuplicate?uiText('Există deja o participare asociată acestei adrese de e-mail.'):(en?'A registration is already associated with this phone number.':'Există deja o participare asociată acestui număr de telefon.')):(en?'Check your connection and try again. Your place is not reserved until confirmation.':'Verifică conexiunea și încearcă din nou. Locul nu este considerat rezervat până la confirmare.')}</p></section>`;
+  nav.innerHTML=duplicate
+   ?`<button class="action-primary" onclick="location.reload()">${en?'CLOSE':'ÎNCHIDE'}</button>`
+   :`<button class="action-primary" onclick="success()">${en?'TRY AGAIN →':'REÎNCEARCĂ →'}</button>`;
+  translateNode(flow);
+ }
+};
+</script>
+
+<script id="location-privacy-corrections">
+function resetParticipant(){
+ clearDraft();clearTimeout(phoneCheckTimer);phoneCheckSeq++;phoneDuplicate=false;if(typeof resetEmailAvailability==='function')resetEmailAvailability();
+ for(const key of Object.keys(S))S[key]=key==='country'?'RO':(key==='gdpr'||key==='gdprConsent'||key==='imageConsent'?false:'');
+ n=0;
+}
+function locationLabels(country,english){if(english==='ru')return country==='MD'?['Район','Район, в котором находится ваша оптика.']:['Жудец','Жудец, в котором находится ваша оптика.'];return country==='MD'
+ ?[english?'District':'Raion',english?'The district where your optical store is located.':'Raionul în care se află optica.']
+ :[english?'County':'Județ',english?'The county where your optical store is located.':'Județul în care se află optica.'];}
+const renderLocationPrivacy=render;
+render=function(){
+ const english=window.APP_LANG==='ru'?'ru':window.APP_LANG==='en';const labels=locationLabels(S.country,english);
+ A[5][1]=labels[0];A[5][2]=labels[1];A[5][4]=labels[0];
+ renderLocationPrivacy();
+ const f=document.getElementById('field');if(f){f.setAttribute('name','participant_'+(A[n]?A[n][3]:'field'));f.setAttribute('autocomplete',A[n]&&A[n][3]==='phone'?'section-participant tel':'off');
+ if(A[n]&&A[n][3]==='county'){
+ const allowed=S.country==='MD'?[...new Set(MD_CITIES_STATIC.map(c=>c.county))]:Object.values(COUNTY_BY_CODE);
+ const list=document.createElement('datalist');list.id='regionOptions';list.innerHTML=allowed.map(c=>'<option value="'+esc(c)+'"></option>').join('');f.setAttribute('list','regionOptions');f.after(list);
+ const h=box.querySelector('h2'),p=box.querySelector('.step p');if(h)h.textContent=labels[0];if(p)p.textContent=labels[1];f.placeholder=labels[0];
+ }}
+};
+window.addEventListener('pagehide',()=>{resetParticipant();box.innerHTML='';nav.innerHTML='';flow.classList.remove('open')});
+window.addEventListener('pageshow',e=>{if(e.persisted){resetParticipant();flow.classList.remove('open');box.innerHTML='';nav.innerHTML=''}});
+</script>
+
+<style>.street-field{resize:none;overflow:hidden;font-family:inherit;height:62px;box-sizing:border-box}.modal #box{position:relative}.swipe-ghost{pointer-events:none!important}</style>
+<script id="autofill-smooth-gestures">
+const renderAutofill=render;
+render=function(){renderAutofill();const f=document.getElementById('field');if(!f||!A[n]||A[n][3]!=='phone')return;
+ const normalize=()=>{const value=nationalPhone(f.value);if(f.value!==value)f.value=value;S.phone=value;validateLiveField();schedulePhoneCheck()};
+ f.addEventListener('input',normalize);f.addEventListener('change',normalize);
+};
+let releasedSwipe=null;
+function springBack(step){if(!step)return;step.style.transition='transform 360ms cubic-bezier(.18,.85,.28,1),opacity 320ms ease';step.style.transform='translate3d(0,0,0)';step.style.opacity='1'}
+function swipeDecision(dy,elapsed){return Math.abs(dy)>=64||(Math.abs(dy)>26&&Math.abs(dy)/Math.max(elapsed,1)>.45)}
+// Continue from the finger position, without snapping the old page back to its center.
+move=function(cb,dir='forward'){
+ if(lock)return;lock=true;transitionDir=dir;
+ const old=box.querySelector('.step'),swipe=releasedSwipe;releasedSwipe=null;
+ const reduced=matchMedia('(prefers-reduced-motion:reduce)').matches;
+ if(!old||reduced||typeof old.animate!=='function'){cb();render();return}
+ const rect=old.getBoundingClientRect(),parent=box.getBoundingClientRect();
+ const distance=Math.max(100,Math.min(window.innerHeight*.22,190));const sign=dir==='back'?1:-1;
+ const dy=swipe?swipe.dy:0,ghost=old.cloneNode(true);
+ ghost.querySelectorAll('[id]').forEach(el=>el.removeAttribute('id'));ghost.removeAttribute('id');ghost.setAttribute('aria-hidden','true');ghost.classList.add('swipe-ghost');
+ Object.assign(ghost.style,{position:'absolute',left:(rect.left-parent.left)+'px',top:(rect.top-parent.top-dy)+'px',width:rect.width+'px',animation:'none',transition:'none',zIndex:'2',margin:'0'});
+ cb();render();box.appendChild(ghost);lock=true;
+ const incoming=box.querySelector('.step:not(.swipe-ghost)');if(incoming){incoming.style.animation='none';incoming.style.transition='none'}
+ const options={duration:380,easing:'cubic-bezier(.22,.65,.3,1)',fill:'both'};
+ const fromOpacity=swipe?Math.max(.92,1-Math.abs(dy)/2400):1;
+ const toY=sign*(Math.abs(dy)+distance*.6);
+ const out=ghost.animate([{transform:`translate3d(0,${dy}px,0)`,opacity:fromOpacity},{transform:`translate3d(0,${toY}px,0)`,opacity:0}],options);
+ if(incoming){const anim=incoming.animate([{transform:`translate3d(0,${-sign*distance*.55}px,0)`,opacity:0},{transform:'translate3d(0,0,0)',opacity:1}],options);anim.finished.then(()=>{anim.cancel();incoming.style.animation='';incoming.style.transform='';incoming.style.opacity=''}).catch(()=>{})}
+ out.finished.then(()=>{ghost.remove();lock=false}).catch(()=>{ghost.remove();lock=false});
+};
+// The registered capture listeners call these function bindings.
+const startNaturalSwipe=stableSwipeStart, endMechanicalSwipe=stableSwipeEnd;
+stableSwipeStart=function(e){if(lock)return;startNaturalSwipe(e);if(stableSwipe){stableSwipe.at=performance.now();if(stableSwipe.step)stableSwipe.step.style.animation='none'}};
+stableSwipeEnd=function(e){
+ if(!stableSwipe)return;const st=stableSwipe;stableSwipe=null;e.stopImmediatePropagation();
+ if(st.frame)cancelAnimationFrame(st.frame);
+ if(st.step){st.step.style.transform=`translate3d(0,${st.dy}px,0)`;st.step.style.opacity=String(Math.max(.92,1-Math.abs(st.dy)/2400))}
+ if(e.type==='touchcancel'||!swipeDecision(st.dy,performance.now()-st.at)){springBack(st.step);return}
+ if(!S.gdpr){springBack(st.step);if(st.dy>0)commitGdprHome();else acceptGdpr();return}
+ releasedSwipe=st;
+ if(st.dy>0){back();if(releasedSwipe){releasedSwipe=null;springBack(st.step)}return}
+ const x=A[n],kind=x&&x[5],key=x&&x[3];
+ if(kind==='role'||kind==='q1'||kind==='q2'){if(S[key])choiceForward();if(releasedSwipe){releasedSwipe=null;springBack(st.step)}return}
+ Promise.resolve(next(false)).finally(()=>{if(releasedSwipe===st){releasedSwipe=null;springBack(st.step)}});
+};
+// Replace capture listeners because addEventListener retains the original function objects.
+flow.removeEventListener('touchstart',startNaturalSwipe,true);flow.removeEventListener('touchend',endMechanicalSwipe,true);flow.removeEventListener('touchcancel',endMechanicalSwipe,true);flow.addEventListener('touchend',stableSwipeEnd,{capture:true,passive:true});flow.addEventListener('touchcancel',stableSwipeEnd,{capture:true,passive:true});
+flow.addEventListener('touchstart',stableSwipeStart,{capture:true,passive:true});
+</script>
+<style id="mobile-type-navigation-polish">
+.phone-field-wrap .phone-prefix,.phone-field-wrap .phone-field{
+ font-family:inherit!important;font-size:27px!important;font-weight:400!important;
+ font-style:normal!important;line-height:1.3!important;letter-spacing:0!important;
+ -webkit-text-size-adjust:100%;font-variant-numeric:normal;
+}
+.phone-field-wrap .phone-field{padding:12px 0 14px!important}
+.phone-field-wrap .phone-prefix{padding:12px 12px 14px 0!important}
+.step-nav{justify-content:flex-end!important;width:100%;box-sizing:border-box}
+.modal #box>.step{animation:none!important;filter:none!important;backface-visibility:hidden;-webkit-backface-visibility:hidden;will-change:transform,opacity}
+</style>
+
+<style id="single-line-optical-address">
+.street-field{white-space:pre!important;overflow-x:auto!important;overflow-y:hidden!important;overflow-wrap:normal!important;word-break:normal!important;line-height:1.3!important;height:62px!important;resize:none!important}
+</style>
+
+<script id="manual-form-navigation">
+const renderConsentSelections=render;
+render=function(){
+ renderConsentSelections();translateNode(flow);
+ if(!S.gdpr){
+  const consent=document.getElementById('gdprConsent'),image=document.getElementById('imageConsent');
+  if(consent&&image){
+   consent.checked=!!S.gdprConsent;image.checked=!!S.imageConsent;
+   const remember=()=>{S.gdprConsent=consent.checked;S.imageConsent=image.checked};
+   consent.addEventListener('change',remember);image.addEventListener('change',remember);
+  }
+ }
+};
+</script>
+
+<script src="form-fields.js"></script>
+<style>
+:root{--bes-gold:#efd093;--bes-ink:#08252e}
+.bg{background:#08252e!important}.bg video{filter:saturate(1.1) brightness(.9)!important}.veil{background:linear-gradient(90deg,rgba(2,25,32,.45),rgba(3,30,38,.2))!important}
+.bes-header-brand{font-size:clamp(12px,1.3vw,17px);letter-spacing:.19em;font-weight:600;color:#f2d396;line-height:1.35}.bes-header-brand span{display:block;font-weight:300;letter-spacing:.33em}
+.hero{align-items:center!important;padding-bottom:0!important}.copy{width:min(920px,88vw)!important;margin:0 auto!important;text-align:center!important}.copy:before{display:none!important}.copy h1{font-size:clamp(54px,7.6vw,114px)!important;line-height:.97!important;letter-spacing:-.05em!important;color:#f3d79f!important;margin:20px 0!important}.copy p{font-size:clamp(13px,1.35vw,19px)!important;letter-spacing:.05em!important;color:#f3e4c5!important}.copy .ey{color:#f0d39a!important}.bes-datetime{font-size:12px;letter-spacing:.15em;color:#f1d59c;margin:20px 0 24px}.go{background:#efd093!important;color:#0b2830!important;border-color:#efd093!important}.bes-partners{display:flex;justify-content:center;align-items:center;gap:clamp(12px,2.8vw,42px);margin:38px auto 0;max-width:850px;flex-wrap:wrap}.bes-partners img{max-width:120px;max-height:48px;width:auto;height:auto;object-fit:contain;filter:brightness(0) invert(1);opacity:.88}.bes-partners img[src*="sd-royal"]{max-width:75px}.bes-partners img[src*="totalmed"]{max-width:125px}.bes-partners .emy-logo{font-size:15px;letter-spacing:.08em;font-weight:800;color:white}
+@media(max-width:760px){.hero{align-items:center!important;padding:110px 0 40px!important;min-height:100dvh}.copy{width:90vw!important}.copy h1{font-size:clamp(43px,12vw,70px)!important}.bes-partners{gap:12px 19px;margin-top:25px}.bes-partners img{max-width:85px;max-height:32px}.bes-partners img[src*="totalmed"]{max-width:95px}.bes-partners .emy-logo{font-size:11px}.bes-datetime{font-size:10px}.bes-header-brand{font-size:10px}}
+</style>

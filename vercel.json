@@ -1,4 +1,47 @@
 {
+  "functions": {
+    "api/register.js": {
+      "maxDuration": 15
+    },
+    "api/admin/login.js": {
+      "maxDuration": 10
+    },
+    "api/admin/me.js": {
+      "maxDuration": 10
+    },
+    "api/admin/logout.js": {
+      "maxDuration": 10
+    },
+    "api/admin/data.js": {
+      "maxDuration": 60
+    },
+    "api/admin/gift.js": {
+      "maxDuration": 10
+    },
+    "api/check-phone.js": {
+      "maxDuration": 10
+    },
+    "api/cron/reminders.js": {
+      "maxDuration": 60
+    },
+    "api/checkin.js": {
+      "maxDuration": 10
+    },
+    "api/admin/reminder-test.js": {
+      "maxDuration": 30
+    }
+  },
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
+    }
+  ],
   "rewrites": [
     {
       "source": "/admin",
@@ -13,17 +56,6 @@
     {
       "path": "/api/cron/reminders",
       "schedule": "30 5 * * *"
-    }
-  ],
-  "headers": [
-    {
-      "source": "/api/(.*)",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "no-store"
-        }
-      ]
     }
   ]
 }
