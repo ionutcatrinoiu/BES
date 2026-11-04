@@ -33,11 +33,20 @@ async function sendOne(doc,stage){
 }
 module.exports=async(req,res)=>{
  if(!process.env.CRON_SECRET||req.headers.authorization!==`Bearer ${process.env.CRON_SECRET}`)return res.status(401).json({error:'UNAUTHORIZED'});
- if(process.env.BES_EMAILS_ENABLED!=='true')return res.status(200).json({paused:true});
- const now=localParts(new Date()),stage=stages.find(x=>x.date===now.date&&x.hour===now.hour);
- if(!stage)return res.status(200).json({skipped:true,localTime:now});
+ if(process.env.BES_EMAILS_ENABLED!=='true'){console.info('BES cron: email delivery paused');return res.status(200).json({paused:true});}
+ // Vercel Hobby may invoke scheduled jobs late within its execution window.
+ // Allow the entire scheduled day after the target hour. The Firestore claim
+ // ensures that a repeated invocation cannot send the same stage twice.
+ const now=localParts(new Date());
+ const stage=stages.find(x=>x.date===now.date&&now.hour>=x.hour);
+ if(!stage){
+  console.info('BES cron: no reminder due',JSON.stringify(now));
+  return res.status(200).json({skipped:true,reason:'NOT_DUE',localTime:now});
+ }
+ console.info('BES cron: processing',stage.id,JSON.stringify(now));
  const snap=await getFirestore().collection('bes_registrations').get();
  const counts={total:snap.size,sent:0,skipped:0,error:0};
  for(const doc of snap.docs){const outcome=await sendOne(doc,stage);counts[outcome]++}
+ console.info('BES cron: finished',stage.id,JSON.stringify(counts));
  return res.status(200).json({stage:stage.id,...counts});
 };
