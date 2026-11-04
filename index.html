@@ -1915,10 +1915,10 @@ root.addEventListener('touchmove',e=>{
   g.active=true;g.dir=dy<0?1:-1;
   if(!g.consent){
    const index=n+g.dir;
-   if(index<0||index>=A.length){reset();return}
+   if(index<0||index>A.length){reset();return}
    g.preview=document.createElement('div');
    g.preview.className='finger-next';
-   g.preview.innerHTML=previewMarkup(index);
+   g.preview.innerHTML=index===A.length?'<section class="step"><small>BRAND EXPERIENCE SUMMIT 2026</small><h2>Finalizăm înscrierea.</h2><p>Salvăm datele tale.</p></section>':previewMarkup(index);
    box.appendChild(g.preview);
   }
  }
@@ -1963,10 +1963,21 @@ root.addEventListener('touchend',e=>{
  g.preview.style.transform=`translate3d(0,${commit?0:(d===1?h:-h)}px,0)`;
  busy=true;
  setTimeout(()=>{
-  g.current.style.removeProperty('transform');g.current.style.removeProperty('transition');
-  g.preview.remove();
-  busy=false;
-  if(!commit)return;
+  if(!commit){
+   g.current.style.removeProperty('transform');g.current.style.removeProperty('transition');
+   g.preview.remove();busy=false;return;
+  }
+  // Keep the incoming panel visible until the actual form render completes.
+  const previousStep=g.current;
+  const observer=new MutationObserver(()=>{
+   if(box.querySelector(':scope > .step')!==previousStep){
+    observer.disconnect();g.preview.remove();
+    previousStep.style.removeProperty('transform');previousStep.style.removeProperty('transition');
+    busy=false;
+   }
+  });
+  observer.observe(box,{childList:true});
+  setTimeout(()=>{observer.disconnect();g.preview.remove();previousStep.style.removeProperty('transform');previousStep.style.removeProperty('transition');busy=false},2500);
   swipeNavigation=true;
   if(d<0)back();
   else if(['role','q1','q2','rooftChoice'].includes(A[n]?.[5]))choiceForward();
@@ -1977,17 +1988,12 @@ root.addEventListener('touchcancel',()=>{reset();root.style.transform='';root.st
 })();
 </script>
 
-<script id="bes-intro-youtube-audio">
+<script id="bes-ios-statusbar-fix">
 (function(){
- let player=null, ready=false;
- const host=document.createElement('div');host.id='bes-intro-audio-host';host.style.cssText='position:fixed;width:1px;height:1px;left:-100px;top:-100px;overflow:hidden;pointer-events:none';document.body.appendChild(host);
- function onIntro(){return !document.getElementById('flow').classList.contains('open')}
- function stop(){try{player?.pauseVideo()}catch(_){}}
- function play(){if(!ready||!onIntro())return;try{player.setVolume(4);player.playVideo()}catch(_){}}
- window.onYouTubeIframeAPIReady=function(){player=new YT.Player(host,{height:'1',width:'1',videoId:'2EJ1_cYTrJM',playerVars:{autoplay:1,controls:0,playsinline:1,loop:1,playlist:'2EJ1_cYTrJM',origin:location.origin},events:{onReady:function(){ready=true;play()}}})};
- const script=document.createElement('script');script.src='https://www.youtube.com/iframe_api';script.async=true;document.head.appendChild(script);
- document.addEventListener('pointerdown',play,{passive:true});
- const observer=new MutationObserver(()=>{if(onIntro())play();else stop()});observer.observe(document.getElementById('flow'),{attributes:true,attributeFilter:['class']});
- document.addEventListener('visibilitychange',()=>{if(document.hidden)stop();else play()});
+ const meta=document.querySelector('meta[name="theme-color"]');
+ if(!meta)return;
+ const update=()=>{const active=document.getElementById('flow')?.classList.contains('open');meta.content=active?'#e9e7f0':'#061315';document.documentElement.style.backgroundColor=active?'#e9e7f0':'#061315';};
+ const flow=document.getElementById('flow');if(flow)new MutationObserver(update).observe(flow,{attributes:true,attributeFilter:['class']});
+ update();
 })();
 </script>
