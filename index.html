@@ -135,6 +135,41 @@ header .bes-brand-logo{display:block;width:100%;height:auto;max-height:62px;obje
 }
 @media(prefers-reduced-motion:reduce){.hero .go,.go{transform:none!important;transition:none!important}}
 </style>
+
+<style id="bes-mobile-polish-2026-11-04">
+header .bes-header-brand{width:255px!important;height:88px!important;max-width:43vw!important;align-items:flex-start!important}
+header .bes-brand-logo{width:100%!important;max-height:88px!important;object-fit:contain!important}
+.hero .go,.go{border:0!important;outline:0!important;box-shadow:0 12px 30px rgba(0,0,0,.14)!important;background:linear-gradient(120deg,rgba(231,211,176,.27),rgba(246,229,201,.12))!important;font-size:13px!important;letter-spacing:.12em!important;font-weight:700!important}
+.hero .go:hover,.go:hover{border:0!important;outline:0!important;box-shadow:0 15px 32px rgba(0,0,0,.18)!important}
+.hero .go:focus-visible,.go:focus-visible{outline:2px solid rgba(255,255,255,.7)!important;outline-offset:3px!important}
+.flow .field,.flow input,.flow textarea{background:transparent!important;background-color:transparent!important;-webkit-appearance:none!important;appearance:none!important;border-radius:0!important}
+.flow input:-webkit-autofill,.flow input:-webkit-autofill:hover,.flow input:-webkit-autofill:focus{-webkit-text-fill-color:#162325!important;box-shadow:0 0 0 1000px #ebe9f2 inset!important;-webkit-box-shadow:0 0 0 1000px #ebe9f2 inset!important;caret-color:#162325!important;transition:background-color 9999s ease-out 0s!important}
+.flow .field:focus{background:transparent!important;background-color:transparent!important}
+@media(max-width:760px){
+ header{top:calc(18px + env(safe-area-inset-top,0px))!important;align-items:flex-start!important}
+ header .bes-header-brand{width:165px!important;max-width:39vw!important;height:65px!important}
+ header .bes-brand-logo{max-height:65px!important}
+ .hero{height:100dvh!important;min-height:100dvh!important;padding:0!important;align-items:stretch!important}
+ .hero .copy{position:relative!important;width:90vw!important;height:100dvh!important;min-height:0!important;margin:0 auto!important;padding:0 0 0!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:flex-end!important;text-align:center!important;box-sizing:border-box!important}
+ .hero .copy .ey{margin-top:auto!important}
+ .hero .copy h1{margin-bottom:22px!important}
+ .hero .copy .go{width:min(88vw,370px)!important;min-width:0!important;min-height:61px!important;font-size:13px!important;margin-top:35px!important;margin-bottom:clamp(115px,17dvh,185px)!important;flex-shrink:0!important}
+ .hero .copy .bes-partners{position:absolute!important;left:0!important;right:0!important;bottom:calc(25px + env(safe-area-inset-bottom,0px))!important;width:100%!important;max-width:100%!important;display:flex!important;justify-content:center!important;align-items:center!important;gap:12px 19px!important;flex-wrap:wrap!important;margin:0!important}
+ .hero .copy .bes-partners img{max-height:42px!important}
+ .flow .modal{height:100dvh!important;max-height:100dvh!important;min-height:0!important;overflow:hidden!important}
+ .flow #box{min-height:0!important;overflow-y:auto!important;overscroll-behavior:contain!important;-webkit-overflow-scrolling:touch!important}
+ .flow .step{transform:none}
+ .flow .field{font-size:24px!important;line-height:1.35!important;padding:12px 3px 14px!important;min-height:58px!important}
+ .flow .field-row{background:transparent!important}
+ .flow .city-suggestions{max-height:28dvh!important;overflow-y:auto!important}
+}
+@media(max-width:760px) and (max-height:700px){
+ .hero .copy .ey{margin-top:135px!important}
+ .hero .copy{overflow-y:auto!important;justify-content:flex-start!important}
+ .hero .copy .go{margin-bottom:150px!important}
+ .hero .copy .bes-partners{position:relative!important;bottom:auto!important;margin-bottom:25px!important}
+}
+</style>
 </head><body>
 <div class="bg"><video id="bgvideo" autoplay muted loop playsinline webkit-playsinline preload="auto" disablepictureinpicture><source src="assets/summit-background.mp4" type="video/mp4"></video></div>
 <div class="veil"></div><div class="grain"></div><header><div class="bes-header-brand"><img src="assets/bes-logo.svg" alt="BES, Brand Experience Summit" class="bes-brand-logo"></div><div class="event-wrap"><div class="event">BES · 2026 · CHIȘINĂU</div><div class="lang-switch"><button type="button" id="langRo" class="lang-btn active" aria-pressed="true" onclick="setLanguage('ro')">RO</button><button type="button" id="langEn" class="lang-btn" aria-pressed="false" onclick="setLanguage('en')">EN</button><button type="button" id="langRu" class="lang-btn" aria-pressed="false" onclick="setLanguage('ru')">RU</button></div></div></header><div class="hero"><div class="copy"><div class="ey">EDIȚIA A II-A · CAPITOLES PARK</div><h1>Brand Experience<br><span class="accent">Summit</span></h1><p>More brands. More knowledge. More business.</p><div class="bes-datetime">28 noiembrie 2026 · 09:30 · Chișinău</div><button class="go" onpointermove="besButtonPointer(event)" onpointerleave="besButtonLeave(event)" onclick="start()">ÎNSCRIE-TE LA EVENIMENT</button><div class="bes-partners" aria-label="Partenerii evenimentului"><img src="assets/sd-royal-white.png" alt="SD Royal Optic"><img src="assets/emy-mono.png" alt="Emy Optic"><img src="assets/totalmed-mono.png" alt="Totalmed"><img src="assets/avvero-mono.png" alt="Avvero"><img src="assets/rooft-mono.png" alt="Rooft"></div></div></div><div class="tech"><b>MYO FREE-FORM</b> · CONTINUOUS OPTICAL SURFACE</div><div class="foot">BRAND EXPERIENCE SUMMIT · MORE BRANDS. MORE KNOWLEDGE. MORE BUSINESS.</div>
@@ -212,7 +247,7 @@ nav.innerHTML='';
 if(window.field){
  const currentField=document.getElementById('field');
  if(!matchMedia('(max-width:760px)').matches)setTimeout(()=>{if(currentField&&currentField.isConnected&&!lock)currentField.focus({preventScroll:true})},460);
- field.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();next(true)}};
+ field.onkeydown=e=>{if(e.key==='Enter'&&!e.isComposing&&x[3]!=='city'){e.preventDefault();next(true)}};
  if(x[3]==='street'){field.value=field.value.replace(/\s*[\r\n]+\s*/g,' ');field.addEventListener('input',e=>{const f=e.currentTarget;f.value=f.value.replace(/\s*[\r\n]+\s*/g,' ');S.street=f.value})}
  if(x[3]==='phone')field.addEventListener('input',schedulePhoneCheck);
  if(x[3]==='city')wireCityAutocomplete(field);
@@ -294,12 +329,12 @@ flow.addEventListener('touchend',e=>{
 flow.addEventListener('touchcancel',()=>{if(!gdprHomeTouchAt)return;gdprHomeTouchAt=0;gdprHomeDragging=false;resetGdprHomeDrag(true)},{passive:true});
 function mobileSwipeEnabled(){return window.matchMedia('(max-width:760px)').matches&&flow.classList.contains('open')&&S.gdpr&&n>=0&&n<A.length}
 flow.addEventListener('touchstart',e=>{
- if(!mobileSwipeEnabled()||e.touches.length!==1)return;
+ if(!mobileSwipeEnabled()||e.touches.length!==1||e.target.closest('input,textarea,select,button,.field-row,.city-suggestions'))return;
  const t=e.touches[0];touchStartX=t.clientX;touchStartY=t.clientY;touchStartedAt=Date.now();touchDragging=false;
  const step=box.querySelector('.step');if(step){step.classList.add('swipe-drag');step.style.transition='none'}
 },{passive:true});
 flow.addEventListener('touchmove',e=>{
- if(!mobileSwipeEnabled()||!touchStartedAt||e.touches.length!==1)return;
+ if(!mobileSwipeEnabled()||!touchStartedAt||e.touches.length!==1||e.target.closest('input,textarea,select,.field-row'))return;
  const t=e.touches[0],dx=t.clientX-touchStartX,dy=t.clientY-touchStartY;
  if(Math.abs(dy)<10||Math.abs(dy)<Math.abs(dx)*1.15)return;
  touchDragging=true;
@@ -1217,7 +1252,7 @@ function wireCityAutocomplete(f){
 let stableSwipe=null;
 function stableSwipeStart(e){
  if(!matchMedia('(max-width:760px)').matches||!flow.classList.contains('open')||n<0||n>=A.length||e.touches.length!==1)return;
- if(e.target.closest('button,a'))return;const t=e.touches[0];stableSwipe={x:t.clientX,y:t.clientY,dy:0,step:box.querySelector('.step')};e.stopImmediatePropagation();
+ if(e.target.closest('button,a,input,textarea,select,[contenteditable],.city-suggestions,.field-row'))return;const t=e.touches[0];stableSwipe={x:t.clientX,y:t.clientY,dy:0,step:box.querySelector('.step')};e.stopImmediatePropagation();
 }
 function stableSwipeMove(e){
  if(!stableSwipe||e.touches.length!==1)return;
