@@ -815,6 +815,77 @@ body:has(.flow.open) > .bes-agenda-trigger{display:none!important;visibility:hid
  },true);
 })();
 </script>
+
+<style id="bes-ios-form-stable-v2">
+/* Match the actual lilac questionnaire surface, including iOS contact autofill. */
+.flow{--bes-field-surface:#e9e7f0}
+.flow .field,.flow input.field,.flow textarea.field{
+ font-family:"Source Sans 3","Source Sans Pro",Arial,Helvetica,sans-serif!important;
+ font-weight:400!important;font-style:normal!important;letter-spacing:normal!important;
+ background:transparent!important;background-color:transparent!important;
+ color:#263330!important;-webkit-text-fill-color:#263330!important;
+ box-shadow:none!important;filter:none!important;appearance:none;-webkit-appearance:none;
+ transition:border-color .15s ease!important;
+}
+.flow .field:-webkit-autofill,.flow .field:-webkit-autofill:hover,.flow .field:-webkit-autofill:focus,
+.flow .field:-webkit-autofill:active,.flow .field:autofill{
+ -webkit-text-fill-color:#263330!important;caret-color:#263330!important;
+ -webkit-box-shadow:0 0 0 1000px var(--bes-field-surface) inset!important;
+ box-shadow:0 0 0 1000px var(--bes-field-surface) inset!important;
+ background-color:var(--bes-field-surface)!important;
+ font-family:"Source Sans 3","Source Sans Pro",Arial,Helvetica,sans-serif!important;
+ transition:none!important;
+}
+.flow .field.field-valid{box-shadow:none!important}
+@media (max-width:760px){.flow .step,.flow .step.out,.flow .step.out-down{animation:none!important;transform:none!important;opacity:1!important;filter:none!important}}
+</style>
+<script id="bes-ios-form-stable-v2">
+(function(){
+ const baseRender=render;
+ render=function(){
+   baseRender();
+   const f=document.getElementById('field');if(!f||!A[n])return;
+   const key=A[n][3];
+   const names={first:'given-name',last:'family-name',optic:'organization',email:'email',phone:'tel-national'};
+   if(names[key])f.setAttribute('autocomplete','section-bes '+names[key]);
+   if(key==='first'||key==='last')f.setAttribute('autocapitalize','words');
+   // Safari can update the DOM value after choosing a contact without dispatching input.
+   const sync=()=>{if(f.isConnected&&A[n]&&A[n][3]===key)S[key]=f.value};
+   f.addEventListener('input',sync);f.addEventListener('change',sync);f.addEventListener('blur',sync);
+ };
+ move=function(callback,direction){
+   if(lock)return;
+   lock=true;
+   try{
+     const f=document.getElementById('field');
+     if(f&&A[n])S[A[n][3]]=f.value.trim();
+     callback();render();
+   }finally{lock=false;}
+ };
+ // One keyboard path only. Never blur before the autofill value is committed.
+ document.addEventListener('keydown',function(e){
+   if(e.key!=='Enter'||e.isComposing||!flow.classList.contains('open'))return;
+   if(e.target.id!=='field'||e.target.tagName==='TEXTAREA')return;
+   e.preventDefault();e.stopImmediatePropagation();
+   const f=e.target;
+   setTimeout(()=>{if(f.isConnected&&!lock)next(false)},90);
+ },true);
+ // The tap should read the committed native input value, not a stale JS draft.
+ document.addEventListener('click',function(e){
+   const b=e.target.closest&&e.target.closest('.flow .forward-arrow');
+   if(!b||!S.gdpr||!A[n])return;
+   const f=document.getElementById('field');if(!f)return;
+   const key=A[n][3];
+   if(key==='first'||key==='last'||key==='optic'){
+     e.preventDefault();e.stopImmediatePropagation();
+     const current=n;
+     setTimeout(()=>{if(n===current&&f.isConnected){S[key]=f.value;next(false)}},100);
+   }
+ },true);
+ window.addEventListener('pageshow',()=>{lock=false;stableSwipe=null});
+})();
+</script>
+
 </body></html>
 <style>
 .bg,#ytbg,
@@ -1076,7 +1147,7 @@ html,body,button,input,textarea,select,
   -webkit-box-shadow:0 0 0 1000px #f1f0eb inset!important;
   box-shadow:0 0 0 1000px #f1f0eb inset!important;
   caret-color:#162325!important;
-  transition:background-color 9999s ease-out 0s!important;
+  transition:none!important;
 }
 .field:autofill{background:#f1f0eb!important;color:#162325!important}
 
@@ -1464,52 +1535,7 @@ window.addEventListener('pageshow',e=>{if(e.persisted){resetParticipant();flow.c
 
 <style>.street-field{resize:none;overflow:hidden;font-family:inherit;height:62px;box-sizing:border-box}.modal #box{position:relative}.swipe-ghost{pointer-events:none!important}</style>
 <script id="autofill-smooth-gestures">
-const renderAutofill=render;
-render=function(){renderAutofill();const f=document.getElementById('field');if(!f||!A[n]||A[n][3]!=='phone')return;
- const normalize=()=>{const value=nationalPhone(f.value);if(f.value!==value)f.value=value;S.phone=value;validateLiveField();schedulePhoneCheck()};
- f.addEventListener('input',normalize);f.addEventListener('change',normalize);
-};
 let releasedSwipe=null;
-function springBack(step){if(!step)return;step.style.transition='transform 360ms cubic-bezier(.18,.85,.28,1),opacity 320ms ease';step.style.transform='translate3d(0,0,0)';step.style.opacity='1'}
-function swipeDecision(dy,elapsed){return Math.abs(dy)>=64||(Math.abs(dy)>26&&Math.abs(dy)/Math.max(elapsed,1)>.45)}
-// Continue from the finger position, without snapping the old page back to its center.
-move=function(cb,dir='forward'){
- if(lock)return;lock=true;transitionDir=dir;
- const old=box.querySelector('.step'),swipe=releasedSwipe;releasedSwipe=null;
- const reduced=matchMedia('(prefers-reduced-motion:reduce)').matches;
- if(!old||reduced||typeof old.animate!=='function'){cb();render();return}
- const rect=old.getBoundingClientRect(),parent=box.getBoundingClientRect();
- const distance=Math.max(100,Math.min(window.innerHeight*.22,190));const sign=dir==='back'?1:-1;
- const dy=swipe?swipe.dy:0,ghost=old.cloneNode(true);
- ghost.querySelectorAll('[id]').forEach(el=>el.removeAttribute('id'));ghost.removeAttribute('id');ghost.setAttribute('aria-hidden','true');ghost.classList.add('swipe-ghost');
- Object.assign(ghost.style,{position:'absolute',left:(rect.left-parent.left)+'px',top:(rect.top-parent.top-dy)+'px',width:rect.width+'px',animation:'none',transition:'none',zIndex:'2',margin:'0'});
- cb();render();box.appendChild(ghost);lock=true;
- const incoming=box.querySelector('.step:not(.swipe-ghost)');if(incoming){incoming.style.animation='none';incoming.style.transition='none'}
- const options={duration:380,easing:'cubic-bezier(.22,.65,.3,1)',fill:'both'};
- const fromOpacity=swipe?Math.max(.92,1-Math.abs(dy)/2400):1;
- const toY=sign*(Math.abs(dy)+distance*.6);
- const out=ghost.animate([{transform:`translate3d(0,${dy}px,0)`,opacity:fromOpacity},{transform:`translate3d(0,${toY}px,0)`,opacity:0}],options);
- if(incoming){const anim=incoming.animate([{transform:`translate3d(0,${-sign*distance*.55}px,0)`,opacity:0},{transform:'translate3d(0,0,0)',opacity:1}],options);anim.finished.then(()=>{anim.cancel();incoming.style.animation='';incoming.style.transform='';incoming.style.opacity=''}).catch(()=>{})}
- out.finished.then(()=>{ghost.remove();lock=false}).catch(()=>{ghost.remove();lock=false});
-};
-// The registered capture listeners call these function bindings.
-const startNaturalSwipe=stableSwipeStart, endMechanicalSwipe=stableSwipeEnd;
-stableSwipeStart=function(e){if(lock)return;startNaturalSwipe(e);if(stableSwipe){stableSwipe.at=performance.now();if(stableSwipe.step)stableSwipe.step.style.animation='none'}};
-stableSwipeEnd=function(e){
- if(!stableSwipe)return;const st=stableSwipe;stableSwipe=null;e.stopImmediatePropagation();
- if(st.frame)cancelAnimationFrame(st.frame);
- if(st.step){st.step.style.transform=`translate3d(0,${st.dy}px,0)`;st.step.style.opacity=String(Math.max(.92,1-Math.abs(st.dy)/2400))}
- if(e.type==='touchcancel'||!swipeDecision(st.dy,performance.now()-st.at)){springBack(st.step);return}
- if(!S.gdpr){springBack(st.step);if(st.dy>0)commitGdprHome();else acceptGdpr();return}
- releasedSwipe=st;
- if(st.dy>0){back();if(releasedSwipe){releasedSwipe=null;springBack(st.step)}return}
- const x=A[n],kind=x&&x[5],key=x&&x[3];
- if(kind==='role'||kind==='q1'||kind==='q2'){if(S[key])choiceForward();if(releasedSwipe){releasedSwipe=null;springBack(st.step)}return}
- Promise.resolve(next(false)).finally(()=>{if(releasedSwipe===st){releasedSwipe=null;springBack(st.step)}});
-};
-// Replace capture listeners because addEventListener retains the original function objects.
-flow.removeEventListener('touchstart',startNaturalSwipe,true);flow.removeEventListener('touchend',endMechanicalSwipe,true);flow.removeEventListener('touchcancel',endMechanicalSwipe,true);flow.addEventListener('touchend',stableSwipeEnd,{capture:true,passive:true});flow.addEventListener('touchcancel',stableSwipeEnd,{capture:true,passive:true});
-flow.addEventListener('touchstart',stableSwipeStart,{capture:true,passive:true});
 </script>
 <style id="mobile-type-navigation-polish">
 .phone-field-wrap .phone-prefix,.phone-field-wrap .phone-field{
@@ -1603,52 +1629,4 @@ body>header .bes-agenda-trigger{position:relative!important;top:auto!important;r
 .flow .action-primary:disabled{color:#fff!important;-webkit-text-fill-color:#fff!important;opacity:.55!important}
 @media(max-width:760px){.flow .step-arrow{touch-action:manipulation!important;pointer-events:auto!important;position:relative!important;z-index:30!important}}
 </style>
-<script id="bes-mobile-autofill-final">
-(function(){
-  // Previous animation handlers sometimes leave lock=true after an iOS autofill.
-  // Avoid cloning focused inputs or waiting for animation.finished on touch devices.
-  const previousMove=move;
-  move=function(callback,direction){
-    if(window.matchMedia('(max-width:760px), (pointer:coarse)').matches){
-      lock=false; releasedSwipe=null; swipeNavigation=false; stableSwipe=null;
-      const active=document.activeElement;
-      if(active&&active.matches&&active.matches('input,textarea'))active.blur();
-      callback();render();lock=false;
-      return;
-    }
-    return previousMove(callback,direction);
-  };
-  const previousRender=render;
-  render=function(){
-    previousRender();
-    const f=document.getElementById('field');
-    if(!f||!A[n])return;
-    const key=A[n][3];
-    const tokens={first:'section-bes given-name',last:'section-bes family-name',optic:'section-bes organization',phone:'section-bes tel-national',email:'section-bes email'};
-    if(tokens[key])f.setAttribute('autocomplete',tokens[key]);
-    if(key==='first'||key==='last'){
-      f.setAttribute('autocapitalize','words');
-      const sync=()=>{if(!f.isConnected||!A[n]||A[n][3]!==key)return;S[key]=f.value;};
-      ['input','change','blur'].forEach(type=>f.addEventListener(type,sync,{passive:true}));
-      // Safari contact autofill can commit after its popup closes without input/change.
-      f.addEventListener('focusout',sync,{passive:true});
-    }
-  };
-  // A capture handler reads the actual field, even if iOS has not dispatched input.
-  document.addEventListener('click',function(e){
-    const arrow=e.target.closest&&e.target.closest('.flow .forward-arrow');
-    if(!arrow||!S.gdpr||!A[n])return;
-    const key=A[n][3],f=document.getElementById('field');
-    if(f&&['first','last','optic'].includes(key))S[key]=f.value;
-    lock=false;
-  },true);
-  // Keep keyboard Next from invoking duplicate navigation via synthetic clicks.
-  document.addEventListener('keydown',function(e){
-    if(e.key!=='Enter'||!flow.classList.contains('open'))return;
-    const f=e.target;if(f.id!=='field'||f.tagName==='TEXTAREA')return;
-    e.preventDefault();if(!lock)Promise.resolve(next(false)).catch(console.error);
-  },true);
-  // Recover from interrupted gestures when the iOS keyboard changes viewport.
-  window.addEventListener('pageshow',()=>{lock=false;releasedSwipe=null;stableSwipe=null});
-})();
-</script>
+
