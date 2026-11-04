@@ -58,6 +58,7 @@ module.exports=async function handler(req,res){
   const counterRef=store.collection('bes_meta').doc('registration_counter');
   const regRef=store.collection('bes_registrations').doc();
   let participationCode='';
+  let numericCheckinCode='';
   const qrToken=crypto.randomBytes(24).toString('hex');
   await store.runTransaction(async tx=>{
    const phoneSnap=await tx.get(phoneRef);
@@ -65,14 +66,25 @@ module.exports=async function handler(req,res){
    const counterSnap=await tx.get(counterRef);
    if(await emailExists(store,email,ref=>tx.get(ref)))throw new Error('DUPLICATE_EMAIL');
    if(phoneSnap.exists||(legacyPhoneSnap&&legacyPhoneSnap.exists))throw new Error('DUPLICATE_PHONE');
+   // Allocate a random four-digit code atomically. The reservation document
+   // prevents collisions across simultaneous registrations.
+   let codeRef;
+   for(let attempt=0;attempt<80;attempt++){
+     const candidate=String(crypto.randomInt(1000,10000));
+     const candidateRef=store.collection('bes_checkin_codes').doc(candidate);
+     const candidateSnap=await tx.get(candidateRef);
+     if(!candidateSnap.exists){numericCheckinCode=candidate;codeRef=candidateRef;break}
+   }
+   if(!codeRef)throw new Error('CHECKIN_CODE_CAPACITY');
    const seq=(counterSnap.exists?Number(counterSnap.data().value)||0:0)+1;
    participationCode='BES-'+String(seq).padStart(4,'0');
    const now=admin.firestore.FieldValue.serverTimestamp();
    tx.set(counterRef,{value:seq},{merge:true});
+   tx.set(codeRef,{registrationId:regRef.id,createdAt:now});
    tx.set(phoneRef,{registrationId:regRef.id,createdAt:now});
    tx.set(emailRef,{registrationId:regRef.id,createdAt:now});
    tx.set(regRef,{
-    participationCode,firstName:String(b.firstName).trim(),lastName:String(b.lastName).trim(),
+    participationCode,numericCheckinCode,firstName:String(b.firstName).trim(),lastName:String(b.lastName).trim(),
     phoneNormalized:phone,email,
     opticalStore:String(b.opticalStore).trim(),role:String(b.role).trim(),
     city:String(b.city).trim(),county:String(b.county||'').trim(),country:'MD',

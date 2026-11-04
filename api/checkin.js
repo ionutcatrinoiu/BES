@@ -50,6 +50,32 @@ module.exports=async function handler(req,res){
       if(!safeEq(supplied,pin()))return res.status(401).json({error:'INVALID_PIN'});
       setSession(res);return res.status(200).json({ok:true,authorized:true});
     }
+    // Public, code-only self check-in. No PIN, no name search.
+    if(action==='self'){
+      const value=String(req.body?.code||'').trim();
+      if(!/^\\d{4}$/.test(value))return res.status(400).json({error:'INVALID_CODE'});
+      const store=db();
+      // Persistent, shared rate limit against guessing four-digit codes.
+      const rawIp=String(req.headers['x-forwarded-for']||req.socket?.remoteAddress||'unknown').split(',')[0].trim();
+      const ipKey=crypto.createHash('sha256').update(secret()+':'+rawIp).digest('hex');
+      const bucket=Math.floor(Date.now()/(15*60*1000));
+      const limitRef=store.collection('bes_checkin_attempts').doc(ipKey+'_'+bucket);
+      let allowed=false;
+      await store.runTransaction(async tx=>{
+        const current=await tx.get(limitRef);
+        const attempts=current.exists?Number(current.data().count||0):0;
+        if(attempts>=12)return;
+        tx.set(limitRef,{count:attempts+1,expiresAt:admin.firestore.Timestamp.fromMillis((bucket+2)*15*60*1000)},{merge:true});
+        allowed=true;
+      });
+      if(!allowed)return res.status(429).json({error:'TOO_MANY_ATTEMPTS'});
+      const codeDoc=await store.collection('bes_checkin_codes').doc(value).get();
+      if(!codeDoc.exists)return res.status(404).json({error:'NOT_FOUND'});
+      const id=String(codeDoc.data()?.registrationId||'');
+      if(!id)return res.status(404).json({error:'NOT_FOUND'});
+      const result=await markPresent(store,store.collection('bes_registrations').doc(id),'numeric-code');
+      return res.status(200).json({ok:true,...result});
+    }
     if(!authorized(req))return res.status(401).json({error:'CHECKIN_AUTH_REQUIRED'});
     const store=db();
     if(action==='search'){
