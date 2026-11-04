@@ -886,6 +886,34 @@ body:has(.flow.open) > .bes-agenda-trigger{display:none!important;visibility:hid
 })();
 </script>
 
+
+<!-- iOS Safari: prevent obsolete swipe preview panels and autofill surface patches -->
+<style id="bes-ios-surface-repair-20261104">
+/* Preserve the original lilac background and remove the old off-white preview layer. */
+.flow .swipe-preview-step,.flow .swipe-ghost{display:none!important}
+.flow .step,.flow .step.out,.flow .step.out-down{background:transparent!important;background-color:transparent!important}
+.flow .modal,.flow .modal #box,.flow .field-row,.flow .phone-field-wrap{background:transparent!important;background-color:transparent!important}
+.flow .field,.flow input.field,.flow textarea.field{
+ background:transparent!important;background-color:transparent!important;
+ background-image:none!important;
+ -webkit-background-clip:text!important;background-clip:text!important;
+ -webkit-box-shadow:none!important;box-shadow:none!important;
+ font-family:"Source Sans 3","Source Sans Pro",Arial,Helvetica,sans-serif!important;
+ font-weight:400!important;color:#263330!important;-webkit-text-fill-color:#263330!important;
+}
+.flow .field:-webkit-autofill,.flow .field:-webkit-autofill:hover,.flow .field:-webkit-autofill:focus,.flow .field:-webkit-autofill:active{
+ background-color:transparent!important;background-image:none!important;
+ -webkit-background-clip:text!important;background-clip:text!important;
+ -webkit-box-shadow:none!important;box-shadow:none!important;
+ -webkit-text-fill-color:#263330!important;caret-color:#263330!important;
+}
+.flow .field:autofill{background:transparent!important;box-shadow:none!important}
+@media(max-width:760px){.flow .step{contain:layout style}}
+</style>
+<script id="bes-ios-swipe-preview-repair">
+/* The obsolete interactive preview was rendering a second form panel over the current one. */
+if(typeof realSwipeEnabled==='function')realSwipeEnabled=function(){return false};
+</script>
 </body></html>
 <style>
 .bg,#ytbg,
