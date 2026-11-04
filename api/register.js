@@ -45,7 +45,17 @@ module.exports=async function handler(req,res){
   const required=['firstName','lastName','phone','email','opticalStore','role','city','streetAddress','usesMyopiaManagement','knowsMyoless'];
   if(!b.partnerAnswers||['rooft'].some(k=>!String(b.partnerAnswers[k]||'').trim()))return res.status(400).json({error:'MISSING_PARTNER_ANSWERS'});
   if(!b.gdprConsent||b.imageConsent!==true||required.some(k=>!String(b[k]??'').trim()))return res.status(400).json({error:'MISSING_FIELDS'});
-  if(!/\d/.test(String(b.streetAddress||'')))return res.status(400).json({error:'INVALID_STREET_ADDRESS'});
+  if(!/^.{3,}\s*,?\s+(?:nr\.?\s*)?\d+[A-Za-z]?(?:\/\d+[A-Za-z]?)?$/i.test(String(b.streetAddress||'').trim()))return res.status(400).json({error:'INVALID_STREET_ADDRESS'});
+  // Revalidate the street against mapped Moldova street names on the server.
+  const streetParts=String(b.streetAddress||'').trim().match(/^(.+?)\s*,?\s+(?:nr\.?\s*)?(\d+[A-Za-z]?(?:\/\d+[A-Za-z]?)?)$/i);
+  if(!streetParts)return res.status(400).json({error:'INVALID_STREET_ADDRESS'});
+  try{
+   const u=new URL('https://photon.komoot.io/api/');u.searchParams.set('q',streetParts[1]+', '+String(b.city||'')+', Moldova');u.searchParams.set('limit','15');
+   const r=await fetch(u,{headers:{'User-Agent':'BES-Event-Registration/1.0 (address validation)'}});
+   if(!r.ok)throw new Error('geocoding failed');const result=await r.json();
+   const norm=x=>String(x||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim().toLowerCase();
+   if(!(result.features||[]).some(x=>x.properties?.countrycode==='MD'&&norm(x.properties.street)===norm(streetParts[1])))return res.status(400).json({error:'INVALID_STREET_ADDRESS'});
+  }catch(e){console.error('street verification',e.message);return res.status(503).json({error:'STREET_LOOKUP_UNAVAILABLE'})}
   const email=normalizeEmail(b.email);
   if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))return res.status(400).json({error:'INVALID_EMAIL'});
   if(String(b.country||'MD').toUpperCase()!=='MD')return res.status(400).json({error:'MOLDOVA_ONLY'});
