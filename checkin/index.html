@@ -186,6 +186,37 @@ function setLanguage(next){
 }
 document.querySelectorAll('.lang-btn').forEach(el=>el.addEventListener('click',()=>setLanguage(el.dataset.lang)));
 function msg(text,kind=''){statusEl.textContent=text;statusEl.className='status '+kind}
+// Subtle synthesized feedback. Audio is unlocked by the participant's tap on iOS.
+let audioContext=null;
+function unlockFeedback(){
+ try{
+  const AC=window.AudioContext||window.webkitAudioContext;
+  if(!AC)return;
+  if(!audioContext)audioContext=new AC();
+  if(audioContext.state==='suspended')audioContext.resume().catch(()=>{});
+ }catch(_){}
+}
+function feedbackTone(correct){
+ try{
+  if(!audioContext||audioContext.state!=='running')return;
+  const now=audioContext.currentTime;
+  const notes=correct?[[659.25,0,.11],[880,.13,.18]]:[[330,0,.14],[246.94,.15,.2]];
+  for(const [frequency,offset,duration] of notes){
+   const osc=audioContext.createOscillator();
+   const gain=audioContext.createGain();
+   osc.type=correct?'sine':'triangle';
+   osc.frequency.setValueAtTime(frequency,now+offset);
+   gain.gain.setValueAtTime(.0001,now+offset);
+   gain.gain.exponentialRampToValueAtTime(correct?.085:.065,now+offset+.018);
+   gain.gain.exponentialRampToValueAtTime(.0001,now+offset+duration);
+   osc.connect(gain);gain.connect(audioContext.destination);
+   osc.start(now+offset);osc.stop(now+offset+duration+.015);
+  }
+ }catch(_){}
+}
+document.getElementById('pin-entry').addEventListener('pointerdown',unlockFeedback,{passive:true});
+document.getElementById('pin-entry').addEventListener('touchstart',unlockFeedback,{passive:true});
+
 async function confirmCode(value){
  if(busy||value===lastSubmitted)return;
  busy=true;lastSubmitted=value;const id=++requestId;
@@ -195,9 +226,10 @@ async function confirmCode(value){
   const d=await r.json().catch(()=>({}));
   if(id!==requestId)return;
   if(r.ok&&d.ok){
+   feedbackTone(true);
    msg(d.already?strings[lang].already:strings[lang].ok+[d.firstName,d.lastName].filter(Boolean).join(' ')+'!','ok');
    code.value='';code.blur();paintPin();
-  }else{msg(strings[lang].invalid,'err');lastSubmitted=''}
+  }else{feedbackTone(false);msg(strings[lang].invalid,'err');lastSubmitted=''}
  }catch(e){if(id===requestId){msg(strings[lang].error,'err');lastSubmitted=''}}
  finally{if(id===requestId)busy=false}
 }
@@ -206,6 +238,7 @@ function paintPin(){const digits=code.value;pinBoxes.forEach((box,i)=>{box.textC
 code.addEventListener('focus',paintPin);
 code.addEventListener('blur',paintPin);
 code.addEventListener('input',()=>{
+ unlockFeedback();
  const clean=code.value.replace(/\\D/g,'').slice(0,4);
  if(code.value!==clean)code.value=clean;
  paintPin();
