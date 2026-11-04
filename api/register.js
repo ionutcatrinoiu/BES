@@ -88,6 +88,6 @@ module.exports=async function handler(req,res){
   if(e.message==='INVALID_EMAIL')return res.status(400).json({error:'INVALID_EMAIL'});
   if(e.message==='DUPLICATE_PHONE')return res.status(409).json({error:'DUPLICATE_PHONE'});
   if(e.message==='INVALID_PHONE')return res.status(400).json({error:'INVALID_PHONE'});
-  console.error(e);return res.status(500).json({error:'SAVE_FAILED'});
+  console.error('BES registration failed:',e);return res.status(500).json({error: e.message==='BES_FIREBASE_ADMIN_CONFIG is not configured'?'DATABASE_NOT_CONFIGURED':'SAVE_FAILED'});
  }
 }

@@ -147,9 +147,9 @@ function applyHeroLanguage(){
  }[lang];
  if(d)d.innerHTML=copy[0]+'<br><span class="hero-light"><span class="accent">'+copy[1]+'</span> '+copy[2]+'</span>';
  if(m)m.innerHTML='<span class="hero-bold">'+copy[3]+'</span> <span class="hero-semi"><span class="accent">'+copy[1]+'</span><br>'+copy[2]+'</span>';
- if(sub)sub.textContent=uiText('Cum educăm o generație să vadă mai bine.');
- if(go)go.textContent=uiText('ÎNSCRIE-TE LA PREZENTARE');
- if(ev)ev.textContent=uiText('SNOO · 2026 · ROMÂNIA');
+ if(sub)sub.textContent='More brands. More knowledge. More business.';
+ if(go)go.textContent=({ro:'ÎNSCRIE-TE LA EVENIMENT',en:'REGISTER FOR THE EVENT',ru:'ЗАРЕГИСТРИРОВАТЬСЯ НА МЕРОПРИЯТИЕ'}[lang]);
+ if(ev)ev.textContent='BES · 2026 · CHIȘINĂU';
 }
 function setLanguage(language){
  if(typeof registrationSubmitted!=='undefined'&&registrationSubmitted)return;
