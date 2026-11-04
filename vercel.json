@@ -6,12 +6,6 @@
     "api/admin/login.js": {
       "maxDuration": 10
     },
-    "api/admin/me.js": {
-      "maxDuration": 10
-    },
-    "api/admin/logout.js": {
-      "maxDuration": 10
-    },
     "api/admin/data.js": {
       "maxDuration": 60
     },
@@ -29,6 +23,9 @@
     },
     "api/admin/reminder-test.js": {
       "maxDuration": 30
+    },
+    "api/admin/session.js": {
+      "maxDuration": 10
     }
   },
   "headers": [
@@ -43,6 +40,14 @@
     }
   ],
   "rewrites": [
+    {
+      "source": "/api/admin/me",
+      "destination": "/api/admin/session?operation=me"
+    },
+    {
+      "source": "/api/admin/logout",
+      "destination": "/api/admin/session?operation=logout"
+    },
     {
       "source": "/admin",
       "destination": "/admin/index.html"
