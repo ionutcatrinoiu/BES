@@ -1,9 +1,0 @@
-Brand Experience Summit, actualizare 4 noiembrie 2026
-
-Aplicate: sigle color originale disponibile, fara filtru alb-negru; afisare completa, BES 2026 Chisinau, slogan nou, footer neutru, buton liquid glass, paleta interioara verde deschis, numai MD pentru localitati si telefoane +373, verificarea e-mailului nu mai blocheaza navigarea la indisponibilitatea API-ului. Un e-mail deja inregistrat continua sa fie respins.
-
-VIDEO: in proiect ramane fundalul video existent, cu redare continua. Clipurile Pexels cerute nu au putut fi descarcate in mediul de executie; NU sunt incluse in montaj. Pentru montajul final sunt necesare fisierele video MP4 originale.
-
-EMY Optic: ramane text, nu a fost furnizat fisierul logo oficial.
-
-Necesita testare live: Firebase, Brevo, email/check-in, toate traducerile si listele complete de sate MD.
