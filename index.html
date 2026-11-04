@@ -252,7 +252,7 @@ async function loadRomaniaCities(){
  catch(e){localitiesFailed=true;MD_CITIES=MD_CITIES_STATIC;rebuildCityIndex();console.error('Lista localităților din România nu a putut fi încărcată',e)}
 }
 MD_CITIES=MD_CITIES_STATIC;rebuildCityIndex();
-const A=[['IDENTITATE','Care este prenumele tău?','Începem cu tine.','first','Prenume','text'],['IDENTITATE','Care este numele tău?','Completează numele de familie.','last','Nume','text'],['OPTICA TA','Ce optică reprezinți?','Denumirea opticii medicale.','optic','Denumirea opticii','text'],['OPTICA TA','Care este rolul tău în optică?','Selectează rolul care te reprezintă.','role','','role'],['LOCAȚIE','În ce localitate se află optica?','Construim adresa pas cu pas.','city','Localitate','text'],['LOCAȚIE','Strada și număr','Introdu strada și numărul imobilului.','street','Stradă, număr','text'],['CONTACT','Lasă-ne numărul tău de telefon','Număr mobil din Republica Moldova, prefix +373.','phone','','tel'],['CONTACT','Adresa ta de e-mail','Adresa de e-mail este necesară pentru confirmarea și reminderul participării.','email','nume@exemplu.ro','email'],['ROOFT','Care este experiența sau interesul dumneavoastră în utilizarea lentilelor de contact speciale?','Selectați varianta care descrie cel mai bine experiența sau interesul dumneavoastră.','partnerRooft','','rooftChoice']];function norm(s){return String(s||'').trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/ş/g,'s').replace(/ţ/g,'t')}function buc(s){const v=norm(s).replace(/^municipiul\s+/,'').trim();return v==='bucuresti'}function countryPrefix(){return S.country==='MD'?'+373':'+40'}function nationalPhone(v){let d=String(v||'').replace(/\D/g,'');const prefix=S.country==='MD'?'373':'40';if(d.startsWith('00'+prefix))d=d.slice(prefix.length+2);else if(d.startsWith(prefix))d=d.slice(prefix.length);if(d.startsWith('0'))d=d.slice(1);return d}function ph(v){const d=nationalPhone(v);return S.country==='MD'?/^[67]\d{7}$/.test(d):/^7\d{8}$/.test(d)}function cap(v){return String(v).trim().toLocaleLowerCase('ro-RO').replace(/(^|[\s\-'])\p{L}/gu,m=>m.toLocaleUpperCase('ro-RO'))}function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;')}function start(){if(window.cancelHomeSwipePreview)window.cancelHomeSwipePreview();flow.style.transform='';flow.style.transition='';flow.style.opacity='';flow.style.clipPath='';flow.classList.add('open','liquid-open');resetParticipant();render();setTimeout(()=>flow.classList.remove('liquid-open'),850)}function render(){
+const A=[['IDENTITATE','Care este prenumele tău?','Începem cu tine.','first','Prenume','text'],['IDENTITATE','Care este numele tău?','Completează numele de familie.','last','Nume','text'],['OPTICA TA','Ce optică reprezinți?','Denumirea opticii medicale.','optic','Denumirea opticii','text'],['OPTICA TA','Care este rolul tău în optică?','Selectează rolul care te reprezintă.','role','','role'],['LOCAȚIE','În ce localitate se află optica?','Construim adresa pas cu pas.','city','Localitate','text'],['LOCAȚIE','Strada și număr','Introdu strada și numărul imobilului.','street','Stradă, număr','text'],['CONTACT','Lasă-ne numărul tău de telefon','Introdu un număr de telefon valabil.','phone','','tel'],['CONTACT','Adresa ta de e-mail','Adresa de e-mail este necesară pentru confirmarea și reminderul participării.','email','nume@exemplu.ro','email'],['ROOFT','Care este experiența sau interesul dumneavoastră în utilizarea lentilelor de contact speciale?','Selectați varianta care descrie cel mai bine experiența sau interesul dumneavoastră.','partnerRooft','','rooftChoice']];function norm(s){return String(s||'').trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/ş/g,'s').replace(/ţ/g,'t')}function buc(s){const v=norm(s).replace(/^municipiul\s+/,'').trim();return v==='bucuresti'}function countryPrefix(){return S.country==='MD'?'+373':'+40'}function nationalPhone(v){let d=String(v||'').replace(/\D/g,'');const prefix=S.country==='MD'?'373':'40';if(d.startsWith('00'+prefix))d=d.slice(prefix.length+2);else if(d.startsWith(prefix))d=d.slice(prefix.length);if(d.startsWith('0'))d=d.slice(1);return d}function ph(v){const d=nationalPhone(v);return S.country==='MD'?/^[67]\d{7}$/.test(d):/^7\d{8}$/.test(d)}function cap(v){return String(v).trim().toLocaleLowerCase('ro-RO').replace(/(^|[\s\-'])\p{L}/gu,m=>m.toLocaleUpperCase('ro-RO'))}function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;')}function start(){if(window.cancelHomeSwipePreview)window.cancelHomeSwipePreview();flow.style.transform='';flow.style.transition='';flow.style.opacity='';flow.style.clipPath='';flow.classList.add('open','liquid-open');resetParticipant();render();setTimeout(()=>flow.classList.remove('liquid-open'),850)}function render(){
 lock=false;
 let sk=false,total=A.length;
 if(!S.gdpr){
@@ -900,10 +900,7 @@ body:has(.flow.open) > .bes-agenda-trigger{display:none!important;visibility:hid
 .flow .field:autofill{background:transparent!important;box-shadow:none!important}
 @media(max-width:760px){.flow .step{contain:layout style}}
 </style>
-<script id="bes-ios-swipe-preview-repair">
-/* The obsolete interactive preview was rendering a second form panel over the current one. */
-if(typeof realSwipeEnabled==='function')realSwipeEnabled=function(){return false};
-</script>
+
 
 <style id="bes-mobile-final-polish-20261104">
 .flow,.flow.open,.flow .modal,.flow #box,.flow .step,.flow .field-row,.flow .step-nav,.flow .nav {background-color:transparent!important;}
@@ -955,28 +952,7 @@ if(typeof realSwipeEnabled==='function')realSwipeEnabled=function(){return false
 @keyframes besStepOutReverse{from{opacity:1;transform:translate3d(0,0,0)}to{opacity:.55;transform:translate3d(0,64px,0)}}
 @media(prefers-reduced-motion:reduce){.flow #box>.step{animation:none!important}}
 </style>
-<script id="bes-single-swipe-navigation">
-/* A single touch recognizer. Never hijack iOS autofill or native input gestures. */
-(function(){
- let start=null;
- flow.addEventListener('touchstart',function(e){
-  if(!matchMedia('(max-width:760px)').matches||!flow.classList.contains('open')||!S.gdpr||lock||e.touches.length!==1)return;
-  if(e.target.closest('input,textarea,select,button,a,[contenteditable],.city-suggestions'))return;
-  const t=e.touches[0];start={x:t.clientX,y:t.clientY,at:Date.now()};
- },{passive:true});
- flow.addEventListener('bes-legacy-touchend',function(e){
-  if(!start||!e.changedTouches.length)return;
-  const t=e.changedTouches[0],dy=t.clientY-start.y,dx=t.clientX-start.x;
-  start=null;
-  if(Math.abs(dy)<65||Math.abs(dy)<Math.abs(dx)*1.25||lock)return;
-  if(dy>0){back();return}
-  const x=A[n];if(!x)return;
-  if(['role','q1','q2','rooftChoice'].includes(x[5])){if(S[x[3]])choiceForward();return}
-  next(false);
- },{passive:true});
- flow.addEventListener('touchcancel',()=>{start=null},{passive:true});
-})();
-</script>
+
 
 <style id="bes-ios-final-unified">
 html:has(.flow.open),body:has(.flow.open){background:#e9e7f0!important}
@@ -1011,73 +987,41 @@ align-items:center!important;width:100%!important;pointer-events:none!important;
 background:transparent!important;z-index:3!important;will-change:transform}
 .flow.open #box>.bes-touch-preview section{width:100%}
 </style>
-<script id="bes-stable-ios-single-navigation">
+<style id="bes-navigation-final-stable">
+.flow.open #box>.swipe-preview-step,.flow.open #box>.bes-drag-preview,.flow.open #box>.bes-touch-preview{display:none!important}
+.flow.open #box>.step{animation:besStableEnter .42s cubic-bezier(.22,1,.36,1) both!important;filter:none!important}
+.flow.open #box>.step.from-up{animation-name:besStableEnterBack!important}
+.flow.open #box>.step.out{animation:besStableExit .34s cubic-bezier(.4,0,.2,1) forwards!important}
+.flow.open #box>.step.out-down{animation:besStableExitBack .34s cubic-bezier(.4,0,.2,1) forwards!important}
+@keyframes besStableEnter{from{opacity:.35;transform:translate3d(0,68px,0)}to{opacity:1;transform:translate3d(0,0,0)}}
+@keyframes besStableEnterBack{from{opacity:.35;transform:translate3d(0,-68px,0)}to{opacity:1;transform:translate3d(0,0,0)}}
+@keyframes besStableExit{to{opacity:0;transform:translate3d(0,-68px,0)}}
+@keyframes besStableExitBack{to{opacity:0;transform:translate3d(0,68px,0)}}
+html:has(.flow.open),body:has(.flow.open),.flow.open{background-color:#e9e7f0!important}
+.flow.open .step,.flow.open #box{background-color:transparent!important}
+</style>
+<script id="bes-navigation-final-stable">
 (function(){
- const flowEl=document.getElementById('flow'),stage=document.getElementById('box');
- const theme=document.querySelector('meta[name="theme-color"]');
- if(!flowEl||!stage)return;
- const original=theme?.content||'#0a1c21';
- const sync=()=>{if(theme)theme.content=flowEl.classList.contains('open')?'#e9e7f0':original};
- new MutationObserver(sync).observe(flowEl,{attributes:true,attributeFilter:['class']});sync();
- let drag=null,committing=false;
- function clear(){
-  if(!drag)return;
-  const d=drag;drag=null;
-  d.preview?.remove();d.current?.classList.remove('bes-touch-current');
-  if(d.current){d.current.style.transition='';d.current.style.transform='';d.current.style.opacity=''}
- }
- function targetAllowed(el){return !el.closest('input,textarea,select,button,a,label,[contenteditable],.field-row,.city-suggestions')}
- flowEl.addEventListener('touchstart',e=>{
-  if(!flowEl.classList.contains('open')||!S.gdpr||lock||committing||e.touches.length!==1||!targetAllowed(e.target))return;
-  const current=stage.querySelector(':scope > .step');
-  if(!current)return;
-  const t=e.touches[0];drag={x:t.clientX,y:t.clientY,current,dy:0,dir:0,preview:null,step:n};
+ const root=document.getElementById('flow');if(!root)return;
+ let start=null,busy=false;
+ root.addEventListener('touchstart',function(e){
+  start=null;
+  if(!root.classList.contains('open')||!S.gdpr||lock||busy||e.touches.length!==1)return;
+  if(e.target.closest('input,textarea,select,button,a,[contenteditable],.city-suggestions'))return;
+  const t=e.touches[0];start={x:t.clientX,y:t.clientY,n:n,at:Date.now()};
  },{passive:true});
- flowEl.addEventListener('touchmove',e=>{
-  const d=drag;if(!d||e.touches.length!==1||n!==d.step)return;
-  const t=e.touches[0],dy=t.clientY-d.y,dx=t.clientX-d.x;
-  if(Math.abs(dy)<12||Math.abs(dy)<Math.abs(dx)*1.2)return;
-  const dir=dy<0?-1:1;
-  if(dir>0&&n===0)return;
-  if(dir<0){
-   const x=A[n];if(!x)return;
-   if(['role','rooftChoice','q1','q2'].includes(x[5])&&!S[x[3]])return;
-  }
-  if(d.dir&&dir!==d.dir)return;
-  d.dir=dir;d.dy=dy;
-  if(!d.preview){
-   const idx=n+(dir<0?1:-1);if(idx<0||idx>=A.length)return;
-   const preview=document.createElement('div');preview.className='bes-touch-preview';
-   preview.innerHTML=previewMarkup(idx);
-   stage.appendChild(preview);d.preview=preview;
-   d.current.classList.add('bes-touch-current');
-  }
-  const fraction=Math.min(.98,Math.abs(dy)/Math.max(stage.clientHeight,420));
-  d.current.style.transition='none';d.current.style.transform=`translate3d(0,${dy}px,0)`;
-  d.preview.style.transition='none';
-  d.preview.style.transform=`translate3d(0,${dir<0?(1-fraction)*100:-(1-fraction)*100}%,0)`;
-  if(e.cancelable)e.preventDefault();
- },{passive:false});
- flowEl.addEventListener('touchend',()=>{
-  const d=drag;if(!d)return;drag=null;
-  if(!d.preview){d.current.classList.remove('bes-touch-current');d.current.style.transform='';return}
-  const commit=Math.abs(d.dy)>=70&&d.step===n;
-  const easing='transform .36s cubic-bezier(.22,1,.36,1)';
-  d.current.style.transition=easing;d.preview.style.transition=easing;
-  d.current.style.transform=commit?`translate3d(0,${d.dir<0?'-100%':'100%'},0)`:'translate3d(0,0,0)';
-  d.preview.style.transform=commit?'translate3d(0,0,0)':`translate3d(0,${d.dir<0?'100%':'-100%'},0)`;
-  committing=true;
-  setTimeout(()=>{
-   d.preview.remove();d.current.classList.remove('bes-touch-current');
-   d.current.style.transition='';d.current.style.transform='';
-   committing=false;
-   if(!commit||d.step!==n)return;
-   if(d.dir>0){back();return}
-   if(['role','rooftChoice','q1','q2'].includes(A[n][5]))choiceForward();
-   else next(false);
-  },370);
+ root.addEventListener('touchcancel',()=>start=null,{passive:true});
+ root.addEventListener('touchend',function(e){
+  const g=start;start=null;
+  if(!g||busy||lock||g.n!==n||e.changedTouches.length!==1)return;
+  const t=e.changedTouches[0],dy=t.clientY-g.y,dx=t.clientX-g.x;
+  if(Math.abs(dy)<65||Math.abs(dy)<Math.abs(dx)*1.2||Date.now()-g.at>1800)return;
+  busy=true;setTimeout(()=>busy=false,650);
+  if(dy>0){back();return}
+  const x=A[n];if(!x)return;
+  if(['role','q1','q2','rooftChoice'].includes(x[5]))choiceForward();
+  else next(false);
  },{passive:true});
- flowEl.addEventListener('touchcancel',clear,{passive:true});
 })();
 </script></body></html>
 <style>
@@ -1848,32 +1792,7 @@ body>header .bes-agenda-trigger{position:relative!important;top:auto!important;r
 }
 .flow .step,.flow #box{background:transparent!important}
 </style>
-<script id="bes-ios-final-swipe">
-(function(){
- // Gestures are interpreted only on release. No cloned pages, transforms or preview panels.
- // This avoids the former double-page flash and does not block native text selection.
- let gesture=null;
- const root=document.getElementById('flow');
- if(!root)return;
- root.addEventListener('touchstart',function(e){
-  if(!root.classList.contains('open')||e.touches.length!==1)return;
-  const t=e.touches[0];gesture={x:t.clientX,y:t.clientY,at:Date.now(),step:n};
- },{passive:true,capture:true});
- root.addEventListener('touchcancel',()=>{gesture=null},{passive:true,capture:true});
- root.addEventListener('bes-legacy-touchend',function(e){
-  const g=gesture;gesture=null;
-  if(!g||!root.classList.contains('open')||e.changedTouches.length!==1||lock||g.step!==n)return;
-  const t=e.changedTouches[0],dy=t.clientY-g.y,dx=t.clientX-g.x;
-  if(Math.abs(dy)<75||Math.abs(dy)<Math.abs(dx)*1.3||Date.now()-g.at>1700)return;
-  if(!S.gdpr){if(dy<0)acceptGdpr();return;}
-  if(dy>0){back();return;}
-  const current=A[n];if(!current)return;
-  const kind=current[5];
-  if(kind==='role'||kind==='rooftChoice'||kind==='q1'||kind==='q2')choiceForward();
-  else next(false);
- },{passive:true,capture:true});
-})();
-</script>
+
 
 <style id="bes-iphone-final-font-motion">
 .flow .phone-field-wrap .phone-prefix,.flow .phone-field-wrap input.phone-field,.flow input.field,.flow textarea.field,.flow input.field::placeholder,.flow textarea.field::placeholder{font-family:"Source Sans 3","Source Sans Pro",Arial,Helvetica,sans-serif!important;font-size:27px!important;font-weight:400!important;font-style:normal!important;letter-spacing:0!important;line-height:1.3!important;font-variant:normal!important;-webkit-text-size-adjust:100%!important;font-synthesis:none!important}
