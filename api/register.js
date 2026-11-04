@@ -42,7 +42,7 @@ module.exports=async function handler(req,res){
    const email=normalizeEmail(b.email);
    return res.status(200).json({exists:await emailExists(db(),email)});
   }
-  const required=['firstName','lastName','phone','email','opticalStore','role','city','streetAddress','usesMyopiaManagement','knowsMyoless'];
+  const required=['firstName','lastName','phone','email','opticalStore','role','city','streetAddress'];
   if(!b.partnerAnswers||['rooft'].some(k=>!String(b.partnerAnswers[k]||'').trim()))return res.status(400).json({error:'MISSING_PARTNER_ANSWERS'});
   if(!b.gdprConsent||b.imageConsent!==true||required.some(k=>!String(b[k]??'').trim()))return res.status(400).json({error:'MISSING_FIELDS'});
   if(!/^.{3,}\s*,?\s+(?:nr\.?\s*)?\d+[A-Za-z]?(?:\/\d+[A-Za-z]?)?$/i.test(String(b.streetAddress||'').trim()))return res.status(400).json({error:'INVALID_STREET_ADDRESS'});
