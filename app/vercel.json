@@ -1,0 +1,79 @@
+{
+  "functions": {
+    "api/register.js": {
+      "maxDuration": 15
+    },
+    "api/admin/login.js": {
+      "maxDuration": 10
+    },
+    "api/admin/data.js": {
+      "maxDuration": 60
+    },
+    "api/check-phone.js": {
+      "maxDuration": 10
+    },
+    "api/cron/reminders.js": {
+      "maxDuration": 60
+    },
+    "api/checkin.js": {
+      "maxDuration": 10
+    },
+    "api/admin/session.js": {
+      "maxDuration": 10
+    },
+    "api/admin/actions.js": {
+      "maxDuration": 60
+    }
+  },
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/api/admin/gift",
+      "destination": "/api/admin/actions?action=gift"
+    },
+    {
+      "source": "/api/admin/confirmation-backfill",
+      "destination": "/api/admin/actions?action=confirmation-backfill"
+    },
+    {
+      "source": "/api/admin/export",
+      "destination": "/api/admin/actions?action=export"
+    },
+    {
+      "source": "/api/admin/reminder-test",
+      "destination": "/api/admin/actions?action=reminder-test"
+    },
+    {
+      "source": "/api/admin/me",
+      "destination": "/api/admin/session?operation=me"
+    },
+    {
+      "source": "/api/admin/logout",
+      "destination": "/api/admin/session?operation=logout"
+    },
+    {
+      "source": "/admin",
+      "destination": "/admin/index.html"
+    },
+    {
+      "source": "/checkin",
+      "destination": "/checkin/index.html"
+    }
+  ],
+  "crons": [
+    {
+      "path": "/api/cron/reminders",
+      "schedule": "30 5 * * *"
+    }
+  ]
+}

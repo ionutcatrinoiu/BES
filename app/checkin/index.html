@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#080808">
+<title>Check-in · Avvero x SNOO</title>
+<link rel="icon" href="/favicon.ico">
+<style>
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;font-family:Arial,Helvetica,sans-serif;background:#070707;color:#fff;overflow:hidden}
+.bg{position:fixed;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}.shade{position:fixed;inset:0;background:rgba(0,0,0,.42);z-index:1}
+.page{position:relative;z-index:2;min-height:100%;display:flex;align-items:center;justify-content:center;padding:24px}
+.card{width:min(92vw,560px);padding:28px 28px 24px;border:1px solid rgba(255,255,255,.20);border-radius:28px;background:rgba(8,8,8,.42);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);box-shadow:0 24px 80px rgba(0,0,0,.32);text-align:center}
+.eyebrow{font-size:12px;letter-spacing:.24em;text-transform:uppercase;opacity:.72;margin-bottom:10px}.title{font-size:clamp(28px,5vw,42px);font-weight:700;margin:0}.subtitle{margin:10px 0 22px;font-size:15px;opacity:.78}
+.scan-wrap{position:relative;width:min(76vw,360px);aspect-ratio:1;margin:0 auto;border-radius:24px;overflow:hidden;background:#050505;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)}
+#reader{width:100%;height:100%}#reader video{width:100%!important;height:100%!important;object-fit:cover!important}#reader__scan_region{min-height:100%!important}#reader img{display:none!important}#reader__dashboard{display:none!important}
+.corner{position:absolute;width:46px;height:46px;border-color:#fff;border-style:solid;z-index:5;pointer-events:none}.c1{top:18px;left:18px;border-width:3px 0 0 3px;border-radius:12px 0 0 0}.c2{top:18px;right:18px;border-width:3px 3px 0 0;border-radius:0 12px 0 0}.c3{bottom:18px;left:18px;border-width:0 0 3px 3px;border-radius:0 0 0 12px}.c4{bottom:18px;right:18px;border-width:0 3px 3px 0;border-radius:0 0 12px 0}
+.status{min-height:72px;margin-top:18px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:5px}.status strong{font-size:20px}.status span{font-size:14px;opacity:.8}.status.ok strong{color:#8ef0b0}.status.warn strong{color:#ffd979}.status.err strong{color:#ff9a9a}
+.manual-link{display:inline-block;margin-top:15px;border:0;background:none;color:#fff;opacity:.66;font-size:13px;text-decoration:underline;text-underline-offset:4px;cursor:pointer}.manual-link:hover{opacity:1}.searchbox{display:none;margin-top:14px;text-align:left}.searchbox.open{display:block}.searchrow{display:flex;gap:8px}.searchrow input{flex:1;min-width:0;border:1px solid rgba(255,255,255,.22);background:rgba(0,0,0,.28);color:#fff;border-radius:12px;padding:12px 14px;outline:0;font-size:16px}.results{margin-top:8px;max-height:210px;overflow:auto}.result{width:100%;text-align:left;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.08);color:#fff;border-radius:12px;padding:10px 12px;margin-top:6px;cursor:pointer}.result b{display:block}.result small{opacity:.68}.empty{font-size:12px;opacity:.6;padding:10px 2px}.start{appearance:none;border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.12);color:#fff;border-radius:999px;padding:13px 22px;font-weight:700;font-size:15px;cursor:pointer}.start[hidden]{display:none}.hint{font-size:12px;opacity:.58;margin-top:4px}.presentation-title{margin:18px auto 5px;max-width:430px;color:#fff}.presentation-title strong{display:block;font-size:18px;line-height:1.22;font-weight:700}.presentation-title span{display:block;margin-top:5px;font-size:13px;line-height:1.4;font-weight:400;opacity:.78}
+@media(max-width:600px){.page{padding:14px}.card{padding:22px 16px 18px;border-radius:24px}.scan-wrap{width:min(82vw,350px)}}
+/* Dedicated mobile/tablet search mode. The normal check-in card is not compressed when the keyboard opens. */
+@media(max-width:1024px){
+  html,body{height:100%;min-height:100%}
+  .page{min-height:100dvh;height:100dvh}
+  body.search-mode .page{height:var(--vvh,100dvh);min-height:var(--vvh,100dvh);align-items:center;justify-content:center;padding:12px;overflow:hidden}
+  body.search-mode .card{width:min(88vw,520px);height:auto;max-height:min(560px,calc(var(--vvh,100dvh) - 24px));margin:auto;padding:18px;border-radius:22px;display:flex;flex-direction:column;overflow:hidden;text-align:left}
+  body.search-mode .eyebrow{font-size:10px;margin:0 0 4px;flex:0 0 auto}
+  body.search-mode .title{font-size:28px;line-height:1.05;margin:0;flex:0 0 auto}
+  body.search-mode .subtitle{display:none}
+  body.search-mode .scan-wrap,body.search-mode .presentation-title,body.search-mode .status,body.search-mode .start{display:none!important}
+  body.search-mode .manual-link{margin:8px 0 8px;padding:0;text-align:left;font-size:14px;opacity:.9;text-decoration:none;pointer-events:none;flex:0 0 auto}
+  body.search-mode .searchbox{display:flex!important;flex:0 1 auto;min-height:0;margin:0;flex-direction:column;overflow:hidden}
+  body.search-mode .searchrow{flex:0 0 auto}
+  body.search-mode .searchrow input{font-size:16px;padding:13px 14px}
+  body.search-mode .results{flex:0 1 auto;min-height:0;max-height:min(300px,calc(var(--vvh,100dvh) - 210px));margin-top:8px;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding-bottom:8px}
+  body.search-mode .result{padding:11px 12px}
+  body.search-mode .back-scan{display:block}
+}
+.back-scan{display:none;align-self:center;margin:10px auto 2px;border:0;background:none;color:#fff;opacity:.72;font-size:13px;text-decoration:underline;text-underline-offset:4px;cursor:pointer}.back-scan:active{opacity:1}
+.auth-gate{display:none;margin:24px auto 4px;max-width:360px}.auth-gate.open{display:block}.auth-gate p{font-size:14px;line-height:1.45;opacity:.76;margin:0 0 18px}.pinrow{display:flex;justify-content:center;gap:10px}.pinbox{width:54px;height:58px;border:1px solid rgba(255,255,255,.24);background:rgba(0,0,0,.30);color:#fff;border-radius:14px;font-size:25px;font-weight:700;outline:0;text-align:center;caret-color:transparent;transition:border-color .18s,background .18s,transform .18s}.pinbox:focus{border-color:rgba(255,255,255,.72);background:rgba(255,255,255,.10);transform:translateY(-1px)}.pinbox.filled{border-color:rgba(255,255,255,.42)}.pinrow.error .pinbox{border-color:#ff8f8f;animation:pinshake .28s ease}.auth-error{min-height:18px;margin-top:11px;color:#ff9a9a;font-size:12px;text-align:center}@keyframes pinshake{0%,100%{transform:translateX(0)}25%{transform:translateX(-3px)}75%{transform:translateX(3px)}}@media(max-width:380px){.pinbox{width:49px;height:55px}.pinrow{gap:8px}}.locked .scan-wrap,.locked .presentation-title,.locked .status,.locked #start,.locked #manualToggle,.locked .searchbox{display:none!important}
+
+
+</style>
+</head>
+<body>
+<video id="checkinBgVideo" class="bg" autoplay muted loop playsinline webkit-playsinline preload="auto" disablepictureinpicture><source src="/myoless-background.mp4" type="video/mp4"></video>
+<div class="shade"></div>
+<main class="page"><section class="card">
+<div class="eyebrow">AVVERO × SNOO · 2026</div>
+<h1 class="title">Check-in</h1>
+<p class="subtitle" id="subtitle">Scanează codul QR primit pe e-mail</p>
+<div id="authGate" class="auth-gate"><p>Introdu PIN-ul de recepție pentru a activa scannerul și căutarea participanților.</p><div id="pinRow" class="pinrow" aria-label="PIN recepție"><input class="pinbox" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="1" autocomplete="one-time-code" aria-label="Cifra 1"><input class="pinbox" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="1" autocomplete="off" aria-label="Cifra 2"><input class="pinbox" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="1" autocomplete="off" aria-label="Cifra 3"><input class="pinbox" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="1" autocomplete="off" aria-label="Cifra 4"></div><div id="authError" class="auth-error"></div></div>
+<div class="scan-wrap">
+  <div id="reader"></div><i class="corner c1"></i><i class="corner c2"></i><i class="corner c3"></i><i class="corner c4"></i>
+</div>
+<div id="status" class="status"></div>
+<button id="start" class="start" hidden>Activează camera</button>
+<div class="presentation-title"><strong>Managementul miopiei dincolo de lentilă:</strong><span>Cum educăm o generație să vadă mai bine.</span></div>
+<button id="manualToggle" class="manual-link" type="button">Caută participant</button>
+<div id="searchbox" class="searchbox"><div class="searchrow"><input id="participantSearch" autocomplete="off" placeholder="Nume, optică, telefon, cod sau e-mail"></div><div id="results" class="results"></div><button id="backScan" class="back-scan" type="button">Înapoi la scanare</button></div>
+</section></main>
+<script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+<script>
+(function(){
+  const v=document.getElementById('checkinBgVideo');
+  if(!v)return;
+  v.muted=true; v.defaultMuted=true; v.volume=0; v.playsInline=true;
+  v.setAttribute('muted',''); v.setAttribute('playsinline',''); v.setAttribute('webkit-playsinline',''); v.removeAttribute('controls');
+  const playBg=()=>{ try{ const p=v.play(); if(p&&typeof p.catch==='function') p.catch(()=>{}); }catch(e){} };
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',playBg,{once:true}); else playBg();
+  window.addEventListener('load',playBg,{once:true});
+  window.addEventListener('pageshow',playBg);
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden)playBg()});
+  v.addEventListener('canplay',playBg);
+  ['touchstart','pointerdown','click'].forEach(ev=>document.addEventListener(ev,playBg,{passive:true,capture:true}));
+})();
+</script>
+<script>
+const statusEl=document.getElementById('status'),startBtn=document.getElementById('start'),manualToggle=document.getElementById('manualToggle'),searchbox=document.getElementById('searchbox'),searchInput=document.getElementById('participantSearch'),resultsEl=document.getElementById('results'),backScan=document.getElementById('backScan'),authGate=document.getElementById('authGate'),pinRow=document.getElementById('pinRow'),pinBoxes=[...document.querySelectorAll('.pinbox')],authError=document.getElementById('authError'),subtitle=document.getElementById('subtitle');
+let scanner=null,busy=false,lastToken='',lastAt=0,resetTimer=null,searchTimer=null,audioCtx=null;
+const baseInnerHeight=window.innerHeight;
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function setStatus(kind,title='',sub=''){statusEl.className='status '+(kind||'');statusEl.innerHTML=title?'<strong>'+esc(title)+'</strong>'+(sub?'<span>'+esc(sub)+'</span>':''):''}
+function clearLater(){clearTimeout(resetTimer);resetTimer=setTimeout(()=>setStatus('','',''),5000)}
+function successSound(){try{const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;if(!audioCtx)audioCtx=new AC();if(audioCtx.state==='suspended')audioCtx.resume();const now=audioCtx.currentTime;[880,1174.66].forEach((freq,i)=>{const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.type='sine';o.frequency.value=freq;g.gain.setValueAtTime(0.0001,now+i*.11);g.gain.exponentialRampToValueAtTime(.13,now+i*.11+.015);g.gain.exponentialRampToValueAtTime(.0001,now+i*.11+.14);o.connect(g);g.connect(audioCtx.destination);o.start(now+i*.11);o.stop(now+i*.11+.15)})}catch(e){}}
+function alertSound(type){try{const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;if(!audioCtx)audioCtx=new AC();if(audioCtx.state==='suspended')audioCtx.resume();const now=audioCtx.currentTime;const seq=type==='already'?[659.25,523.25]:[220,174.61];seq.forEach((freq,i)=>{const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.type=type==='already'?'triangle':'square';o.frequency.value=freq;g.gain.setValueAtTime(0.0001,now+i*.13);g.gain.exponentialRampToValueAtTime(type==='already'?.10:.075,now+i*.13+.012);g.gain.exponentialRampToValueAtTime(.0001,now+i*.13+.16);o.connect(g);g.connect(audioCtx.destination);o.start(now+i*.13);o.stop(now+i*.13+.17)})}catch(e){}}
+function tokenFrom(text){const s=String(text||'').trim();const m=s.match(/^SNOO:([a-f0-9]{48})$/i);if(m)return m[1].toLowerCase();if(/^[a-f0-9]{48}$/i.test(s))return s.toLowerCase();try{const u=new URL(s);const t=u.searchParams.get('token')||'';return /^[a-f0-9]{48}$/i.test(t)?t.toLowerCase():''}catch(e){return ''}}
+function timeRO(iso){try{return new Intl.DateTimeFormat('ro-RO',{hour:'2-digit',minute:'2-digit'}).format(new Date(iso))}catch(e){return ''}}
+function showResult(d){const name=[d.firstName,d.lastName].filter(Boolean).join(' ');if(d.already){setStatus('warn','Participant deja înregistrat',[name,d.participationCode,'Check-in '+timeRO(d.checkedInAt)].filter(Boolean).join(' · '));alertSound('already')}else{setStatus('ok','Check-in realizat',[name,d.participationCode].filter(Boolean).join(' · '));successSound()}clearLater()}
+async function onScan(decoded){const token=tokenFrom(decoded);if(!token){setStatus('err','Cod QR invalid','Acest cod nu aparține evenimentului.');alertSound('invalid');clearLater();return}const now=Date.now();if(busy||(token===lastToken&&now-lastAt<6000))return;busy=true;lastToken=token;lastAt=now;setStatus('','Se verifică…','Un moment');try{const r=await fetch('/api/checkin',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({token})});const d=await r.json().catch(()=>({}));if(r.ok&&d.ok)showResult(d);else{setStatus('err','Cod QR invalid','Participantul nu a fost identificat.');alertSound('invalid');clearLater()}}catch(e){setStatus('err','Conexiune indisponibilă','Încearcă din nou.');clearLater()}finally{setTimeout(()=>{busy=false},1800)}}
+async function startScanner(){startBtn.hidden=true;if(!window.Html5Qrcode){setStatus('err','Scanner indisponibil','Reîncarcă pagina și verifică conexiunea.');return}scanner=new Html5Qrcode('reader');try{await scanner.start({facingMode:'environment'},{fps:12,qrbox:(w,h)=>{const s=Math.floor(Math.min(w,h)*.72);return{width:s,height:s}},aspectRatio:1},onScan,()=>{});setStatus('','','')}catch(e){setStatus('err','Camera nu a pornit','Permite accesul la cameră și încearcă din nou.');startBtn.hidden=false}}
+async function searchParticipants(){const q=searchInput.value.trim();if(q.length<3){resultsEl.innerHTML=q?'<div class="empty">Introdu minimum 3 caractere.</div>':'';return}resultsEl.innerHTML='<div class="empty">Se caută…</div>';try{const r=await fetch('/api/checkin',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'search',query:q})});const d=await r.json();const items=d.results||[];resultsEl.innerHTML=items.length?items.map(x=>'<button class="result" data-id="'+esc(x.id)+'"><b>'+esc([x.firstName,x.lastName].filter(Boolean).join(' '))+'</b><small>'+esc([x.opticalStore,x.phoneMasked,x.participationCode].filter(Boolean).join(' · '))+(x.checkedIn?' · Deja prezent':'')+'</small></button>').join(''):'<div class="empty">Niciun participant găsit.</div>';document.querySelectorAll('.result').forEach(b=>b.onclick=()=>manualCheckin(b.dataset.id))}catch(e){resultsEl.innerHTML='<div class="empty">Căutarea nu este disponibilă momentan.</div>'}}
+async function manualCheckin(id){if(busy)return;busy=true;setStatus('','Se verifică…','Un moment');try{const r=await fetch('/api/checkin',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'manual',registrationId:id})});const d=await r.json().catch(()=>({}));if(r.ok&&d.ok){showResult(d);searchInput.value='';resultsEl.innerHTML='';searchbox.classList.remove('open');leaveSearchMode()}else{setStatus('err','Check-in nereușit','Participantul nu a putut fi înregistrat.');clearLater()}}catch(e){setStatus('err','Conexiune indisponibilă','Încearcă din nou.');clearLater()}finally{setTimeout(()=>{busy=false},1000)}}
+function syncVisualViewport(){
+  const vv=window.visualViewport;
+  const h=Math.round(vv?vv.height:window.innerHeight);
+  const top=Math.round(vv?vv.offsetTop:0);
+  document.documentElement.style.setProperty('--vvh',h+'px');
+  document.documentElement.style.setProperty('--vvtop',top+'px');
+  if(document.body.classList.contains('search-mode')){
+    document.querySelector('.page').style.transform=top?'translateY('+top+'px)':'';
+  }else{
+    document.querySelector('.page').style.transform='';
+  }
+}
+function enterSearchMode(){
+  searchbox.classList.add('open');
+  document.body.classList.add('search-mode');
+  syncVisualViewport();
+  setTimeout(()=>{searchInput.focus({preventScroll:true});syncVisualViewport()},60);
+}
+function leaveSearchMode(){
+  document.body.classList.remove('search-mode');
+  document.querySelector('.page').style.transform='';
+  syncVisualViewport();
+}
+if(window.visualViewport){visualViewport.addEventListener('resize',syncVisualViewport);visualViewport.addEventListener('scroll',syncVisualViewport)}
+window.addEventListener('resize',syncVisualViewport);
+searchInput.addEventListener('focus',()=>{document.body.classList.add('search-mode');setTimeout(syncVisualViewport,50)});
+searchInput.addEventListener('blur',()=>setTimeout(syncVisualViewport,120));
+function backToScanner(){searchInput.value='';resultsEl.innerHTML='';searchbox.classList.remove('open');searchInput.blur();leaveSearchMode()}
+backScan.onclick=backToScanner;
+manualToggle.onclick=()=>{if(searchbox.classList.contains('open')){backToScanner()}else{enterSearchMode()}};searchInput.addEventListener('input',()=>{clearTimeout(searchTimer);searchTimer=setTimeout(searchParticipants,260)});startBtn.addEventListener('click',startScanner);
+let loginBusy=false;
+function clearPin(focus=true){pinBoxes.forEach(b=>{b.value='';b.classList.remove('filled');b.disabled=false});pinRow.classList.remove('error');if(focus)setTimeout(()=>pinBoxes[0].focus(),40)}
+function showLogin(message=''){document.body.classList.add('locked');authGate.classList.add('open');subtitle.textContent='Acces recepție';authError.textContent=message;clearPin(!message)}
+function unlock(){document.body.classList.remove('locked');authGate.classList.remove('open');subtitle.textContent='Scanează codul QR primit pe e-mail';authError.textContent='';clearPin(false);syncVisualViewport();startScanner()}
+async function authStatus(){try{const r=await fetch('/api/checkin',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'auth-status'})});const d=await r.json().catch(()=>({}));if(r.ok&&d.authorized)return unlock();showLogin(d.configured===false?'PIN-ul de recepție nu este configurat corect.':'')}catch(e){showLogin('Nu s-a putut verifica accesul. Reîncarcă pagina.')}}
+async function login(){if(loginBusy)return;const value=pinBoxes.map(b=>b.value).join('');if(!/^\d{4}$/.test(value))return;loginBusy=true;pinBoxes.forEach(b=>b.disabled=true);authError.textContent='Se verifică…';try{const r=await fetch('/api/checkin',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'login',pin:value})});const d=await r.json().catch(()=>({}));if(r.ok&&d.authorized){unlock()}else{authError.textContent=d.error==='CHECKIN_AUTH_NOT_CONFIGURED'?'PIN-ul de recepție trebuie să aibă exact 4 cifre.':'PIN incorect.';pinRow.classList.add('error');setTimeout(()=>clearPin(true),420)}}catch(e){authError.textContent='Conexiune indisponibilă.';clearPin(true)}finally{loginBusy=false}}
+pinBoxes.forEach((box,i)=>{box.addEventListener('input',()=>{box.value=box.value.replace(/\D/g,'').slice(-1);box.classList.toggle('filled',!!box.value);authError.textContent='';pinRow.classList.remove('error');if(box.value&&i<3)pinBoxes[i+1].focus();if(pinBoxes.every(b=>b.value))login()});box.addEventListener('keydown',e=>{if(e.key==='Backspace'&&!box.value&&i>0){pinBoxes[i-1].value='';pinBoxes[i-1].classList.remove('filled');pinBoxes[i-1].focus()}if(e.key==='ArrowLeft'&&i>0)pinBoxes[i-1].focus();if(e.key==='ArrowRight'&&i<3)pinBoxes[i+1].focus()});box.addEventListener('focus',()=>box.select())});
+pinRow.addEventListener('paste',e=>{const d=(e.clipboardData||window.clipboardData).getData('text').replace(/\D/g,'').slice(0,4);if(!d)return;e.preventDefault();pinBoxes.forEach((b,i)=>{b.value=d[i]||'';b.classList.toggle('filled',!!b.value)});if(d.length===4)login();else pinBoxes[d.length].focus()});
+syncVisualViewport();showLogin();authStatus();
+</script>
+</body></html>

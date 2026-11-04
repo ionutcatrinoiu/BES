@@ -1000,28 +1000,66 @@ background:transparent!important;z-index:3!important;will-change:transform}
 html:has(.flow.open),body:has(.flow.open),.flow.open{background-color:#e9e7f0!important}
 .flow.open .step,.flow.open #box{background-color:transparent!important}
 </style>
-<script id="bes-navigation-final-stable">
+<style id="bes-direct-finger-css">
+@media(max-width:760px){
+.flow.open #box{position:relative!important;overflow:hidden!important;isolation:isolate!important;touch-action:pan-x!important}
+.flow.open #box>.step{animation:none!important;transition:none!important;filter:none!important;position:relative!important;z-index:2!important;will-change:transform!important}
+.flow.open #box>.finger-next{position:absolute!important;inset:0!important;z-index:1!important;width:100%!important;display:flex!important;align-items:center!important;pointer-events:none!important;will-change:transform!important;opacity:1!important;background:transparent!important}
+.flow.open #box>.finger-next>section{width:100%!important}
+.flow.open #box>.finger-next h2{font-size:clamp(38px,4.7vw,66px);font-weight:700;line-height:1.02;letter-spacing:-.055em;margin:16px 0 12px}
+.flow.open #box>.finger-next small{font-size:8px;letter-spacing:.22em;color:#728083}
+.flow.open #box>.finger-next p{font-size:12px;color:#6d797b;margin:0 0 32px}
+}
+</style>
+<script id="bes-direct-finger-engine">
 (function(){
- const root=document.getElementById('flow');if(!root)return;
- let start=null,busy=false;
- root.addEventListener('touchstart',function(e){
-  start=null;
-  if(!root.classList.contains('open')||!S.gdpr||lock||busy||e.touches.length!==1)return;
-  if(e.target.closest('input,textarea,select,button,a,[contenteditable],.city-suggestions'))return;
-  const t=e.touches[0];start={x:t.clientX,y:t.clientY,n:n,at:Date.now()};
- },{passive:true});
- root.addEventListener('touchcancel',()=>start=null,{passive:true});
- root.addEventListener('touchend',function(e){
-  const g=start;start=null;
-  if(!g||busy||lock||g.n!==n||e.changedTouches.length!==1)return;
-  const t=e.changedTouches[0],dy=t.clientY-g.y,dx=t.clientX-g.x;
-  if(Math.abs(dy)<65||Math.abs(dy)<Math.abs(dx)*1.2||Date.now()-g.at>1800)return;
-  busy=true;setTimeout(()=>busy=false,650);
-  if(dy>0){back();return}
-  const x=A[n];if(!x)return;
-  if(['role','q1','q2','rooftChoice'].includes(x[5]))choiceForward();
-  else next(false);
- },{passive:true});
+const root=document.getElementById('flow');if(!root)return;
+let g=null,animating=false;
+const H=()=>Math.max(300,box.clientHeight);
+function clean(){if(!g)return;g.current?.style.removeProperty('transform');g.current?.style.removeProperty('transition');g.preview?.remove();g=null}
+function previewFor(index){
+ if(index<0||index>=A.length)return null;
+ const node=document.createElement('div');node.className='finger-next';
+ node.innerHTML=previewMarkup(index);box.appendChild(node);return node;
+}
+function can(e){return matchMedia('(max-width:760px)').matches&&root.classList.contains('open')&&S.gdpr&&!animating&&!lock&&n>=0&&n<A.length&&e.touches.length===1}
+root.addEventListener('touchstart',function(e){
+ clean();if(!can(e)||e.target.closest('button,a,input,textarea,select,[contenteditable],.city-suggestions,.field-row'))return;
+ const t=e.touches[0];g={x:t.clientX,y:t.clientY,dy:0,dir:0,at:Date.now(),page:n,current:box.querySelector(':scope>.step'),preview:null};
+},{passive:true});
+root.addEventListener('touchmove',function(e){
+ if(!g||e.touches.length!==1)return;
+ const t=e.touches[0],dx=t.clientX-g.x,dy=t.clientY-g.y;
+ if(!g.dir){if(Math.abs(dy)<9)return;if(Math.abs(dx)>Math.abs(dy)*.9){clean();return}g.dir=dy<0?1:-1;
+   g.preview=previewFor(n+g.dir);if(!g.preview){clean();return}
+ }
+ if((dy<0?1:-1)!==g.dir)return;
+ g.dy=dy;const height=H();
+ g.current.style.setProperty('transform','translate3d(0,'+dy+'px,0)','important');
+ g.preview.style.transform='translate3d(0,'+(dy+(g.dir===1?height:-height))+'px,0)';
+ if(e.cancelable)e.preventDefault();
+},{passive:false});
+root.addEventListener('touchend',function(e){
+ if(!g)return;const st=g;if(!st.preview||st.page!==n){clean();return}
+ const dy=st.dy,elapsed=Date.now()-st.at,commit=Math.abs(dy)>Math.min(115,H()*.16)||(Math.abs(dy)>45&&Math.abs(dy)/Math.max(elapsed,1)>.5);
+ animating=true;const height=H();const duration=commit?Math.max(190,Math.min(390,340*(1-Math.abs(dy)/height))):260;
+ const ease='cubic-bezier(.22,.72,.22,1)';
+ st.current.style.setProperty('transition','transform '+duration+'ms '+ease,'important');
+ st.preview.style.transition='transform '+duration+'ms '+ease;
+ const target=commit?(st.dir===1?-height:height):0;
+ requestAnimationFrame(()=>{st.current.style.setProperty('transform','translate3d(0,'+target+'px,0)','important');st.preview.style.transform='translate3d(0,'+(target+(st.dir===1?height:-height))+'px,0)'});
+ setTimeout(()=>{
+   const dir=st.dir;clean();animating=false;
+   if(!commit)return;
+   if(dir<0){back();return}
+   const x=A[n];if(!x)return;
+   if(['role','q1','q2','rooftChoice'].includes(x[5]))choiceForward();else next(false);
+ },duration+25);
+},{passive:true});
+root.addEventListener('touchcancel',clean,{passive:true});
+// The consent page can return to intro without trapping the scroll or leaving a transformed overlay.
+const oldBack=back;
+back=function(){if(!S.gdpr){commitGdprHome();return}if(n===0){S.gdpr=false;commitGdprHome();return}return oldBack()};
 })();
 </script></body></html>
 <style>
@@ -1817,67 +1855,4 @@ body>header .bes-agenda-trigger{position:relative!important;top:auto!important;r
  .flow.open .swipe-preview-step,.flow.open .bes-drag-preview,.flow.open .bes-touch-preview{display:none!important}
 }
 </style>
-<script id="snoo-gesture-engine">
-(function(){
- const root=document.getElementById('flow');
- if(!root)return;
- let gesture=null, pending=null;
- const reduced=()=>window.matchMedia('(prefers-reduced-motion: reduce)').matches;
- const reset=(el)=>{if(!el)return;el.style.transition='transform 330ms cubic-bezier(.18,.85,.28,1), opacity 290ms ease';el.style.transform='translate3d(0,0,0)';el.style.opacity='1'};
- // Replace the old page-switch animation. The outgoing page is a noninteractive snapshot.
- move=function(change,direction='forward'){
-   if(lock)return;
-   lock=true;transitionDir=direction;swipeNavigation=false;
-   const old=box.querySelector(':scope > .step');
-   const drag=pending;pending=null;
-   if(!old||reduced()) {change();render();lock=false;return}
-   const before=old.getBoundingClientRect(),container=box.getBoundingClientRect();
-   const dy=drag?drag.dy:0;
-   const ghost=old.cloneNode(true);
-   ghost.querySelectorAll('[id]').forEach(x=>x.removeAttribute('id'));
-   ghost.className='snoo-gesture-ghost';ghost.setAttribute('aria-hidden','true');
-   Object.assign(ghost.style,{position:'absolute',left:(before.left-container.left)+'px',top:(before.top-container.top-dy)+'px',width:before.width+'px',margin:'0',zIndex:'3',transform:'translate3d(0,'+dy+'px,0)',opacity:'1',pointerEvents:'none'});
-   change();render();
-   const incoming=box.querySelector(':scope > .step');
-   box.appendChild(ghost);
-   if(!incoming){ghost.remove();lock=false;return}
-   const sign=direction==='back'?1:-1;
-   const travel=Math.min(210,Math.max(120,window.innerHeight*.22));
-   incoming.style.animation='none';incoming.style.opacity='0';
-   incoming.style.transform='translate3d(0,'+(-sign*travel)+'px,0)';
-   const duration=440, easing='cubic-bezier(.22,.65,.3,1)';
-   const a=ghost.animate([{transform:'translate3d(0,'+dy+'px,0)',opacity:1},{transform:'translate3d(0,'+(sign*(travel+Math.abs(dy)*.25))+'px,0)',opacity:0}],{duration,easing,fill:'forwards'});
-   const b=incoming.animate([{transform:'translate3d(0,'+(-sign*travel)+'px,0)',opacity:0},{transform:'translate3d(0,0,0)',opacity:1}],{duration,easing,fill:'forwards'});
-   Promise.allSettled([a.finished,b.finished]).then(()=>{a.cancel();b.cancel();ghost.remove();incoming.style.transform='';incoming.style.opacity='';incoming.style.animation='none';lock=false});
- };
- function active(e){return matchMedia('(max-width:760px)').matches&&root.classList.contains('open')&&S.gdpr&&!lock&&n>=0&&n<A.length&&e.touches.length===1}
- window.addEventListener('touchstart',function(e){
-   gesture=null;if(!active(e))return;
-   if(e.target.closest('button,a,input,textarea,select,[contenteditable],.city-suggestions,.field-row'))return;
-   const t=e.touches[0];gesture={x:t.clientX,y:t.clientY,dy:0,at:performance.now(),page:n,step:box.querySelector(':scope > .step'),moved:false};
-   e.stopImmediatePropagation();
- },{capture:true,passive:true});
- window.addEventListener('touchmove',function(e){
-   const g=gesture;if(!g||e.touches.length!==1)return;
-   const t=e.touches[0],dx=t.clientX-g.x,dy=t.clientY-g.y;
-   if(!g.moved&&Math.abs(dy)<9)return;
-   if(!g.moved&&Math.abs(dy)<Math.abs(dx)*1.15){gesture=null;return}
-   g.moved=true;g.dy=dy;
-   if(g.step){g.step.style.animation='none';g.step.style.transition='none';g.step.style.transform='translate3d(0,'+dy+'px,0)';g.step.style.opacity=String(Math.max(.90,1-Math.abs(dy)/1900))}
-   if(e.cancelable)e.preventDefault();e.stopImmediatePropagation();
- },{capture:true,passive:false});
- window.addEventListener('touchend',function(e){
-   const g=gesture;gesture=null;if(!g)return;
-   e.stopImmediatePropagation();
-   if(!g.moved||g.page!==n||lock){reset(g.step);return}
-   const elapsed=performance.now()-g.at;
-   if(!(Math.abs(g.dy)>65||(Math.abs(g.dy)>30&&Math.abs(g.dy)/Math.max(elapsed,1)>.42))){reset(g.step);return}
-   pending=g;
-   if(g.dy>0){if(n===0){pending=null;reset(g.step);back()}else back();return}
-   const x=A[n];if(!x){pending=null;reset(g.step);return}
-   if(['role','q1','q2','rooftChoice'].includes(x[5]))choiceForward();else next(false);
-   setTimeout(()=>{if(pending===g){pending=null;reset(g.step)}},750);
- },{capture:true,passive:true});
- window.addEventListener('touchcancel',function(e){if(gesture){reset(gesture.step);gesture=null;e.stopImmediatePropagation()}},{capture:true,passive:true});
-})();
-</script>
+

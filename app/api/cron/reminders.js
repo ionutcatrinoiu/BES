@@ -1,0 +1,1 @@
+module.exports=async(req,res)=>{if(req.headers.authorization!==`Bearer ${process.env.CRON_SECRET}`||!process.env.CRON_SECRET)return res.status(401).end();return res.status(200).json({paused:true,message:'BES reminder templates require configuration before activation'});};

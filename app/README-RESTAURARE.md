@@ -1,0 +1,1 @@
+Versiune restaurata din BES-2026-remediere-ios-autofill.zip. Au fost modificate exclusiv metadatele Open Graph/Twitter din index.html si adaugata imaginea bes-share-2026-v3.png. Stilurile, scripturile si clipul video sunt neschimbate. Publicati pachetul si verificati previzualizarea WhatsApp dupa actualizarea cache-ului.
