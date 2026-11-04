@@ -634,11 +634,20 @@ const __renderVerified=render;render=function(){__renderVerified();wireVerifiedU
 function previewMarkup(idx){
  const x=A[idx];if(!x)return '';
  let body='';
- if(x[5]==='role')body='<div class="field-row"><div class="answers"><button class="answer">Medic oftalmolog</button><button class="answer">Optometrist</button></div></div>';
- else if(x[5]==='q1'||x[5]==='q2')body='<div class="field-row"><div class="answers"><button class="answer">Da</button><button class="answer">Nu</button></div></div>';
- else body=`<div class="field-row"><input class="field" tabindex="-1" placeholder="${esc(x[4])}"></div>`;
- return `<section class="step ${x[3]==='partnerRooft'?'rooft-step':''}"><small>${esc(x[0])}</small><h2>${x[3]==='partnerRooft'&&window.APP_LANG==='ro'?'<span class="rooft-title-line">Care este experiența sau interesul dumneavoastră</span><span class="rooft-title-line">în utilizarea lentilelor de contact speciale?</span>':esc(x[1])}</h2><p>${esc(x[2])}</p>${body}</section>`;
+ if(x[5]==='rooftChoice'){
+  const options=ROOFT_OPTIONS[window.APP_LANG]||ROOFT_OPTIONS.ro;
+  body=`<div class="answers rooft-answers">${options.map((v,i)=>`<button type="button" class="answer ${S.partnerRooft===ROOFT_OPTIONS.ro[i]?'sel':''}" tabindex="-1">${esc(v)}</button>`).join('')}</div>`;
+ }else if(x[5]==='role'){
+  body='<div class="answers role-answers">'+['Medic oftalmolog','Optometrist','Administrator','Consilier vânzări','Altul'].map(v=>`<button type="button" class="answer" tabindex="-1">${v}</button>`).join('')+'</div>';
+ }else if(x[5]==='q1'||x[5]==='q2'){
+  body='<div class="answers"><button class="answer" tabindex="-1">Da</button><button class="answer" tabindex="-1">Nu</button></div>';
+ }else{
+  body=`<input class="field" tabindex="-1" placeholder="${esc(x[4])}" value="${esc(S[x[3]]||'')}">`;
+ }
+ const title=x[3]==='partnerRooft'&&window.APP_LANG==='ro'?'<span class="rooft-title-line">Care este experiența sau interesul dumneavoastră</span><span class="rooft-title-line">în utilizarea lentilelor de contact speciale?</span>':esc(x[1]);
+ return `<section class="step ${x[3]==='partnerRooft'?'rooft-step':''}" tabindex="-1"><small>${esc(x[0])}</small><h2>${title}</h2><p>${esc(x[2])}</p><div class="field-row">${body}</div><div class="step-nav" aria-hidden="true"><button class="step-arrow back-arrow" tabindex="-1">‹</button><button class="step-arrow forward-arrow" tabindex="-1">›</button></div></section>`;
 }
+
 let realSwipe=null;
 function realSwipeEnabled(){return matchMedia('(max-width:760px)').matches&&flow.classList.contains('open')&&S.gdpr&&n>=0&&n<A.length}
 function beginInteractiveStepSwipe(e){
@@ -2007,4 +2016,15 @@ html:has(.flow.open),body:has(.flow.open){background-color:#e9e7f0!important}
 .finger-next>.step,.swipe-preview-step>.step{width:100%;max-width:100%;transform:none!important;animation:none!important;opacity:1!important}
 .finger-next>.step h2,.swipe-preview-step>.step h2{font-size:clamp(38px,4.7vw,66px)}
 @media(max-width:760px){.flow.open #box>.finger-next .rooft-step h2,.flow.open #box>.swipe-preview-step .rooft-step h2{font-size:clamp(27px,6.7vw,38px)!important;line-height:1.12!important;letter-spacing:-.038em!important}}
+</style>
+
+<style id="bes-preview-complete-choices-fix">
+@media(max-width:760px){
+ .flow.open #box>.finger-next>.step,
+ .flow.open #box>.swipe-preview-step>.step{box-sizing:border-box!important;width:100%!important;max-width:100%!important}
+ .flow.open #box>.finger-next .field-row,
+ .flow.open #box>.swipe-preview-step .field-row{width:100%!important}
+ .flow.open #box>.finger-next .rooft-answers,
+ .flow.open #box>.swipe-preview-step .rooft-answers{display:flex!important;flex-direction:column!important;opacity:1!important;visibility:visible!important}
+}
 </style>
