@@ -53,7 +53,7 @@ module.exports=async function handler(req,res){
     // Public, code-only self check-in. No PIN, no name search.
     if(action==='self'){
       const value=String(req.body?.code||'').trim();
-      if(!/^\\d{4}$/.test(value))return res.status(400).json({error:'INVALID_CODE'});
+      if(!/^\d{4}$/.test(value))return res.status(400).json({error:'INVALID_CODE'});
       const store=db();
       // Persistent, shared rate limit against guessing four-digit codes.
       const rawIp=String(req.headers['x-forwarded-for']||req.socket?.remoteAddress||'unknown').split(',')[0].trim();
