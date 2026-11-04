@@ -637,7 +637,7 @@ function previewMarkup(idx){
  if(x[5]==='role')body='<div class="field-row"><div class="answers"><button class="answer">Medic oftalmolog</button><button class="answer">Optometrist</button></div></div>';
  else if(x[5]==='q1'||x[5]==='q2')body='<div class="field-row"><div class="answers"><button class="answer">Da</button><button class="answer">Nu</button></div></div>';
  else body=`<div class="field-row"><input class="field" tabindex="-1" placeholder="${esc(x[4])}"></div>`;
- return `<section><small>${esc(x[0])}</small><h2>${esc(x[1])}</h2><p>${esc(x[2])}</p>${body}</section>`;
+ return `<section class="step"><small>${esc(x[0])}</small><h2>${esc(x[1])}</h2><p>${esc(x[2])}</p>${body}</section>`;
 }
 let realSwipe=null;
 function realSwipeEnabled(){return matchMedia('(max-width:760px)').matches&&flow.classList.contains('open')&&S.gdpr&&n>=0&&n<A.length}
@@ -1891,6 +1891,9 @@ function reset(){
 }
 function returnIntro(){
  S.gdpr=false;
+ document.querySelector('meta[name="theme-color"]')?.setAttribute('content','#061315');
+ document.documentElement.style.backgroundColor='#061315';
+ document.body.style.backgroundColor='#061315';
  root.style.transition='transform 340ms cubic-bezier(.22,1,.36,1)';
  root.style.transform='translate3d(0,100dvh,0)';
  setTimeout(()=>{
@@ -1997,3 +2000,10 @@ root.addEventListener('touchcancel',()=>{reset();root.style.transform='';root.st
  update();
 })();
 </script>
+
+<style id="bes-header-step09-correction">
+html:has(.flow:not(.open)),body:has(.flow:not(.open)){background-color:#061315!important}
+html:has(.flow.open),body:has(.flow.open){background-color:#e9e7f0!important}
+.finger-next>.step,.swipe-preview-step>.step{width:100%;max-width:100%;transform:none!important;animation:none!important;opacity:1!important}
+.finger-next>.step h2,.swipe-preview-step>.step h2{font-size:inherit}
+</style>
