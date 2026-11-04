@@ -1,8 +1,8 @@
 const {getFirestore,admin}=require('../../lib/admin/firebase');
 const {sendReminder,ensureQrToken}=require('../../lib/reminder');
 const stages=[
- {id:'r1',date:'2026-11-21',hour:'10:00'},
- {id:'r2',date:'2026-11-27',hour:'10:00'},
+ {id:'r1',date:'2026-11-21',hour:'09:30'},
+ {id:'r2',date:'2026-11-27',hour:'09:30'},
  {id:'r3',date:'2026-11-28',hour:'07:30'}
 ];
 function localParts(now){
