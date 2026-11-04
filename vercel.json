@@ -38,6 +38,10 @@
   ],
   "rewrites": [
     {
+      "source": "/api/admin/email-test",
+      "destination": "/api/admin/actions?action=email-test"
+    },
+    {
       "source": "/api/admin/gift",
       "destination": "/api/admin/actions?action=gift"
     },

@@ -3,7 +3,8 @@ const handlers = {
   gift: require('../../lib/admin/handlers/gift'),
   'confirmation-backfill': require('../../lib/admin/handlers/confirmation-backfill'),
   export: require('../../lib/admin/handlers/export'),
-  'reminder-test': require('../../lib/admin/handlers/reminder-test')
+  'reminder-test': require('../../lib/admin/handlers/reminder-test'),
+  'email-test': require('../../lib/admin/handlers/email-test')
 };
 module.exports = async (req, res) => {
   const action = String((req.query || {}).action || '');
