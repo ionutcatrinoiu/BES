@@ -300,12 +300,12 @@ function acceptGdpr(){
  if(!c||!c.checked||!image||!image.checked){document.getElementById('gdprErr').textContent=uiText('Ambele acorduri sunt obligatorii pentru a continua.');return}
  S.gdprConsent=true;S.imageConsent=true;S.gdpr=true;render();
 }
-function move(cb,dir='forward'){if(lock)return;lock=true;transitionDir=dir;const step=box.querySelector('.step');if(swipeNavigation){swipeNavigation=false;cb();render();return}if(step)step.classList.add(dir==='back'?'out-down':'out');setTimeout(()=>{cb();render()},390)}async function next(keepKeyboard=false){const field=document.getElementById('field');const err=document.getElementById('err');let x=A[n];if(!x||!field)return;let v=field.value.trim();if(x[3]==='street'){v=formatStreet(v);field.value=v}if(x[3]==='phone'){v=nationalPhone(v);field.value=v}if(!v){err.textContent=uiText(x[3]==='email'?'Introdu adresa ta de e-mail pentru a continua.':'Completează acest câmp pentru a continua.');return}if(x[3]==='email'&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)){err.textContent=uiText('Introdu o adresă de e-mail validă.');return}if(x[3]==='street'&&!/\d/.test(v)){err.textContent=uiText('Introdu și numărul imobilului.');return}if(x[3]==='phone'&&!ph(v)){err.textContent=uiText('Introdu un număr de telefon valid.');return}if(x[3]==='email'){const stepIndex=n;v=normalizeEmailClient(v);const ok=await checkEmailAvailability(v);if(!ok||n!==stepIndex||document.getElementById('field')!==field||normalizeEmailClient(field.value)!==v)return}
+function move(cb,dir='forward'){if(lock)return;lock=true;transitionDir=dir;const step=box.querySelector('.step');if(swipeNavigation){swipeNavigation=false;cb();render();return}if(step)step.classList.add(dir==='back'?'out-down':'out');setTimeout(()=>{cb();render()},390)}async function next(keepKeyboard=false){const field=document.getElementById('field');const err=document.getElementById('err');let x=A[n];if(!x||!field)return;let v=field.value.trim();if(x[3]==='street'){v=formatStreet(v);field.value=v}if(x[3]==='phone'){v=nationalPhone(v);field.value=v}if(!v){swipeNavigation=false;err.textContent=uiText(x[3]==='email'?'Introdu adresa ta de e-mail pentru a continua.':'Completează acest câmp pentru a continua.');return}if(x[3]==='email'&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)){err.textContent=uiText('Introdu o adresă de e-mail validă.');return}if(x[3]==='street'&&!/\d/.test(v)){err.textContent=uiText('Introdu și numărul imobilului.');return}if(x[3]==='phone'&&!ph(v)){err.textContent=uiText('Introdu un număr de telefon valid.');return}if(x[3]==='email'){const stepIndex=n;v=normalizeEmailClient(v);const ok=await checkEmailAvailability(v);if(!ok||n!==stepIndex||document.getElementById('field')!==field||normalizeEmailClient(field.value)!==v)return}
 if(x[3]==='phone'){const stepIndex=n;const ok=await checkPhoneAvailability(normalizePhoneClient(v));if(!ok||n!==stepIndex||document.getElementById('field')!==field||nationalPhone(field.value)!==v)return}
 if(x[3]==='city'){
  const matches=MD_CITIES_STATIC.filter(c=>cityKey(c.name)===cityKey(v));
  let c=matches.find(c=>c.country===S.country&&cityKey(c.county)===cityKey(S.county))||matches.find(c=>c.country===S.country)||matches[0];
- if(!c){err.textContent=uiText('Selectează o localitate din Republica Moldova din lista afișată.');return}
+ if(!c){swipeNavigation=false;err.textContent=uiText('Selectează o localitate din Republica Moldova.');return}
  v=c.name;const oldCountry=S.country;S.city=c.name;S.county=c.county||'';S.country='MD';if(oldCountry!==S.country)S.phone='';
 }
 if(x[3]==='county'){
@@ -332,7 +332,7 @@ function registrationPayload(){return {
  partnerAnswers:{sdRoyal:S.partnerSd,emyOptic:S.partnerEmy,totalmed:S.partnerTotalmed,avvero:S.partnerAvvero,rooft:S.partnerRooft},gdprConsent:true,imageConsent:S.imageConsent,event:'Brand Experience Summit 2026',language:(window.APP_LANG||'ro')
 }}
 let gdprHomeTouchY=0,gdprHomeTouchX=0,gdprHomeTouchAt=0,gdprHomeDragging=false;
-function gdprSwipeHomeEnabled(){return window.matchMedia('(max-width:760px)').matches&&flow.classList.contains('open')&&!S.gdpr}
+function gdprSwipeHomeEnabled(){return false} // Gesture handled by unified finger engine
 function resetGdprHomeDrag(animated=true){
  flow.style.transition=animated?'transform .26s cubic-bezier(.22,1,.36,1),opacity .22s ease':'';
  flow.style.transform='translate3d(0,0,0)';flow.style.opacity='1';
@@ -1014,52 +1014,49 @@ html:has(.flow.open),body:has(.flow.open),.flow.open{background-color:#e9e7f0!im
 <script id="bes-direct-finger-engine">
 (function(){
 const root=document.getElementById('flow');if(!root)return;
-let g=null,animating=false;
-const H=()=>Math.max(300,box.clientHeight);
-function clean(){if(!g)return;g.current?.style.removeProperty('transform');g.current?.style.removeProperty('transition');g.preview?.remove();g=null}
-function previewFor(index){
- if(index<0||index>=A.length)return null;
- const node=document.createElement('div');node.className='finger-next';
- node.innerHTML=previewMarkup(index);box.appendChild(node);return node;
-}
-function can(e){return matchMedia('(max-width:760px)').matches&&root.classList.contains('open')&&S.gdpr&&!animating&&!lock&&n>=0&&n<A.length&&e.touches.length===1}
+let gesture=null,animating=false;
+const height=()=>Math.max(300,box.clientHeight);
+function cleanup(){if(!gesture)return;gesture.current?.style.removeProperty('transform');gesture.current?.style.removeProperty('transition');gesture.preview?.remove();gesture=null;root.style.removeProperty('transform');root.style.removeProperty('transition')}
+function validConsent(){const a=document.getElementById('gdprConsent'),b=document.getElementById('imageConsent');if(a?.checked&&b?.checked)return true;const err=document.getElementById('gdprErr');if(err)err.textContent=uiText('Ambele acorduri sunt obligatorii pentru a continua.');return false}
+function createPreview(index){if(index<0||index>=A.length)return null;const el=document.createElement('div');el.className='finger-next';el.innerHTML=previewMarkup(index);box.appendChild(el);return el}
 root.addEventListener('touchstart',function(e){
- clean();if(!can(e)||e.target.closest('button,a,input,textarea,select,[contenteditable],.city-suggestions,.field-row'))return;
- const t=e.touches[0];g={x:t.clientX,y:t.clientY,dy:0,dir:0,at:Date.now(),page:n,current:box.querySelector(':scope>.step'),preview:null};
+ if(animating||!matchMedia('(max-width:760px)').matches||!root.classList.contains('open')||e.touches.length!==1||e.target.closest('button,a,input,textarea,select,label,[contenteditable],.city-suggestions,.field-row'))return;
+ const t=e.touches[0];gesture={x:t.clientX,y:t.clientY,dy:0,dir:0,at:Date.now(),page:n,consent:!S.gdpr,current:box.querySelector(':scope #box>.step'),preview:null,home:false};
 },{passive:true});
 root.addEventListener('touchmove',function(e){
- if(!g||e.touches.length!==1)return;
+ const g=gesture;if(!g||e.touches.length!==1)return;
  const t=e.touches[0],dx=t.clientX-g.x,dy=t.clientY-g.y;
- if(!g.dir){if(Math.abs(dy)<9)return;if(Math.abs(dx)>Math.abs(dy)*.9){clean();return}g.dir=dy<0?1:-1;
-   g.preview=previewFor(n+g.dir);if(!g.preview){clean();return}
+ if(!g.dir){if(Math.abs(dy)<9)return;if(Math.abs(dx)>Math.abs(dy)*.9){cleanup();return}g.dir=dy<0?1:-1;
+   if(g.consent&&g.dir===-1){g.home=true}
+   else {const index=g.consent?0:n+g.dir;g.preview=createPreview(index);if(!g.preview){cleanup();return}}
  }
  if((dy<0?1:-1)!==g.dir)return;
- g.dy=dy;const height=H();
- g.current.style.setProperty('transform','translate3d(0,'+dy+'px,0)','important');
- g.preview.style.transform='translate3d(0,'+(dy+(g.dir===1?height:-height))+'px,0)';
+ g.dy=dy;const h=height();
+ if(g.home){root.style.setProperty('transform','translate3d(0,'+Math.max(0,dy)+'px,0)','important')}
+ else {g.current?.style.setProperty('transform','translate3d(0,'+dy+'px,0)','important');g.preview.style.transform='translate3d(0,'+(dy+(g.dir===1?h:-h))+'px,0)'}
  if(e.cancelable)e.preventDefault();
 },{passive:false});
-root.addEventListener('touchend',function(e){
- if(!g)return;const st=g;if(!st.preview||st.page!==n){clean();return}
- const dy=st.dy,elapsed=Date.now()-st.at,commit=Math.abs(dy)>Math.min(115,H()*.16)||(Math.abs(dy)>45&&Math.abs(dy)/Math.max(elapsed,1)>.5);
- animating=true;const height=H();const duration=commit?Math.max(190,Math.min(390,340*(1-Math.abs(dy)/height))):260;
- const ease='cubic-bezier(.22,.72,.22,1)';
- st.current.style.setProperty('transition','transform '+duration+'ms '+ease,'important');
- st.preview.style.transition='transform '+duration+'ms '+ease;
- const target=commit?(st.dir===1?-height:height):0;
- requestAnimationFrame(()=>{st.current.style.setProperty('transform','translate3d(0,'+target+'px,0)','important');st.preview.style.transform='translate3d(0,'+(target+(st.dir===1?height:-height))+'px,0)'});
+root.addEventListener('touchend',function(){
+ const g=gesture;if(!g)return;
+ if(!g.dir){cleanup();return}
+ let commit=Math.abs(g.dy)>Math.min(115,height()*.16)||(Math.abs(g.dy)>45&&Math.abs(g.dy)/Math.max(Date.now()-g.at,1)>.5);
+ if(g.consent&&g.dir===1&&!validConsent())commit=false;
+ animating=true;const h=g.home?window.innerHeight:height(),duration=commit?Math.max(190,Math.min(390,340*(1-Math.abs(g.dy)/h))):260;
+ const easing='cubic-bezier(.22,.72,.22,1)',target=commit?(g.dir===1?-h:h):0;
+ if(g.home){root.style.setProperty('transition','transform '+duration+'ms '+easing,'important');requestAnimationFrame(()=>root.style.setProperty('transform','translate3d(0,'+(commit?h:0)+'px,0)','important'))}
+ else {g.current?.style.setProperty('transition','transform '+duration+'ms '+easing,'important');g.preview.style.transition='transform '+duration+'ms '+easing;requestAnimationFrame(()=>{g.current?.style.setProperty('transform','translate3d(0,'+target+'px,0)','important');g.preview.style.transform='translate3d(0,'+(target+(g.dir===1?h:-h))+'px,0)'})}
  setTimeout(()=>{
-   const dir=st.dir;clean();animating=false;
-   if(!commit)return;
-   if(dir<0){back();return}
-   const x=A[n];if(!x)return;
-   if(['role','q1','q2','rooftChoice'].includes(x[5]))choiceForward();else next(false);
+  const dir=g.dir,consent=g.consent,home=g.home;cleanup();animating=false;
+  if(!commit)return;
+  if(home){root.classList.remove('open','liquid-open');n=0;render();return}
+  if(consent){S.gdprConsent=true;S.imageConsent=true;S.gdpr=true;n=0;render();return}
+  if(dir<0){swipeNavigation=true;back();return}
+  const x=A[n];if(!x)return;
+  if(['role','q1','q2','rooftChoice'].includes(x[5])){swipeNavigation=true;choiceForward()}
+  else {swipeNavigation=true;next(false)}
  },duration+25);
 },{passive:true});
-root.addEventListener('touchcancel',clean,{passive:true});
-// The consent page can return to intro without trapping the scroll or leaving a transformed overlay.
-const oldBack=back;
-back=function(){if(!S.gdpr){commitGdprHome();return}if(n===0){S.gdpr=false;commitGdprHome();return}return oldBack()};
+root.addEventListener('touchcancel',()=>{cleanup();animating=false},{passive:true});
 })();
 </script></body></html>
 <style>
