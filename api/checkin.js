@@ -1,7 +1,7 @@
 const admin=require('firebase-admin');
 const crypto=require('crypto');
 
-const COOKIE='snoo_checkin_session';
+const COOKIE='bes_checkin_session';
 const MAX_AGE=12*60*60;
 function db(){
   if(!admin.apps.length){
@@ -11,8 +11,8 @@ function db(){
   }
   return admin.firestore();
 }
-function secret(){return process.env.SNOO_ADMIN_SESSION_SECRET||''}
-function pin(){return String(process.env.SNOO_CHECKIN_PIN||'')}
+function secret(){return process.env.BES_ADMIN_SESSION_SECRET||''}
+function pin(){return String(process.env.BES_CHECKIN_PIN||'')}
 function sign(v){return crypto.createHmac('sha256',secret()).update(v).digest('hex')}
 function safeEq(a,b){const x=Buffer.from(String(a)),y=Buffer.from(String(b));return x.length===y.length&&crypto.timingSafeEqual(x,y)}
 function cookieMap(req){return Object.fromEntries(String(req.headers.cookie||'').split(';').map(v=>v.trim()).filter(Boolean).map(v=>{const i=v.indexOf('=');return i<0?[v,'']:[v.slice(0,i),decodeURIComponent(v.slice(i+1))]}))}
@@ -25,7 +25,7 @@ function authorized(req){
 function setSession(res){const stamp=String(Math.floor(Date.now()/1000));const value=`${stamp}.${sign(stamp)}`;res.setHeader('Set-Cookie',`${COOKIE}=${encodeURIComponent(value)}; Path=/; Max-Age=${MAX_AGE}; HttpOnly; Secure; SameSite=Strict`)}
 function extractToken(value=''){
   const raw=String(value||'').trim();
-  const snoo=raw.match(/^BES:([a-f0-9]{48})$/i);if(snoo)return snoo[1].toLowerCase();
+  const bes=raw.match(/^BES:([a-f0-9]{48})$/i);if(bes)return bes[1].toLowerCase();
   if(/^[a-f0-9]{48}$/i.test(raw)) return raw.toLowerCase();
   try{const u=new URL(raw);const token=String(u.searchParams.get('token')||'').trim();if(/^[a-f0-9]{48}$/i.test(token))return token.toLowerCase()}catch(_e){}
   return '';
