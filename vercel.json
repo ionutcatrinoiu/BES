@@ -9,9 +9,6 @@
     "api/admin/data.js": {
       "maxDuration": 60
     },
-    "api/admin/gift.js": {
-      "maxDuration": 10
-    },
     "api/check-phone.js": {
       "maxDuration": 10
     },
@@ -21,11 +18,11 @@
     "api/checkin.js": {
       "maxDuration": 10
     },
-    "api/admin/reminder-test.js": {
-      "maxDuration": 30
-    },
     "api/admin/session.js": {
       "maxDuration": 10
+    },
+    "api/admin/actions.js": {
+      "maxDuration": 60
     }
   },
   "headers": [
@@ -40,6 +37,22 @@
     }
   ],
   "rewrites": [
+    {
+      "source": "/api/admin/gift",
+      "destination": "/api/admin/actions?action=gift"
+    },
+    {
+      "source": "/api/admin/confirmation-backfill",
+      "destination": "/api/admin/actions?action=confirmation-backfill"
+    },
+    {
+      "source": "/api/admin/export",
+      "destination": "/api/admin/actions?action=export"
+    },
+    {
+      "source": "/api/admin/reminder-test",
+      "destination": "/api/admin/actions?action=reminder-test"
+    },
     {
       "source": "/api/admin/me",
       "destination": "/api/admin/session?operation=me"
