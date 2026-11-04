@@ -6,12 +6,10 @@ const EN_STEPS=[
 ['YOUR OPTICAL STORE','Which optical store do you represent?','Enter the name of the optical store.','optic','Optical store name','text'],
 ['YOUR OPTICAL STORE','What is your role?','Select the role that best describes you.','role','','role'],
 ['LOCATION','Which locality is your optical store in?','Let’s build the address step by step.','city','Locality','text'],
-['LOCATION','County or district','The county or district where your optical store is located.','county','County / district','text'],
 ['LOCATION','Street and number','Enter the street and building number.','street','Street, number','text'],
 ['CONTACT','Your phone number','The country prefix is selected automatically from the locality.','phone','','tel'],
 ['CONTACT','Your email address','Your email is required for the confirmation and reminder.','email','name@example.com','email'],
-['PERSPECTIVE','How do you approach myopia?','Do you use dedicated myopia management solutions?','myopia','','q1'],
-['Myoless','How familiar are you with Myoless?','Choose the option that best describes you.','myoless','','q2']
+['ROOFT','What is your experience or interest in using specialty contact lenses?','Select the option that best describes your experience or interest.','partnerRooft','','rooftChoice']
 ];
 const RO_STEPS=A.map(x=>x.slice());
 const EN_TEXT=new Map(Object.entries({
@@ -42,12 +40,10 @@ const RU_STEPS=[
  ['ВАША ОПТИКА','Какую оптику вы представляете?','Укажите название оптики.','optic','Название оптики','text'],
  ['ВАША ОПТИКА','Какова ваша роль в оптике?','Выберите вашу должность.','role','','role'],
  ['АДРЕС','В каком населённом пункте находится оптика?','Укажем адрес шаг за шагом.','city','Населённый пункт','text'],
- ['АДРЕС','Жудец или район','Жудец или район, в котором находится оптика.','county','Жудец / район','text'],
  ['АДРЕС','Улица и номер дома','Укажите улицу и номер дома.','street','Улица, номер дома','text'],
  ['КОНТАКТЫ','Ваш номер телефона','Код страны определяется автоматически по населённому пункту.','phone','','tel'],
  ['КОНТАКТЫ','Ваша электронная почта','Она необходима для подтверждения регистрации и напоминания.','email','name@example.com','email'],
- ['ВАШ ОПЫТ','Как вы подходите к контролю миопии?','Используете ли вы специальные решения для контроля миопии?','myopia','','q1'],
- ['Myoless','Насколько хорошо вы знаете Myoless?','Выберите подходящий вам ответ.','myoless','','q2']
+['ROOFT','Каков ваш опыт или интерес к использованию специальных контактных линз?','Выберите вариант, который лучше всего описывает ваш опыт или интерес.','partnerRooft','','rooftChoice']
 ];
 const EN_EXTRA={
  'Sugestii județe':'County suggestions','Sugestii raioane':'District suggestions',
@@ -160,7 +156,7 @@ function setLanguage(language){
  window.APP_LANG=['ro','en','ru'].includes(language)?language:'ro';document.documentElement.lang=window.APP_LANG;
  A.splice(0,A.length,...({ro:RO_STEPS,en:EN_STEPS,ru:RU_STEPS}[window.APP_LANG]).map(x=>x.slice()));
  for(const [id,lang] of [['langRo','ro'],['langEn','en'],['langRu','ru']]){const button=document.getElementById(id);if(button){button.classList.toggle('active',window.APP_LANG===lang);button.setAttribute('aria-pressed',String(window.APP_LANG===lang))}}
- if(flow.classList.contains('open')&&(field||checked||S.gdpr&&n<11)){
+ if(flow.classList.contains('open')&&(field||checked||S.gdpr&&n<A.length)){
   render();
   if(checked){document.getElementById('gdprConsent').checked=checked[0];document.getElementById('imageConsent').checked=checked[1]}
  }

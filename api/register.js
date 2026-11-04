@@ -43,7 +43,7 @@ module.exports=async function handler(req,res){
    return res.status(200).json({exists:await emailExists(db(),email)});
   }
   const required=['firstName','lastName','phone','email','opticalStore','role','city','streetAddress','usesMyopiaManagement','knowsMyoless'];
-  if(!b.partnerAnswers||['sdRoyal','emyOptic','totalmed','avvero','rooft'].some(k=>!String(b.partnerAnswers[k]||'').trim()))return res.status(400).json({error:'MISSING_PARTNER_ANSWERS'});
+  if(!b.partnerAnswers||['rooft'].some(k=>!String(b.partnerAnswers[k]||'').trim()))return res.status(400).json({error:'MISSING_PARTNER_ANSWERS'});
   if(!b.gdprConsent||b.imageConsent!==true||required.some(k=>!String(b[k]??'').trim()))return res.status(400).json({error:'MISSING_FIELDS'});
   if(!/\d/.test(String(b.streetAddress||'')))return res.status(400).json({error:'INVALID_STREET_ADDRESS'});
   const email=normalizeEmail(b.email);
