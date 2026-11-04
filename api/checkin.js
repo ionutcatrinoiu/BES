@@ -25,7 +25,7 @@ function authorized(req){
 function setSession(res){const stamp=String(Math.floor(Date.now()/1000));const value=`${stamp}.${sign(stamp)}`;res.setHeader('Set-Cookie',`${COOKIE}=${encodeURIComponent(value)}; Path=/; Max-Age=${MAX_AGE}; HttpOnly; Secure; SameSite=Strict`)}
 function extractToken(value=''){
   const raw=String(value||'').trim();
-  const snoo=raw.match(/^SNOO:([a-f0-9]{48})$/i);if(snoo)return snoo[1].toLowerCase();
+  const snoo=raw.match(/^BES:([a-f0-9]{48})$/i);if(snoo)return snoo[1].toLowerCase();
   if(/^[a-f0-9]{48}$/i.test(raw)) return raw.toLowerCase();
   try{const u=new URL(raw);const token=String(u.searchParams.get('token')||'').trim();if(/^[a-f0-9]{48}$/i.test(token))return token.toLowerCase()}catch(_e){}
   return '';

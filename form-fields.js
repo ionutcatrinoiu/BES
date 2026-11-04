@@ -55,7 +55,7 @@ async function checkEmailAvailability(email){
   if(!response.ok)throw new Error('CHECK_FAILED');
   if(err)err.textContent=data.exists?uiText('Această adresă de e-mail este deja asociată unei înscrieri.'):'';
   return !data.exists;
- }catch(_){if(sequence===emailCheckSeq&&document.getElementById('field')===field&&err)err.textContent=uiText('Nu am putut verifica adresa de e-mail. Încearcă din nou.');return false}
+ }catch(_){if(sequence===emailCheckSeq&&document.getElementById('field')===field&&err)err.textContent=uiText('Verificarea online nu este disponibilă acum. Adresa va fi verificată la înscriere.');return true}
 }
 const renderFieldEnhancements=render;
 render=function(){

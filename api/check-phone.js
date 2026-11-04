@@ -11,7 +11,7 @@ function normalizePhone(v=''){
  let x=String(v).replace(/[^\d+]/g,'');
  if(x.startsWith('0040'))x='+40'+x.slice(4);else if(x.startsWith('40'))x='+40'+x.slice(2);else if(/^07\d{8}$/.test(x))x='+40'+x.slice(1);
  if(x.startsWith('00373'))x='+373'+x.slice(5);else if(x.startsWith('373'))x='+373'+x.slice(3);
- if(!/^\+407\d{8}$/.test(x)&&!/^\+373[67]\d{7}$/.test(x))throw new Error('INVALID_PHONE');
+ if(!/^\+373[67]\d{7}$/.test(x))throw new Error('INVALID_PHONE');
  return x;
 }
 function phoneKeys(phone){return phone.startsWith('+40')?[phone,'0'+phone.slice(3)]:[phone]}

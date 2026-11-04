@@ -18,7 +18,7 @@ function normalizePhone(v=''){
  let x=String(v).replace(/[^\d+]/g,'');
  if(x.startsWith('0040'))x='+40'+x.slice(4);else if(x.startsWith('40'))x='+40'+x.slice(2);else if(/^07\d{8}$/.test(x))x='+40'+x.slice(1);
  if(x.startsWith('00373'))x='+373'+x.slice(5);else if(x.startsWith('373'))x='+373'+x.slice(3);
- if(!/^\+407\d{8}$/.test(x)&&!/^\+373[67]\d{7}$/.test(x))throw new Error('INVALID_PHONE');
+ if(!/^\+373[67]\d{7}$/.test(x))throw new Error('INVALID_PHONE');
  return x;
 }
 function phoneKeys(phone){return phone.startsWith('+40')?[phone,'0'+phone.slice(3)]:[phone]}
@@ -27,7 +27,7 @@ module.exports=async function handler(req,res){
   const token=String(req.query.qr||'').trim();
   if(!/^[a-f0-9]{48}$/.test(token))return res.status(400).send('INVALID_QR_TOKEN');
   try{
-   const payload=`SNOO:${token}`;
+   const payload=`BES:${token}`;
    const png=await QRCode.toBuffer(payload,{type:'png',width:420,margin:2,errorCorrectionLevel:'M',color:{dark:'#000000FF',light:'#00000000'}});
    res.setHeader('Content-Type','image/png');
    res.setHeader('Cache-Control','public, max-age=31536000, immutable');
