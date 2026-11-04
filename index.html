@@ -1596,3 +1596,59 @@ body>header .bes-agenda-trigger{position:relative!important;top:auto!important;r
  body>header .bes-agenda-trigger{width:42px!important;height:42px!important}
 }
 </style>
+
+<!-- Mobile Safari autofill and navigation stabilization, 2026-11-04 -->
+<style id="bes-mobile-navigation-final">
+.flow .action-primary,.flow .nav .action-primary,.flow .nav-success-stack .action-primary,.flow .final-success-actions .action-primary{color:#fff!important;-webkit-text-fill-color:#fff!important;background-color:#162325!important;opacity:1!important;text-shadow:none!important}
+.flow .action-primary:disabled{color:#fff!important;-webkit-text-fill-color:#fff!important;opacity:.55!important}
+@media(max-width:760px){.flow .step-arrow{touch-action:manipulation!important;pointer-events:auto!important;position:relative!important;z-index:30!important}}
+</style>
+<script id="bes-mobile-autofill-final">
+(function(){
+  // Previous animation handlers sometimes leave lock=true after an iOS autofill.
+  // Avoid cloning focused inputs or waiting for animation.finished on touch devices.
+  const previousMove=move;
+  move=function(callback,direction){
+    if(window.matchMedia('(max-width:760px), (pointer:coarse)').matches){
+      lock=false; releasedSwipe=null; swipeNavigation=false; stableSwipe=null;
+      const active=document.activeElement;
+      if(active&&active.matches&&active.matches('input,textarea'))active.blur();
+      callback();render();lock=false;
+      return;
+    }
+    return previousMove(callback,direction);
+  };
+  const previousRender=render;
+  render=function(){
+    previousRender();
+    const f=document.getElementById('field');
+    if(!f||!A[n])return;
+    const key=A[n][3];
+    const tokens={first:'section-bes given-name',last:'section-bes family-name',optic:'section-bes organization',phone:'section-bes tel-national',email:'section-bes email'};
+    if(tokens[key])f.setAttribute('autocomplete',tokens[key]);
+    if(key==='first'||key==='last'){
+      f.setAttribute('autocapitalize','words');
+      const sync=()=>{if(!f.isConnected||!A[n]||A[n][3]!==key)return;S[key]=f.value;};
+      ['input','change','blur'].forEach(type=>f.addEventListener(type,sync,{passive:true}));
+      // Safari contact autofill can commit after its popup closes without input/change.
+      f.addEventListener('focusout',sync,{passive:true});
+    }
+  };
+  // A capture handler reads the actual field, even if iOS has not dispatched input.
+  document.addEventListener('click',function(e){
+    const arrow=e.target.closest&&e.target.closest('.flow .forward-arrow');
+    if(!arrow||!S.gdpr||!A[n])return;
+    const key=A[n][3],f=document.getElementById('field');
+    if(f&&['first','last','optic'].includes(key))S[key]=f.value;
+    lock=false;
+  },true);
+  // Keep keyboard Next from invoking duplicate navigation via synthetic clicks.
+  document.addEventListener('keydown',function(e){
+    if(e.key!=='Enter'||!flow.classList.contains('open'))return;
+    const f=e.target;if(f.id!=='field'||f.tagName==='TEXTAREA')return;
+    e.preventDefault();if(!lock)Promise.resolve(next(false)).catch(console.error);
+  },true);
+  // Recover from interrupted gestures when the iOS keyboard changes viewport.
+  window.addEventListener('pageshow',()=>{lock=false;releasedSwipe=null;stableSwipe=null});
+})();
+</script>
