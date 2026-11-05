@@ -175,7 +175,7 @@ header .brand-logo{width:clamp(170px,17vw,275px);max-height:90px;object-fit:cont
 const code=document.getElementById('code'),statusEl=document.getElementById('status');
 let lang='ro',requestId=0,busy=false,lastSubmitted='';
 const strings={
- ro:{title:'Confirmă prezența',subtitle:'Introdu codul tău numeric unic de 4 cifre, primit prin e-mail.',label:'Cod numeric unic',checking:'Verificăm codul…',invalid:'Cod invalid. Verifică cele 4 cifre.',error:'Conexiune indisponibilă. Încearcă din nou.',ok:'Prezență confirmată! Bine ai venit, ',already:'Prezența ta a fost deja înregistrată.'},
+ ro:{title:'Confirmă prezența',subtitle:'Introdu codul tău numeric unic de 4 cifre, primit prin e-mail.',label:'Cod numeric unic',checking:'Verificăm codul…',invalid:'Cod invalid. Verifică cele 4 cifre.',error:'Conexiune indisponibilă. Încearcă din nou.',ok:'Prezență confirmată! Bine ai venit, ',already:'Vă mulțumim, prezența a fost deja înregistrată!'},
  en:{title:'Confirm your attendance',subtitle:'Enter the unique 4-digit code received by email.',label:'Unique numeric code',checking:'Checking your code…',invalid:'Invalid code. Check the four digits.',error:'Connection unavailable. Please try again.',ok:'Attendance confirmed! Welcome, ',already:'Your attendance has already been recorded.'},
  ru:{title:'Подтвердите присутствие',subtitle:'Введите уникальный 4-значный код из электронного письма.',label:'Уникальный цифровой код',checking:'Проверяем код…',invalid:'Неверный код. Проверьте четыре цифры.',error:'Нет соединения. Попробуйте ещё раз.',ok:'Присутствие подтверждено! Добро пожаловать, ',already:'Ваше присутствие уже отмечено.'}
 };
@@ -218,7 +218,7 @@ document.getElementById('pin-entry').addEventListener('pointerdown',unlockFeedba
 document.getElementById('pin-entry').addEventListener('touchstart',unlockFeedback,{passive:true});
 
 async function confirmCode(value){
- if(busy||value===lastSubmitted)return;
+ if(busy)return;
  busy=true;lastSubmitted=value;const id=++requestId;
  msg(strings[lang].checking);
  try{
@@ -228,7 +228,7 @@ async function confirmCode(value){
   if(r.ok&&d.ok){
    feedbackTone(true);
    msg(d.already?strings[lang].already:strings[lang].ok+[d.firstName,d.lastName].filter(Boolean).join(' ')+'!','ok');
-   code.value='';code.blur();paintPin();
+   code.value='';paintPin();
   }else{feedbackTone(false);msg(strings[lang].invalid,'err');lastSubmitted=''}
  }catch(e){if(id===requestId){msg(strings[lang].error,'err');lastSubmitted=''}}
  finally{if(id===requestId)busy=false}
@@ -247,5 +247,17 @@ code.addEventListener('input',()=>{
 });
 document.getElementById('form').addEventListener('submit',e=>e.preventDefault());
 document.getElementById('pin-entry').addEventListener('click',()=>code.focus());
+// Tastare directă de la tastatura fizică, indiferent de caseta selectată.
+document.addEventListener('keydown',e=>{
+ if(e.ctrlKey||e.altKey||e.metaKey||busy)return;
+ const active=document.activeElement;
+ if(active===code||active?.matches('input,textarea,select,[contenteditable]'))return;
+ if(/^\d$/.test(e.key)&&code.value.length<4){e.preventDefault();code.value+=e.key;code.dispatchEvent(new Event('input',{bubbles:true}));}
+ else if(e.key==='Backspace'){e.preventDefault();code.value=code.value.slice(0,-1);code.dispatchEvent(new Event('input',{bubbles:true}));}
+});
+// Menține un singur câmp real pentru PIN. Backspace șterge automat ultima cifră.
+code.addEventListener('keydown',e=>{if(e.key==='Backspace'){e.preventDefault();code.value=code.value.slice(0,-1);code.dispatchEvent(new Event('input',{bubbles:true}));}});
+// Încearcă focalizarea automată pe desktop; pe mobil, un tap în zona PIN deschide tastatura.
+if(!/Android|iPhone|iPad|iPod/i.test(navigator.userAgent))requestAnimationFrame(()=>code.focus());
 paintPin();
 </script></body></html>
