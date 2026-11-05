@@ -11,6 +11,10 @@ const EN_STEPS=[
 ['CONTACT','Your email address','Your email is required for the confirmation and reminder.','email','name@example.com','email'],
 ['ROOFT','What is your experience or interest in using specialty contact lenses?','Select the option that best describes your experience or interest.','partnerRooft','','rooftChoice']
 ];
+EN_STEPS.splice(EN_STEPS.length-1,0,
+ ['AVVERO','Do you use Myoless lenses or other myopia management solutions?','Select one option.','avveroMyopia','','avveroChoice'],
+ ['AVVERO','Do you work in a private practice, an optical store, or only in a hospital?','Select one option.','avveroPractice','','avveroChoice'],
+ ['AVVERO','Would you like to get involved in myopia prevention initiatives?','Select one option.','avveroPrevention','','avveroChoice']);
 const RO_STEPS=A.map(x=>x.slice());
 const EN_TEXT=new Map(Object.entries({
 'Managementul miopiei':'Myopia management','dincolo':'beyond',' de lentilă:':' the lens:','ÎNSCRIE-TE LA PREZENTARE':'REGISTER FOR THE PRESENTATION','Cum educăm o generație să vadă mai bine.':'How do we educate a generation to see better.','SNOO · 2026 · ROMÂNIA':'SNOO · 2026 · ROMANIA',
@@ -33,6 +37,7 @@ const EN_TEXT=new Map(Object.entries({
 'Completează acest câmp pentru a continua.':'Complete this field to continue.','Introdu adresa ta de e-mail pentru a continua.':'Enter your email address to continue.','Introdu o adresă de e-mail validă.':'Enter a valid email address.','Introdu și numărul imobilului.':'Please also enter the building number.','Introdu un număr de telefon valid.':'Enter a valid phone number.','Selectează o opțiune pentru a continua.':'Select an option to continue.','Acest număr de telefon este deja asociat unei rezervări.':'This phone number is already linked to a registration.','Verificăm numărul…':'Checking the number…','Nu am putut verifica numărul acum. Poți încerca din nou.':'We could not check the number right now. Please try again.',
 'SE SALVEAZĂ':'SAVING','Finalizăm înscrierea.':'Finalising your registration.','Salvăm datele și rezervăm locul tău la prezentare.':'We are saving your details and reserving your place at the presentation.','CONFIRMAT':'CONFIRMED','ÎNSCRIERE CONFIRMATĂ':'REGISTRATION CONFIRMED','Locul tău la prezentarea Avvero este rezervat.':'Your place at the Avvero presentation is reserved.','Cadoul tău surpriză te așteaptă la prezentare.':'Your surprise gift will be waiting for you at the presentation.','ADAUGĂ ÎN CALENDAR':'ADD TO CALENDAR','REVENIRE LA PAGINA PRINCIPALĂ':'BACK TO HOME','ÎNCHIDE':'CLOSE','NECONFIRMAT':'NOT CONFIRMED','Numărul este deja înscris.':'This phone number is already registered.','Înscrierea nu a fost salvată.':'Your registration was not saved.','Există deja o participare asociată acestui număr de telefon.':'A registration already exists for this phone number.','Verifică conexiunea și încearcă din nou.':'Check your connection and try again.','REÎNCEARCĂ →':'TRY AGAIN →'
 }));
+EN_TEXT.set('Finalizează înscrierea','Complete registration');
 const RO_TEXT=new Map(Array.from(EN_TEXT.entries()).map(([ro,en])=>[en,ro]));
 const RU_STEPS=[
  ['ЛИЧНЫЕ ДАННЫЕ','Как вас зовут?','Начнём знакомство с вами.','first','Имя','text'],
@@ -45,6 +50,10 @@ const RU_STEPS=[
  ['КОНТАКТЫ','Ваша электронная почта','Она необходима для подтверждения регистрации и напоминания.','email','name@example.com','email'],
 ['ROOFT','Каков ваш опыт или интерес к использованию специальных контактных линз?','Выберите вариант, который лучше всего описывает ваш опыт или интерес.','partnerRooft','','rooftChoice']
 ];
+RU_STEPS.splice(RU_STEPS.length-1,0,
+ ['AVVERO','Используете ли вы линзы Myoless или другие решения для контроля миопии?','Выберите один вариант.','avveroMyopia','','avveroChoice'],
+ ['AVVERO','Вы работаете в частном кабинете, оптике или только в больнице?','Выберите один вариант.','avveroPractice','','avveroChoice'],
+ ['AVVERO','Хотели бы вы участвовать в мероприятиях по профилактике миопии?','Выберите один вариант.','avveroPrevention','','avveroChoice']);
 const EN_EXTRA={
  'Sugestii județe':'County suggestions','Sugestii raioane':'District suggestions',
  'Verificăm adresa de e-mail…':'Checking the email address…',
@@ -67,6 +76,7 @@ const EN_EXTRA={
 };
 for(const [ro,en] of Object.entries(EN_EXTRA)){EN_TEXT.set(ro,en);RO_TEXT.set(en,ro)}
 const RU_TEXT=new Map(Object.entries({
+ 'Finalizează înscrierea':'Завершить регистрацию',
  'Sugestii județe':'Подсказки жудецов','Sugestii raioane':'Подсказки районов',
  'Verificăm adresa de e-mail…':'Проверяем электронную почту…',
  'Această adresă de e-mail este deja asociată unei înscrieri.':'С этим адресом электронной почты уже связана регистрация.',

@@ -43,6 +43,8 @@ module.exports=async function handler(req,res){
    return res.status(200).json({exists:await emailExists(db(),email)});
   }
   const required=['firstName','lastName','phone','email','opticalStore','role','city','streetAddress'];
+  const avveroAllowed={avveroMyopia:['Da','Nu'],avveroPractice:['Într-un cabinet privat','În spital','Și într-un spital și într-un cabinet privat'],avveroPrevention:['Da, doresc mai multe detalii','Nu']};
+  if(!Object.entries(avveroAllowed).every(([k,values])=>values.includes(String(b[k]||'').trim())))return res.status(400).json({error:'MISSING_AVVERO_ANSWERS'});
   if(!b.partnerAnswers||['rooft'].some(k=>!String(b.partnerAnswers[k]||'').trim()))return res.status(400).json({error:'MISSING_PARTNER_ANSWERS'});
   if(!b.gdprConsent||b.imageConsent!==true||required.some(k=>!String(b[k]??'').trim()))return res.status(400).json({error:'MISSING_FIELDS'});
   if(!/^.{3,}\s*,?\s+(?:nr\.?\s*)?\d+[A-Za-z]?(?:\/\d+[A-Za-z]?)?$/i.test(String(b.streetAddress||'').trim()))return res.status(400).json({error:'INVALID_STREET_ADDRESS'});
@@ -89,6 +91,7 @@ module.exports=async function handler(req,res){
     opticalStore:String(b.opticalStore).trim(),role:String(b.role).trim(),
     city:String(b.city).trim(),county:String(b.county||'').trim(),country:'MD',
     streetAddress:String(b.streetAddress).trim(),
+    avveroMyopia:String(b.avveroMyopia).trim(),avveroPractice:String(b.avveroPractice).trim(),avveroPrevention:String(b.avveroPrevention).trim(),
     partnerAnswers:b.partnerAnswers,
     gdprConsent:true,gdprConsentAt:now,imageConsent:true,imageConsentAt:now,language:normalizeLanguage(b.language),qrToken,event:'Brand Experience Summit 2026',giftDelivered:false,confirmationEmailSent:false,reminderSent:false,registeredAt:now
    });
