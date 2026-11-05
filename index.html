@@ -1941,7 +1941,7 @@ root.addEventListener('touchmove',e=>{
   if(Math.abs(dx)>Math.abs(dy)*.85){reset();return}
   g.active=true;g.dir=dy<0?1:-1;
   if(!g.consent){
-   if(g.dir===1&&['phone','email'].includes(A[n]?.[3])){reset();return}
+   // Phone and email swipes use the same server validation as the forward button.
    if(g.dir===1&&A[n]&&['role','rooftChoice','avveroChoice'].includes(A[n][5])&&!S[A[n][3]]){reset();return}
    const index=n+g.dir;
    if(index<0||index>A.length){reset();return}
@@ -1985,6 +1985,15 @@ root.addEventListener('touchend',e=>{
   return;
  }
  if(!g.preview)return;
+ // On contact slides, let next() verify the phone/email before changing pages.
+ // Do not animate the preview away while an asynchronous verification is pending.
+ if(commit&&g.dir===1&&['phone','email'].includes(A[n]?.[3])){
+  g.current.style.removeProperty('transform');g.current.style.removeProperty('transition');
+  g.preview.remove();
+  swipeNavigation=false;
+  next(false);
+  return;
+ }
  const h=Math.max(box.clientHeight,innerHeight*.6),d=g.dir;
  g.current.style.setProperty('transition','transform 260ms cubic-bezier(.22,1,.36,1)','important');
  g.preview.style.transition='transform 260ms cubic-bezier(.22,1,.36,1)';
