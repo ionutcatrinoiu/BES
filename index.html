@@ -235,6 +235,7 @@ function avveroChoiceMarkup(key,preview=false){const lang=window.APP_LANG||'ro';
 function pickAvvero(key,i,button){pick(AVVERO_CHOICES.ro[key][i],button)}
 function pickRooft(i,b){pick(ROOFT_OPTIONS.ro[i],b)}
 const S={gdpr:false,imageConsent:false,first:'',last:'',phone:'',email:'',optic:'',role:'',city:'',county:'',country:'MD',street:'',myopia:'',myoless:'',partnerSd:'',partnerEmy:'',partnerTotalmed:'',partnerAvvero:'',partnerRooft:'',avveroMyopia:'',avveroPractice:'',avveroPrevention:''};let n=0,lock=false,phoneDuplicate=false,phoneCheckTimer=null,phoneCheckSeq=0;
+const verifiedContact={phone:'',email:''};
 const COUNTY_BY_CODE={AB:'Alba',AR:'Arad',AG:'Argeș',BC:'Bacău',BH:'Bihor',BN:'Bistrița-Năsăud',BT:'Botoșani',BR:'Brăila',BV:'Brașov',B:'București',BZ:'Buzău',CL:'Călărași',CS:'Caraș-Severin',CJ:'Cluj',CT:'Constanța',CV:'Covasna',DB:'Dâmbovița',DJ:'Dolj',GL:'Galați',GR:'Giurgiu',GJ:'Gorj',HR:'Harghita',HD:'Hunedoara',IL:'Ialomița',IS:'Iași',IF:'Ilfov',MM:'Maramureș',MH:'Mehedinți',MS:'Mureș',NT:'Neamț',OT:'Olt',PH:'Prahova',SJ:'Sălaj',SM:'Satu Mare',SB:'Sibiu',SV:'Suceava',TR:'Teleorman',TM:'Timiș',TL:'Tulcea',VL:'Vâlcea',VS:'Vaslui',VN:'Vrancea'};
 let RO_CITIES=[],MD_CITIES=[],ALL_CITIES=[],CITY_INDEX=new Map(),localitiesReady=false,localitiesFailed=false;
 const MD_CITIES_STATIC=[
@@ -302,12 +303,15 @@ if(window.field){
  field.onkeydown=e=>{if(e.key==='Enter'&&!e.isComposing&&x[3]!=='city'){e.preventDefault();next(true)}};
  if(x[3]==='street'){field.value=field.value.replace(/\s*[\r\n]+\s*/g,' ');field.addEventListener('input',e=>{const f=e.currentTarget;f.value=f.value.replace(/\s*[\r\n]+\s*/g,' ');S.street=f.value})}
  if(x[3]==='phone')field.addEventListener('input',schedulePhoneCheck);
+ if(x[3]==='email')field.addEventListener('input',scheduleEmailPrecheck);
  if(x[3]==='city')wireCityAutocomplete(field);
 }
 }
 function normalizePhoneClient(v){return countryPrefix()+nationalPhone(v)}
-function schedulePhoneCheck(){phoneDuplicate=false;clearTimeout(phoneCheckTimer);const el=document.getElementById('field'),msg=document.getElementById('err');if(!el||!msg)return;if(!ph(el.value)){msg.textContent='';return}const d=normalizePhoneClient(el.value);msg.textContent=uiText('Verificăm numărul…');const seq=++phoneCheckSeq;phoneCheckTimer=setTimeout(()=>checkPhoneAvailability(d,seq),260)}
-async function checkPhoneAvailability(phone,seq=++phoneCheckSeq){const msg=document.getElementById('err');try{const r=await fetch('/api/check-phone',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({language:window.APP_LANG||'ro',phone})});const data=await r.json();if(seq!==phoneCheckSeq)return false;phoneDuplicate=!!data.exists;if(msg)msg.textContent=phoneDuplicate?uiText('Acest număr de telefon este deja asociat unei rezervări.'):'';return !phoneDuplicate}catch(_){if(seq===phoneCheckSeq&&msg)msg.textContent=uiText('Nu am putut verifica numărul acum. Poți încerca din nou.');return false}}
+let emailPrecheckTimer=null;
+function scheduleEmailPrecheck(){verifiedContact.email='';clearTimeout(emailPrecheckTimer);const field=document.getElementById('field');if(!field)return;const value=normalizeEmailClient(field.value);if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value))return;emailPrecheckTimer=setTimeout(()=>checkEmailAvailability(value),320)}
+function schedulePhoneCheck(){verifiedContact.phone='';phoneDuplicate=false;clearTimeout(phoneCheckTimer);const el=document.getElementById('field'),msg=document.getElementById('err');if(!el||!msg)return;if(!ph(el.value)){msg.textContent='';return}const d=normalizePhoneClient(el.value);msg.textContent=uiText('Verificăm numărul…');const seq=++phoneCheckSeq;phoneCheckTimer=setTimeout(()=>checkPhoneAvailability(d,seq),260)}
+async function checkPhoneAvailability(phone,seq=++phoneCheckSeq){if(verifiedContact.phone===phone)return true;const msg=document.getElementById('err');try{const r=await fetch('/api/check-phone',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({language:window.APP_LANG||'ro',phone})});const data=await r.json();if(seq!==phoneCheckSeq)return false;phoneDuplicate=!!data.exists;verifiedContact.phone=(!phoneDuplicate&&r.ok)?phone:'';if(msg)msg.textContent=phoneDuplicate?uiText('Acest număr de telefon este deja asociat unei rezervări.'):'';return !phoneDuplicate}catch(_){verifiedContact.phone='';if(seq===phoneCheckSeq&&msg)msg.textContent=uiText('Nu am putut verifica numărul acum. Poți încerca din nou.');return false}}
 function choiceForward(){const x=A[n];if(!x)return;const v=S[x[3]];if(!v){const step=box.querySelector('.step');let e=step&&step.querySelector('.choice-error');if(!e&&step){e=document.createElement('div');e.className='err choice-error';e.setAttribute('aria-live','polite');step.querySelector('.step-nav').before(e)}if(e)e.textContent=uiText('Selectează o opțiune pentru a continua.');return}move(()=>{n++})}
 function acceptGdpr(){
  const c=document.getElementById('gdprConsent');
@@ -315,8 +319,8 @@ function acceptGdpr(){
  if(!c||!c.checked||!image||!image.checked){document.getElementById('gdprErr').textContent=uiText('Ambele acorduri sunt obligatorii pentru a continua.');return}
  S.gdprConsent=true;S.imageConsent=true;S.gdpr=true;render();
 }
-function move(cb,dir='forward'){if(lock)return;lock=true;transitionDir=dir;const step=box.querySelector('.step');if(swipeNavigation){swipeNavigation=false;cb();render();return}if(step)step.classList.add(dir==='back'?'out-down':'out');setTimeout(()=>{cb();render()},390)}async function next(keepKeyboard=false){const field=document.getElementById('field');const err=document.getElementById('err');let x=A[n];if(!x||!field)return;let v=field.value.trim();if(x[3]==='street'){v=formatStreet(v);field.value=v}if(x[3]==='phone'){v=nationalPhone(v);field.value=v}if(!v){err.textContent=uiText(x[3]==='email'?'Introdu adresa ta de e-mail pentru a continua.':'Completează acest câmp pentru a continua.');return}if(x[3]==='email'&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)){err.textContent=uiText('Introdu o adresă de e-mail validă.');return}if(x[3]==='street'&&!/\d/.test(v)){err.textContent=uiText('Introdu și numărul imobilului.');return}if(x[3]==='phone'&&!ph(v)){err.textContent=uiText('Introdu un număr de telefon valid.');return}if(x[3]==='email'){const stepIndex=n;v=normalizeEmailClient(v);const ok=await checkEmailAvailability(v);if(!ok||n!==stepIndex||document.getElementById('field')!==field||normalizeEmailClient(field.value)!==v)return}
-if(x[3]==='phone'){const stepIndex=n;const ok=await checkPhoneAvailability(normalizePhoneClient(v));if(!ok||n!==stepIndex||document.getElementById('field')!==field||nationalPhone(field.value)!==v)return}
+function move(cb,dir='forward'){if(lock)return;lock=true;transitionDir=dir;const step=box.querySelector('.step');if(swipeNavigation){swipeNavigation=false;cb();render();return}if(step)step.classList.add(dir==='back'?'out-down':'out');setTimeout(()=>{cb();render()},390)}async function next(keepKeyboard=false){const field=document.getElementById('field');const err=document.getElementById('err');let x=A[n];if(!x||!field)return;let v=field.value.trim();if(x[3]==='street'){v=formatStreet(v);field.value=v}if(x[3]==='phone'){v=nationalPhone(v);field.value=v}if(!v){err.textContent=uiText(x[3]==='email'?'Introdu adresa ta de e-mail pentru a continua.':'Completează acest câmp pentru a continua.');return}if(x[3]==='email'&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)){err.textContent=uiText('Introdu o adresă de e-mail validă.');return}if(x[3]==='street'&&!/\d/.test(v)){err.textContent=uiText('Introdu și numărul imobilului.');return}if(x[3]==='phone'&&!ph(v)){err.textContent=uiText('Introdu un număr de telefon valid.');return}if(x[3]==='email'){const stepIndex=n;v=normalizeEmailClient(v);const ok=verifiedContact.email===v||await checkEmailAvailability(v);if(!ok||n!==stepIndex||document.getElementById('field')!==field||normalizeEmailClient(field.value)!==v)return}
+if(x[3]==='phone'){const stepIndex=n;const ok=verifiedContact.phone===normalizePhoneClient(v)||await checkPhoneAvailability(normalizePhoneClient(v));if(!ok||n!==stepIndex||document.getElementById('field')!==field||nationalPhone(field.value)!==v)return}
 if(x[3]==='city'){
  const matches=MD_CITIES_STATIC.filter(c=>cityKey(c.name)===cityKey(v));
  let c=matches.find(c=>c.country===S.country&&cityKey(c.county)===cityKey(S.county))||matches.find(c=>c.country===S.country)||matches[0];
@@ -1943,6 +1947,11 @@ root.addEventListener('touchmove',e=>{
   if(!g.consent){
    // Phone and email swipes use the same server validation as the forward button.
    if(g.dir===1&&A[n]&&['role','rooftChoice','avveroChoice'].includes(A[n][5])&&!S[A[n][3]]){reset();return}
+   if(g.dir===1&&['phone','email'].includes(A[n]?.[3])){
+    const field=document.getElementById('field');const value=field?.value.trim()||'';
+    const verified=A[n][3]==='phone'?(ph(value)&&verifiedContact.phone===normalizePhoneClient(value)):(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)&&verifiedContact.email===normalizeEmailClient(value));
+    if(!verified){reset();return}
+   }
    const index=n+g.dir;
    if(index<0||index>A.length){reset();return}
    g.preview=document.createElement('div');
@@ -1985,15 +1994,6 @@ root.addEventListener('touchend',e=>{
   return;
  }
  if(!g.preview)return;
- // On contact slides, let next() verify the phone/email before changing pages.
- // Do not animate the preview away while an asynchronous verification is pending.
- if(commit&&g.dir===1&&['phone','email'].includes(A[n]?.[3])){
-  g.current.style.removeProperty('transform');g.current.style.removeProperty('transition');
-  g.preview.remove();
-  swipeNavigation=false;
-  next(false);
-  return;
- }
  const h=Math.max(box.clientHeight,innerHeight*.6),d=g.dir;
  g.current.style.setProperty('transition','transform 260ms cubic-bezier(.22,1,.36,1)','important');
  g.preview.style.transition='transform 260ms cubic-bezier(.22,1,.36,1)';

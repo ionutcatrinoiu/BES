@@ -56,6 +56,13 @@ body{background:linear-gradient(150deg,#e9e6ed 0%,#f1ece7 100%);color:var(--ink)
 .table td .pill{padding:2px 3px!important;font-size:clamp(7px,.5vw,10px)!important;white-space:normal!important}
 .table td .muted{font-size:clamp(8px,.56vw,11px)!important}
 @media(max-width:1000px){.table-wrap{display:none!important}}
+</style><style id="bes-admin-clean-delivery">
+.table thead th:nth-child(n+7):nth-child(-n+10){background:#dce6e5!important;color:#284447!important;font-weight:700!important;border-bottom:1px solid #cfd2ce!important}
+.table tbody td:nth-child(n+7):nth-child(-n+10){background:transparent!important;font-weight:400!important;color:#183337!important}
+.delivery-icon{display:inline-flex;align-items:center;justify-content:center;width:21px;height:21px;border-radius:50%;font-size:16px;font-weight:800;line-height:1;white-space:nowrap}
+.delivery-sent{color:#16864b}.delivery-failed{color:#cf3345}.delivery-pending{color:#3283da;font-size:15px}
+.table th:nth-child(13),.table th:nth-child(14),.table th:nth-child(15),.table th:nth-child(16){width:2.5%!important;text-align:center}
+.table td:nth-child(13),.table td:nth-child(14),.table td:nth-child(15),.table td:nth-child(16){text-align:center}
 </style></head><body>
 <section id="login" class="login"><div class="login-card"><div class="bes-admin-wordmark">BRAND EXPERIENCE SUMMIT</div><div class="eyebrow">BRAND EXPERIENCE SUMMIT · ADMINISTRARE</div><h1>Brand Experience Summit</h1><p class="sub">Acces administrare participanți</p><form id="loginForm"><div class="field"><label>Utilizator</label><input id="username" autocomplete="username" required></div><div class="field"><label>Parolă</label><input id="password" type="password" autocomplete="current-password" required></div><button class="primary" type="submit">AUTENTIFICARE →</button><div id="loginError" class="error"></div></form></div></section>
 <main id="app" class="app hidden"><header class="top"><div><div class="bes-admin-wordmark">BRAND EXPERIENCE SUMMIT</div><div class="eyebrow">BES · 2026 · CHIȘINĂU</div><h1>Participanți</h1><p>More brands. More knowledge. More business.</p></div><div class="actions"><button id="exportBtn" class="ghost">EXPORT EXCEL</button><button id="logoutBtn" class="primary">IEȘIRE</button></div></header>
@@ -79,7 +86,8 @@ function apply(){
  });render()
 }
 function fmt(d){if(!d)return '—';try{return new Intl.DateTimeFormat('ro-RO',{dateStyle:'short',timeStyle:'short'}).format(new Date(d))}catch{return d}}
-function confirmationStatus(x){if(x.confirmationEmailSent)return `<span class="pill reminder-ok">Trimis</span><div class="muted">${esc(fmt(x.confirmationEmailSentAt))}</div>`;if(x.confirmationEmailError)return `<span class="pill reminder-error">Eroare</span>`;return `<span class="pill">Netrimis</span>`}
+function iconStatus(state,tooltip){const symbol=state==='sent'?'✓':state==='pending'?'●':'×';return `<span class="delivery-icon delivery-${state}" title="${esc(tooltip)}" aria-label="${esc(tooltip)}">${symbol}</span>`}
+function confirmationStatus(x){return x.confirmationEmailSent?iconStatus('sent','Confirmare trimisă'):x.confirmationEmailError?iconStatus('failed','Confirmare netrimisă, eroare'):iconStatus('failed','Confirmare netrimisă')}
 function reminderLabel(x){if(x.reminderDeliveryStatus==='delivered')return 'Trimis';if(x.reminderDeliveryStatus==='sender_error')return 'Respins: expeditor';if(x.reminderDeliveryStatus==='unknown')return 'De verificat';if(x.reminderDeliveryStatus==='pending')return 'În așteptare';if(x.reminderSent)return 'Acceptat de Brevo';return x.reminderError?'Eroare':'Netrimis'}
 function finalReminderStatus(x){
  if(x.finalReminderDeliveryStatus==='delivered')return `<span class="pill reminder-ok">Trimis</span><div class="muted">${esc(fmt(x.finalReminderSentAt))}</div>`;
@@ -92,8 +100,11 @@ function finalReminderStatus(x){
 }
 function stageStatus(x,id){
  const entry=x.emailStages&&x.emailStages[id]||{},state=entry.state||'';
- const labels={sent:'Trimis',sending:'În curs',review:'Verifică Brevo'};
- return `<span class="pill ${state==='review'?'reminder-error':''}">${labels[state]||'Netrimis'}</span>`;
+ if(state==='sent')return iconStatus('sent','Reminder trimis');
+ if(state==='review'||state==='error'||state==='failed')return iconStatus('failed','Reminder netrimis sau cu eroare');
+ const dates={r1:'2026-11-21T09:30:00+02:00',r2:'2026-11-27T09:30:00+02:00',r3:'2026-11-28T07:30:00+02:00'};
+ if(Date.now()<new Date(dates[id]).getTime()||state==='sending'||state==='scheduled')return iconStatus('pending','În așteptarea termenului de trimitere');
+ return iconStatus('failed','Reminder netrimis');
 }
 function reminderStatus(x){return `<span class="pill">${esc(reminderLabel(x))}</span>${x.reminderSentAt?`<div class="muted">${esc(fmt(x.reminderSentAt))}</div>`:''}`}
 function presenceStatus(x){return x.checkedIn?`<span class="pill">Prezent</span><div class="muted">${esc(fmt(x.checkedInAt))}</div>`:'<span class="pill muted">Absent</span>'}
