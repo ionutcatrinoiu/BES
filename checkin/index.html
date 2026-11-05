@@ -243,7 +243,7 @@ code.addEventListener('input',()=>{
  if(code.value!==clean)code.value=clean;
  paintPin();
  msg('');
- if(clean.length===4)confirmCode(clean);
+ if(clean.length===4){code.blur();confirmCode(clean);}
 });
 document.getElementById('form').addEventListener('submit',e=>e.preventDefault());
 document.getElementById('pin-entry').addEventListener('click',()=>code.focus());
