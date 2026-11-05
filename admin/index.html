@@ -72,6 +72,18 @@ body{background:linear-gradient(150deg,#e9e6ed 0%,#f1ece7 100%);color:var(--ink)
 .table th:nth-child(n+13):nth-child(-n+16){white-space:nowrap!important;overflow-wrap:normal!important;word-break:keep-all!important;text-align:center!important;letter-spacing:0!important;font-size:clamp(8px,.6vw,11px)!important}
 .table td:nth-child(4),.table td:nth-child(5){padding-left:2px!important;padding-right:2px!important}
 }
+</style><style id="bes-admin-checkin-rooft-final">
+@media(min-width:1001px){
+.table th:nth-child(10){width:13%!important}
+.table th:nth-child(4){width:10%!important}
+.table th:nth-child(5){width:6%!important}
+.table th:nth-child(7){width:8%!important}
+.table th:nth-child(8){width:7%!important}
+.table th:nth-child(9){width:8%!important}
+.table th:nth-child(11){width:4%!important}
+.table td:nth-child(12){text-align:center!important}
+.table td.rooft-answer{white-space:nowrap!important;overflow-wrap:normal!important;word-break:normal!important;font-size:clamp(8px,.60vw,12px)!important;letter-spacing:-.02em!important}
+}
 </style></head><body>
 <section id="login" class="login"><div class="login-card"><div class="bes-admin-wordmark">BRAND EXPERIENCE SUMMIT</div><div class="eyebrow">BRAND EXPERIENCE SUMMIT · ADMINISTRARE</div><h1>Brand Experience Summit</h1><p class="sub">Acces administrare participanți</p><form id="loginForm"><div class="field"><label>Utilizator</label><input id="username" autocomplete="username" required></div><div class="field"><label>Parolă</label><input id="password" type="password" autocomplete="current-password" required></div><button class="primary" type="submit">AUTENTIFICARE →</button><div id="loginError" class="error"></div></form></div></section>
 <main id="app" class="app hidden"><header class="top"><div><div class="bes-admin-wordmark">BRAND EXPERIENCE SUMMIT</div><div class="eyebrow">BES · 2026 · CHIȘINĂU</div><h1>Participanți</h1><p>More brands. More knowledge. More business.</p></div><div class="actions"><button id="exportBtn" class="ghost">EXPORT EXCEL</button><button id="logoutBtn" class="primary">IEȘIRE</button></div></header>
@@ -116,7 +128,7 @@ function stageStatus(x,id){
  return iconStatus('failed','Reminder netrimis');
 }
 function reminderStatus(x){return `<span class="pill">${esc(reminderLabel(x))}</span>${x.reminderSentAt?`<div class="muted">${esc(fmt(x.reminderSentAt))}</div>`:''}`}
-function presenceStatus(x){return x.checkedIn?`<span class="pill">Prezent</span><div class="muted">${esc(fmt(x.checkedInAt))}</div>`:'<span class="pill muted">Absent</span>'}
+function presenceStatus(x){return x.checkedIn?iconStatus('sent','Prezent la eveniment'):iconStatus('failed','Check-in neefectuat')}
 function titleCase(v){return String(v||'').toLocaleLowerCase('ro-RO').replace(/(^|[\s\-’'])(\p{L})/gu,(m,sep,ch)=>sep+ch.toLocaleUpperCase('ro-RO'))}
 function participantAddress(x){const city=String(x.city||'').trim(),county=String(x.county||'').trim();const showCounty=county&&city.toLocaleLowerCase('ro-RO')!==county.toLocaleLowerCase('ro-RO');return `<div>${esc(city)}${showCounty?', '+esc(county):''}</div><div class="muted">${esc(x.streetAddress||'')}</div>`}
 function render(){
@@ -126,7 +138,7 @@ function render(){
  <td><div class="name">${esc(titleCase(x.firstName))} ${esc(titleCase(x.lastName))}</div></td>
  <td><div>${esc(x.phone)}</div><div class="muted">${esc(x.email||'—')}</div></td>
  <td><div>${esc(x.opticalStore)}</div><div class="muted">${esc(x.role)}</div></td>
- <td>${participantAddress(x)}</td><td>${esc(x.avveroMyopia||'—')}</td><td>${esc(x.avveroPractice||'—')}</td><td>${esc(x.avveroPrevention||'—')}</td><td>${esc(x.partnerAnswers?.rooft||'—')}</td>
+ <td>${participantAddress(x)}</td><td>${esc(x.avveroMyopia||'—')}</td><td>${esc(x.avveroPractice||'—')}</td><td>${esc(x.avveroPrevention||'—')}</td><td class="rooft-answer">${esc(x.partnerAnswers?.rooft||'—')}</td>
  <td>${esc(fmt(x.registeredAt))}</td><td>${presenceStatus(x)}</td>
  <td>${confirmationStatus(x)}</td><td>${stageStatus(x,'r1')}</td><td>${stageStatus(x,'r2')}</td><td>${stageStatus(x,'r3')}</td></tr>`).join('');
  $('mobileRows').innerHTML=filtered.map(x=>`<article class="mobile-card"><div class="mobile-head"><div><b>${esc(titleCase(x.firstName))} ${esc(titleCase(x.lastName))}</b><div class="code">${esc(x.participationCode)} · PIN ${esc(x.numericCheckinCode||'—')}</div></div></div><p>${esc(x.opticalStore)} · ${esc(x.role)}</p><p class="muted">${esc(x.phone)} · ${esc(x.email)}</p><div class="mobile-address">${participantAddress(x)}</div><p>AVVERO: ${esc(x.avveroMyopia||'—')} · ${esc(x.avveroPractice||'—')} · ${esc(x.avveroPrevention||'—')}</p><p>ROOFT: ${esc(x.partnerAnswers?.rooft||'—')}</p><p>Check-in: ${x.checkedIn?'Prezent '+fmt(x.checkedInAt):'Absent'}</p><p>Confirmare: ${x.confirmationEmailSent?'Trimis':x.confirmationEmailError?'Eroare':'Netrimis'}</p><p>Remindere: ${stageStatus(x,'r1')} ${stageStatus(x,'r2')} ${stageStatus(x,'r3')}</p></article>`).join('');
