@@ -47,7 +47,7 @@ module.exports=async function handler(req,res){
   if(!Object.entries(avveroAllowed).every(([k,values])=>values.includes(String(b[k]||'').trim())))return res.status(400).json({error:'MISSING_AVVERO_ANSWERS'});
   if(!b.partnerAnswers||['rooft'].some(k=>!String(b.partnerAnswers[k]||'').trim()))return res.status(400).json({error:'MISSING_PARTNER_ANSWERS'});
   if(!b.gdprConsent||b.imageConsent!==true||required.some(k=>!String(b[k]??'').trim()))return res.status(400).json({error:'MISSING_FIELDS'});
-  if(!/^.{3,}$/.test(String(b.streetAddress||'').trim())||!/\d/.test(String(b.streetAddress||'')))return res.status(400).json({error:'INVALID_STREET_ADDRESS'});
+  if(!/^[\p{L}][\p{L}\p{M} .,'’\-]*\s+\d+$/u.test(String(b.streetAddress||'').trim()))return res.status(400).json({error:'INVALID_STREET_ADDRESS'});
   const email=normalizeEmail(b.email);
   if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))return res.status(400).json({error:'INVALID_EMAIL'});
   if(String(b.country||'MD').toUpperCase()!=='MD')return res.status(400).json({error:'MOLDOVA_ONLY'});
