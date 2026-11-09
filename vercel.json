@@ -23,6 +23,9 @@
     },
     "api/admin/actions.js": {
       "maxDuration": 60
+    },
+    "api/admin/export.js": {
+      "maxDuration": 60
     }
   },
   "headers": [
@@ -48,10 +51,6 @@
     {
       "source": "/api/admin/confirmation-backfill",
       "destination": "/api/admin/actions?action=confirmation-backfill"
-    },
-    {
-      "source": "/api/admin/export",
-      "destination": "/api/admin/actions?action=export"
     },
     {
       "source": "/api/admin/reminder-test",
