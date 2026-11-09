@@ -101,6 +101,16 @@ body{background:linear-gradient(150deg,#e9e6ed 0%,#f1ece7 100%);color:var(--ink)
 .table th:nth-child(11){width:4.5%!important}
 .table tbody td:nth-child(11){white-space:normal!important}
 }
+</style><style id="bes-admin-compact-final-2026">
+@media(min-width:1001px){
+.table th:nth-child(5){width:10%!important}
+.table th:nth-child(10){width:9%!important}
+.table th:nth-child(11){width:5.5%!important}
+.table tbody td.institution-cell .institution-name,.table tbody td.institution-cell .muted{display:-webkit-box!important;-webkit-box-orient:vertical!important;-webkit-line-clamp:2!important;line-clamp:2!important;overflow:hidden!important;white-space:normal!important;overflow-wrap:break-word!important;line-height:1.22!important}
+.table tbody td.rooft-answer .rooft-answer-text{display:-webkit-box!important;-webkit-box-orient:vertical!important;-webkit-line-clamp:2!important;line-clamp:2!important;overflow:hidden!important;white-space:normal!important;overflow-wrap:break-word!important;line-height:1.24!important}
+.table td.registered-cell{white-space:nowrap!important;text-align:center!important}
+.table td.registered-cell .registration-date,.table td.registered-cell .registration-time{display:block;line-height:1.4}
+}
 </style></head><body>
 <section id="login" class="login"><div class="login-card"><div class="bes-admin-wordmark">BRAND EXPERIENCE SUMMIT</div><div class="eyebrow">BRAND EXPERIENCE SUMMIT · ADMINISTRARE</div><h1>Brand Experience Summit</h1><p class="sub">Acces administrare participanți</p><form id="loginForm"><div class="field"><label>Utilizator</label><input id="username" autocomplete="username" required></div><div class="field"><label>Parolă</label><input id="password" type="password" autocomplete="current-password" required></div><button class="primary" type="submit">AUTENTIFICARE →</button><div id="loginError" class="error"></div></form></div></section>
 <main id="app" class="app hidden"><header class="top"><div><div class="bes-admin-wordmark">BRAND EXPERIENCE SUMMIT</div><div class="eyebrow">BES · 2026 · CHIȘINĂU</div><h1>Participanți</h1><p>More brands. More knowledge. More business.</p></div><div class="actions"><button id="exportBtn" class="ghost">EXPORT EXCEL</button><button id="logoutBtn" class="primary">IEȘIRE</button></div></header>
@@ -124,6 +134,7 @@ function apply(){
  });render()
 }
 function fmt(d){if(!d)return '—';try{return new Intl.DateTimeFormat('ro-RO',{timeZone:'Europe/Chisinau',day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false}).format(new Date(d)).replace(',', '')}catch{return d}}
+function registrationDateTime(v){if(!v)return '—';const d=new Date(v);if(Number.isNaN(d.getTime()))return '—';const date=new Intl.DateTimeFormat('ro-RO',{timeZone:'Europe/Chisinau',day:'2-digit',month:'2-digit'}).format(d);const time=new Intl.DateTimeFormat('ro-RO',{timeZone:'Europe/Chisinau',hour:'2-digit',minute:'2-digit',hour12:false}).format(d);return `<span class="registration-date">${esc(date)}</span><span class="registration-time">${esc(time)}</span>`}
 function iconStatus(state,tooltip){const symbol=state==='sent'?'✓':state==='pending'?'●':'×';return `<span class="delivery-icon delivery-${state}" title="${esc(tooltip)}" aria-label="${esc(tooltip)}">${symbol}</span>`}
 function confirmationStatus(x){return x.confirmationEmailSent?iconStatus('sent','Confirmare trimisă'):x.confirmationEmailError?iconStatus('failed','Confirmare netrimisă, eroare'):iconStatus('failed','Confirmare netrimisă')}
 function reminderLabel(x){if(x.reminderDeliveryStatus==='delivered')return 'Trimis';if(x.reminderDeliveryStatus==='sender_error')return 'Respins: expeditor';if(x.reminderDeliveryStatus==='unknown')return 'De verificat';if(x.reminderDeliveryStatus==='pending')return 'În așteptare';if(x.reminderSent)return 'Acceptat de Brevo';return x.reminderError?'Eroare':'Netrimis'}
@@ -156,7 +167,7 @@ function render(){
  <td><div>${esc(x.phone)}</div><div class="muted">${esc(x.email||'—')}</div></td>
  <td class="institution-cell"><div class="institution-name" title="${esc(x.opticalStore)}">${esc(x.opticalStore)}</div><div class="muted" title="${esc(x.role)}">${esc(x.role)}</div></td>
  <td>${participantAddress(x)}</td><td class="answer-cell"><span title="${esc(x.avveroMyopia||'—')}">${esc(x.avveroMyopia||'—')}</span></td><td class="answer-cell"><span title="${esc(x.avveroPractice||'—')}">${esc(x.avveroPractice||'—')}</span></td><td class="answer-cell"><span title="${esc(x.avveroPrevention||'—')}">${esc(x.avveroPrevention||'—')}</span></td><td class="rooft-answer"><span class="rooft-answer-text" title="${esc(x.partnerAnswers?.rooft||'—')}">${esc(x.partnerAnswers?.rooft||'—')}</span></td>
- <td>${esc(fmt(x.registeredAt))}</td><td>${confirmationStatus(x)}</td>
+ <td class="registered-cell">${registrationDateTime(x.registeredAt)}</td><td>${confirmationStatus(x)}</td>
  <td>${presenceStatus(x)}</td><td>${stageStatus(x,'r1')}</td><td>${stageStatus(x,'r2')}</td><td>${stageStatus(x,'r3')}</td></tr>`).join('');
  $('mobileRows').innerHTML=filtered.map(x=>`<article class="mobile-card"><div class="mobile-head"><div><b>${esc(titleCase(x.firstName))} ${esc(titleCase(x.lastName))}</b><div class="code">${esc(x.participationCode)} · PIN ${esc(x.numericCheckinCode||'—')}</div></div></div><p>${esc(x.opticalStore)} · ${esc(x.role)}</p><p class="muted">${esc(x.phone)} · ${esc(x.email)}</p><div class="mobile-address">${participantAddress(x)}</div><p>AVVERO: ${esc(x.avveroMyopia||'—')} · ${esc(x.avveroPractice||'—')} · ${esc(x.avveroPrevention||'—')}</p><p>ROOFT: ${esc(x.partnerAnswers?.rooft||'—')}</p><p>Confirmare: ${confirmationStatus(x)} · Check-in: ${presenceStatus(x)}</p><p>Remindere: ${stageStatus(x,'r1')} ${stageStatus(x,'r2')} ${stageStatus(x,'r3')}</p></article>`).join('');
 
@@ -171,7 +182,7 @@ $('codesBtn').onclick=async()=>{
  finally{btn.disabled=false}
 };
 $('logoutBtn').onclick=async()=>{try{await fetch('/api/admin/logout',{method:'POST',credentials:'same-origin'})}finally{showLogin()}};
-$('exportBtn').onclick=async()=>{const b=$('exportBtn'),old=b.textContent;try{b.disabled=true;b.textContent='SE GENEREAZĂ...';const r=await fetch('/api/admin/export',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({})});if(r.status===401){showLogin();return}if(!r.ok)throw new Error('EXPORT_FAILED');const blob=await r.blob(),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`BES-2026-participanti-${new Date().toISOString().slice(0,10)}.xlsx`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}catch(e){$('status').className='status fatal';$('status').textContent='Fișierul Excel nu a putut fi generat.'}finally{b.disabled=false;b.textContent=old}};
+$('exportBtn').onclick=async()=>{const b=$('exportBtn'),old=b.textContent;try{b.disabled=true;b.textContent='SE GENEREAZĂ...';const r=await fetch('/api/admin/export',{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},body:'{}',cache:'no-store'});if(r.status===401){showLogin();return}if(!r.ok){let message='Exportul Excel nu a putut fi generat.';try{const error=await r.json();if(error.error)message+=' ('+error.error+')'}catch{}throw new Error(message)}const blob=await r.blob();if(!blob.size)throw new Error('Fișierul Excel este gol.');const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=`BES-2026-participanti-${new Date().toISOString().slice(0,10)}.xlsx`;document.body.appendChild(a);a.click();setTimeout(()=>{a.remove();URL.revokeObjectURL(url)},10000)}catch(e){$('status').className='status fatal';$('status').textContent=e.message||'Fișierul Excel nu a putut fi generat.'}finally{b.disabled=false;b.textContent=old}};
 document.querySelectorAll('.test-button').forEach(btn=>btn.addEventListener('click',async()=>{
  const stage=btn.dataset.stage,language=$('testLang').value;
  const names={confirmation:'confirmarea înscrierii',r1:'reminderul 1',r2:'reminderul 2',r3:'reminderul 3'};
