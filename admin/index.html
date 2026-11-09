@@ -115,7 +115,7 @@ body{background:linear-gradient(150deg,#e9e6ed 0%,#f1ece7 100%);color:var(--ink)
 @media(min-width:1001px){.table thead th.registration-heading{text-align:center!important;vertical-align:middle!important;white-space:nowrap!important;padding-left:1px!important;padding-right:1px!important}.table tbody td.registered-cell{text-align:center!important}}
 </style></head><body>
 <section id="login" class="login"><div class="login-card"><div class="bes-admin-wordmark">BRAND EXPERIENCE SUMMIT</div><div class="eyebrow">BRAND EXPERIENCE SUMMIT · ADMINISTRARE</div><h1>Brand Experience Summit</h1><p class="sub">Acces administrare participanți</p><form id="loginForm"><div class="field"><label>Utilizator</label><input id="username" autocomplete="username" required></div><div class="field"><label>Parolă</label><input id="password" type="password" autocomplete="current-password" required></div><button class="primary" type="submit">AUTENTIFICARE →</button><div id="loginError" class="error"></div></form></div></section>
-<main id="app" class="app hidden"><header class="top"><div><div class="bes-admin-wordmark">BRAND EXPERIENCE SUMMIT</div><div class="eyebrow">BES · 2026 · CHIȘINĂU</div><h1>Participanți</h1><p>More brands. More knowledge. More business.</p></div><div class="actions"><button id="exportBtn" class="ghost">EXPORT EXCEL</button><button id="logoutBtn" class="primary">IEȘIRE</button></div></header>
+<main id="app" class="app hidden"><header class="top"><div><div class="bes-admin-wordmark">BRAND EXPERIENCE SUMMIT</div><div class="eyebrow">BES · 2026 · CHIȘINĂU</div><h1>Participanți</h1><p>More brands. More knowledge. More business.</p></div><div class="actions"><button id="downloadParticipantsBtn" type="button" class="ghost">DESCARCĂ PARTICIPANȚII</button><span id="downloadParticipantsStatus" role="status" aria-live="polite" style="font-size:12px;max-width:270px"></span><button id="logoutBtn" class="primary">IEȘIRE</button></div></header>
 <section class="cards" aria-label="Indicatori BES"><article class="card"><div id="total" class="n">0</div><div class="l">Participanți</div></article><article class="card"><div id="stores" class="n">0</div><div class="l">Instituții</div></article><article class="card"><div id="confirmed" class="n">0</div><div class="l">Confirmări trimise</div></article><article class="card"><div id="reminders" class="n">0</div><div class="l">Reminder 1 trimise</div></article><article class="card"><div id="reminder2" class="n">0</div><div class="l">Reminder 2 trimise</div></article><article class="card"><div id="reminder3" class="n">0</div><div class="l">Reminder 3 trimise</div></article><article class="card"><div id="present" class="n">0</div><div class="l">Prezenți</div></article></section>
 
 <section class="panel"><div class="reminder-actions"><span class="reminder-note">Eveniment: 28 noiembrie 2026, ora 09:30, Capitoles Park, Chișinău.</span></div><div class="toolbar"><input id="search" placeholder="Caută nume, telefon sau instituție"><select id="role"><option value="">Toate rolurile</option></select><select id="fp"><option value="">Toate prezențele</option><option value="yes">Prezenți</option><option value="no">Absenți</option></select><select id="fc"><option value="">Toate confirmările</option><option value="sent">Confirmare trimisă</option><option value="pending">Confirmare netrimisă</option><option value="error">Eroare confirmare</option></select><select id="fr"><option value="">Toate statusurile e-mail</option><option value="sent">Cel puțin un reminder trimis</option><option value="pending">Niciun reminder trimis</option><option value="error">Reminder de verificat</option></select></div><div id="status" class="status">Se încarcă participanții...</div><div class="table-wrap"><table class="table"><thead><tr><th>Cod BES</th><th title="PIN check-in">PIN check-in</th><th>Participant</th><th>Telefon / E-mail</th><th>Instituție / Rol</th><th>Localitate</th><th title="Folosește Myoless sau alte soluții pentru miopie?">Folosește Myoless sau alte soluții pentru miopie?</th><th title="Unde profesează?">Unde profesează?</th><th title="Dorește implicare în prevenția miopiei?">Dorește implicare în prevenția miopiei?</th><th title="Experiență / interes lentile ROOFT">Experiență / interes lentile ROOFT</th><th class="registration-heading">Înscriere</th><th title="Confirmare e-mail">Confirmare</th><th>Check-in</th><th title="Reminder 1">R1</th><th title="Reminder 2">R2</th><th title="Reminder 3">R3</th></tr></thead><tbody id="rows"></tbody></table></div><div id="mobileRows"></div></section></main>
@@ -184,12 +184,22 @@ $('codesBtn').onclick=async()=>{
  finally{btn.disabled=false}
 };
 $('logoutBtn').onclick=async()=>{try{await fetch('/api/admin/logout',{method:'POST',credentials:'same-origin'})}finally{showLogin()}};
-$('exportBtn').onclick=()=>{
- // Descărcare nativă, fără fetch/blob sau blocaje Safari/Chrome.
- const url='/api/admin/export?download='+Date.now();
- const a=document.createElement('a');a.href=url;a.download='BES-2026-participanti.xlsx';
- document.body.appendChild(a);a.click();a.remove();
-};
+$('downloadParticipantsBtn').addEventListener('click',async()=>{
+ const btn=$('downloadParticipantsBtn'),status=$('downloadParticipantsStatus');
+ btn.disabled=true;status.textContent='Se pregătește fișierul Excel...';
+ try{
+  const response=await fetch('/api/admin/download-participants',{method:'POST',credentials:'same-origin',cache:'no-store',headers:{'Accept':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}});
+  if(!response.ok){let detail='HTTP '+response.status;try{const error=await response.json();detail=error.message||error.error||detail}catch{}if(response.status===401)throw new Error('Sesiunea a expirat. Autentifică-te din nou.');throw new Error('Export nereușit: '+detail)}
+  const blob=await response.blob();
+  if(blob.size<100||!String(response.headers.get('Content-Type')||'').includes('spreadsheetml'))throw new Error('Serverul nu a returnat un fișier Excel valid.');
+  const url=URL.createObjectURL(blob),link=document.createElement('a');
+  link.href=url;link.download='BES-2026-participanti-'+new Date().toISOString().slice(0,10)+'.xlsx';
+  document.body.appendChild(link);link.click();link.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),60000);
+  status.textContent='Fișierul Excel a fost generat ('+Math.round(blob.size/1024)+' KB).';
+ }catch(err){status.textContent=err.message||'Exportul a eșuat.';console.error('BES export:',err)}
+ finally{btn.disabled=false}
+});
 document.querySelectorAll('.test-button').forEach(btn=>btn.addEventListener('click',async()=>{
  const stage=btn.dataset.stage,language=$('testLang').value;
  const names={confirmation:'confirmarea înscrierii',r1:'reminderul 1',r2:'reminderul 2',r3:'reminderul 3'};

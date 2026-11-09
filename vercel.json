@@ -26,6 +26,9 @@
     },
     "api/admin/export.js": {
       "maxDuration": 60
+    },
+    "api/admin/download-participants.js": {
+      "maxDuration": 60
     }
   },
   "headers": [
