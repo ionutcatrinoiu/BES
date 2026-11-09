@@ -176,13 +176,6 @@ function render(){
 }
 ['search','role','fp','fc','fr'].forEach(id=>$(id).addEventListener(id==='search'?'input':'change',apply));
 
-$('codesBtn').onclick=async()=>{
- const btn=$('codesBtn');if(!confirm('Generezi coduri unice de 4 cifre pentru participanții existenți fără cod valid?'))return;
- btn.disabled=true;
- try{const result=await api('/api/admin/checkin-codes',{method:'POST',body:'{}'});alert('Coduri generate: '+result.updated+'. Deja existente: '+result.existing+'.');await load()}
- catch(e){alert('Generarea codurilor nu a reușit. Verifică logurile Vercel.')}
- finally{btn.disabled=false}
-};
 $('logoutBtn').onclick=async()=>{try{await fetch('/api/admin/logout',{method:'POST',credentials:'same-origin'})}finally{showLogin()}};
 $('downloadParticipantsBtn').addEventListener('click',async()=>{
  const btn=$('downloadParticipantsBtn'),status=$('downloadParticipantsStatus');
